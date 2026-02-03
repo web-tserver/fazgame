@@ -9,10 +9,10 @@ export const FAST_SALES = [
     limited: true
   },
   {
-    name: 'RTX Gaming PC',
-    type: 'PC',
+    name: 'Nintendo LITE',
+    type: 'Console',
     condition: 'USED',
-    price: 3800,
+    price: 700,
     limited: true
   }
 ];
