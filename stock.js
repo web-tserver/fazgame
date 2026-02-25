@@ -1,28 +1,10 @@
 /* ==========================================
-   FAZGAME STOCK SYSTEM (50 ITEMS)
-   GitHub Compatible Version
+   FAZGAME STOCK SYSTEM (FULL VERSION)
+   GitHub Compatible
 ========================================== */
 
 const STOCK = [
-   
-/* ==========================================
-   🎮 NINTENDO SWITCH GAMES (12)
-========================================== */
 
-{ n:'The Legend of Zelda Breath of the Wild', c:'switch', type:'game', p:160, cond:'used' },
-{ n:'The Legend of Zelda Tears of the Kingdom', c:'switch', type:'game', p:190, cond:'used' },
-{ n:'Super Mario Odyssey', c:'switch', type:'game', p:140, cond:'used' },
-{ n:'Mario Kart 8 Deluxe', c:'switch', type:'game', p:150, cond:'used' },
-{ n:'Pokemon Scarlet', c:'switch', type:'game', p:130, cond:'used' },
-{ n:'Pokemon Violet', c:'switch', type:'game', p:130, cond:'used' },
-{ n:'Super Smash Bros Ultimate', c:'switch', type:'game', p:150, cond:'used' },
-{ n:'Animal Crossing New Horizons', c:'switch', type:'game', p:140, cond:'used' },
-{ n:'Splatoon 3', c:'switch', type:'game', p:130, cond:'used' },
-{ n:'Metroid Dread', c:'switch', type:'game', p:150, cond:'used' },
-{ n:'Luigis Mansion 3', c:'switch', type:'game', p:130, cond:'used' },
-{ n:'Minecraft (Switch Edition)', c:'switch', type:'game', p:120, cond:'used' },
-
-   
 /* ==========================================
    🎮 PS5 CONSOLES (6)
 ========================================== */
@@ -81,6 +63,22 @@ const STOCK = [
 { n:'Nintendo Switch Lite', c:'console', type:'console', p:650, cond:'used' },
 
 /* ==========================================
+   🎮 NINTENDO SWITCH GAMES (12)
+========================================== */
+{ n:'The Legend of Zelda Breath of the Wild', c:'switch', type:'game', p:160, cond:'used' },
+{ n:'The Legend of Zelda Tears of the Kingdom', c:'switch', type:'game', p:190, cond:'used' },
+{ n:'Super Mario Odyssey', c:'switch', type:'game', p:140, cond:'used' },
+{ n:'Mario Kart 8 Deluxe', c:'switch', type:'game', p:150, cond:'used' },
+{ n:'Pokemon Scarlet', c:'switch', type:'game', p:130, cond:'used' },
+{ n:'Pokemon Violet', c:'switch', type:'game', p:130, cond:'used' },
+{ n:'Super Smash Bros Ultimate', c:'switch', type:'game', p:150, cond:'used' },
+{ n:'Animal Crossing New Horizons', c:'switch', type:'game', p:140, cond:'used' },
+{ n:'Splatoon 3', c:'switch', type:'game', p:130, cond:'used' },
+{ n:'Metroid Dread', c:'switch', type:'game', p:150, cond:'used' },
+{ n:'Luigis Mansion 3', c:'switch', type:'game', p:130, cond:'used' },
+{ n:'Minecraft (Switch Edition)', c:'switch', type:'game', p:120, cond:'used' },
+
+/* ==========================================
    🖥 PC BUILDS (5)
 ========================================== */
 { n:'Gaming PC Ryzen 5 + RTX 3060', c:'pc', type:'pc', p:3500, cond:'used' },
@@ -103,8 +101,4 @@ const STOCK = [
 
 ];
 
-/* ==========================================
-   GLOBAL EXPORT FOR GITHUB
-========================================== */
 window.STOCK = STOCK;
-
