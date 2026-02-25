@@ -321,14 +321,10 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
 
 <footer>© 2026 FAZGAME • Faz Service, Faz Gaming</footer>
 
-<script type="module">
-let products = [];
-try {
-  const module = await import('./stock.js');
-  products = module.STOCK || [];
-} catch (e) {
-  console.warn("Stock data not found.");
-}
+<script src="stock.js"></script>
+<script>
+let products = window.STOCK || [];
+</script>
 
 const icons = {
   console:'https://api.iconify.design/mdi/console.svg',
