@@ -68,4 +68,7 @@ const STOCK = [
 
 ];
 
+window.STOCK = STOCK;
+
+
 
