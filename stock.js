@@ -3,7 +3,7 @@
 // FAZGAME STOCK (FROM PHOTO)
 // ===============================
 
-export const STOCK = [
+const STOCK = [
 
 /* ===============================
    🎮 PS5 GAMES
@@ -67,4 +67,5 @@ export const STOCK = [
 { n:'Dragon Quest Builders', c:'ps4', type:'game', p:20, cond:'used' }
 
 ];
+
 
