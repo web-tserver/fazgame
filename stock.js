@@ -1,6 +1,6 @@
 // stock.js
 // ===============================
-// FAZGAME STOCK SYSTEM (EXPANDED)
+// FAZGAME STOCK (FROM PHOTO)
 // ===============================
 
 export const STOCK = [
@@ -96,3 +96,4 @@ export const STOCK = [
 { n:'EA FC 24 (PS4)', c:'ps4', type:'game', p:70, cond:'used' }
 
 ];
+
