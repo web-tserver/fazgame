@@ -1,6 +1,6 @@
 /* ==========================================
-   FAZGAME STOCK SYSTEM (FULL VERSION)
-   GitHub Compatible
+   FAZGAME FULL STOCK SYSTEM
+   GitHub Compatible Version
 ========================================== */
 
 const STOCK = [
@@ -54,10 +54,8 @@ const STOCK = [
 { n:'Call of Duty Modern Warfare', c:'ps4', type:'game', p:60, cond:'used' },
 
 /* ==========================================
-   🎮 OTHER CONSOLES (5)
+   🎮 NINTENDO SWITCH CONSOLES (3)
 ========================================== */
-{ n:'Xbox Series S 512GB', c:'console', type:'console', p:1250, cond:'used' },
-{ n:'Xbox One S 1TB', c:'console', type:'console', p:900, cond:'used' },
 { n:'Nintendo Switch V2', c:'console', type:'console', p:950, cond:'used' },
 { n:'Nintendo Switch OLED', c:'console', type:'console', p:1200, cond:'used' },
 { n:'Nintendo Switch Lite', c:'console', type:'console', p:650, cond:'used' },
@@ -77,6 +75,26 @@ const STOCK = [
 { n:'Metroid Dread', c:'switch', type:'game', p:150, cond:'used' },
 { n:'Luigis Mansion 3', c:'switch', type:'game', p:130, cond:'used' },
 { n:'Minecraft (Switch Edition)', c:'switch', type:'game', p:120, cond:'used' },
+
+/* ==========================================
+   🎮 XBOX CONSOLES (4)
+========================================== */
+{ n:'Xbox Series X 1TB', c:'xbox', type:'console', p:2300, cond:'used' },
+{ n:'Xbox Series S 512GB', c:'xbox', type:'console', p:1250, cond:'used' },
+{ n:'Xbox One X 1TB', c:'xbox', type:'console', p:1100, cond:'used' },
+{ n:'Xbox One S 1TB', c:'xbox', type:'console', p:900, cond:'used' },
+
+/* ==========================================
+   🎮 XBOX GAMES (8)
+========================================== */
+{ n:'Halo Infinite', c:'xbox', type:'game', p:100, cond:'used' },
+{ n:'Forza Horizon 5', c:'xbox', type:'game', p:120, cond:'used' },
+{ n:'Gears 5', c:'xbox', type:'game', p:80, cond:'used' },
+{ n:'Starfield', c:'xbox', type:'game', p:180, cond:'used' },
+{ n:'Call of Duty Modern Warfare II (Xbox)', c:'xbox', type:'game', p:120, cond:'used' },
+{ n:'Red Dead Redemption 2 (Xbox)', c:'xbox', type:'game', p:70, cond:'used' },
+{ n:'FIFA 23 (Xbox)', c:'xbox', type:'game', p:50, cond:'used' },
+{ n:'NBA 2K24 (Xbox)', c:'xbox', type:'game', p:85, cond:'used' },
 
 /* ==========================================
    🖥 PC BUILDS (5)
