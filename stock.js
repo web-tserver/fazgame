@@ -91,6 +91,8 @@ export const STOCK = [
 { n:'Need for Speed Heat', c:'ps4', type:'game', p:60, cond:'used' },
 { n:'FIFA 23 (PS4)', c:'ps4', type:'game', p:50, cond:'used' },
 { n:'EA FC 24 (PS4)', c:'ps4', type:'game', p:70, cond:'used' }
+
 ];
+
 
 
