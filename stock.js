@@ -7,7 +7,7 @@
 const STOCK = [
 
 { n:'God of war ragnarok', c:'ps5', type:'game', p:90, cond:'used' },
-{ n:'Assassin\'s Creed Origins', c:'ps4', type:'game', p:50, cond:'used' },
+{ n:'Assassin's Creed Origins', c:'ps4', type:'game', p:50, cond:'used' },
 { n:'Devil May cry 5', c:'ps4', type:'game', p:40, cond:'used' },
 { n:'FIFA 20', c:'ps4', type:'game', p:20, cond:'used' },
 { n:'FIFA 21', c:'ps4', type:'game', p:30, cond:'used' },
@@ -19,7 +19,7 @@ const STOCK = [
 { n:'FIFA 22', c:'ps5', type:'game', p:20, cond:'used' },
 { n:'Horizon Zero Dawn (No Case) ', c:'ps4', type:'game', p:20, cond:'used' },
 { n:'PS4 Slim 500gb 1 Controller', c:'console', type:'console', p:590, cond:'used' }
-{ n:'DS4 BLACK - PS4 Controller', c:'ps4', type:'Controller', p:90, cond:'used' }
+{ n:'DS4 BLACK-PS4 Controller', c:'ps4', type:'Controller', p:90, cond:'used' }
 
 ];
 
