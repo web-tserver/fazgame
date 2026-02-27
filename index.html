@@ -151,6 +151,38 @@ section{padding:60px 20px;max-width:1200px;margin:auto}
   z-index: 5;
 }
 
+/* ===============================
+   3D PARALLAX CARD EFFECT
+================================ */
+
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform .15s ease;
+  will-change: transform;
+}
+
+.tilt-card .hot-card-content,
+.tilt-card img,
+.tilt-card .fast-condition,
+.tilt-card .preorder-badge {
+  transform: translateZ(30px);
+}
+
+.tilt-card::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,.15), transparent 60%);
+  opacity:0;
+  transition: opacity .3s ease;
+  pointer-events:none;
+}
+
+.tilt-card:hover::before {
+  opacity:1;
+}
 /* Stock Grid */
 .controls{margin-bottom:14px}
 .search-box{padding:14px;border-radius:14px;border:none;background:rgba(255,255,255,.08);color:#fff;width:100%;max-width:360px}
@@ -360,7 +392,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
   <h2 class="section-title">Fast Sales</h2>
   <div style="font-size:13px; color:var(--accent); margin-bottom:10px;">🔥 While Stock Lasts</div>
   <div class="hot-grid">
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/ps5.jpg">
       <span class="fast-condition fast-used">USED</span>
       <span class="limited-badge">LIMITED</span>
@@ -369,7 +401,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
         <div class="hot-desc">RM 1450 • Limited Stock</div>
       </div>
     </div>
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/switch.jpg">
       <span class="fast-condition fast-used">USED</span>
       <span class="limited-badge">LIMITED</span>
@@ -390,7 +422,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
   <div class="hot-grid">
 
     <!-- PS4 SLIM -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/ps4-slim.jpg" alt="PS4 Slim 500GB">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -401,7 +433,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- PS4 PRO -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/ps4-pro.jpg" alt="PS4 Pro 1TB">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -412,7 +444,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- PS5 FAT -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/ps5-fat.jpg" alt="PS5 Fat Disc">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -423,7 +455,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- PS5 SLIM -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/ps5-slim.jpg" alt="PS5 Slim Disc">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -434,7 +466,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- PS5 PRO -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/ps5-pro.jpg" alt="PS5 Pro Digital">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -445,7 +477,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- SWITCH LITE -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/switch-lite.jpg" alt="Nintendo Switch Lite">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -456,7 +488,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- OLED WHITE -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/switch-oled-white.jpg" alt="Switch OLED White">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -467,7 +499,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- OLED NEON -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/switch-oled-neon.jpg" alt="Switch OLED Neon">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -478,7 +510,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- ZELDA -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/switch-zelda.jpg" alt="Switch OLED Zelda Edition">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -489,7 +521,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- SPLATOON -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/switch-splatoon.jpg" alt="Switch OLED Splatoon Edition">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -500,7 +532,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- MARIO -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/switch-mario.jpg" alt="Switch OLED Mario Edition">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -511,7 +543,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- POKEMON -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/switch-pokemon.jpg" alt="Switch OLED Pokemon Edition">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -522,7 +554,7 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
     </div>
 
     <!-- SWITCH 2 -->
-    <div class="hot-card">
+    <div class="hot-card tilt-card">
       <img src="images/switch-2.jpg" alt="Switch 2 Edition">
       <span class="fast-condition fast-used">USED</span>
       <span class="preorder-badge">PRE-ORDER</span>
@@ -541,9 +573,9 @@ footer{text-align:center;padding:40px;color:#aaa;font-size:13px}
   🖥 Custom Gaming PCs • Built On Demand
 </div>
   <div class="hot-grid">
-    <div class="hot-card"><img src="images/pc2000.jpg"><span class="preorder-badge">PRE-ORDER</span><div class="hot-card-content"><div class="hot-title">PC Budget from RM2,000</div><div class="hot-desc">Entry Gaming</div></div></div>
-    <div class="hot-card"><img src="images/pc3000.jpg"><span class="preorder-badge">PRE-ORDER</span><div class="hot-card-content"><div class="hot-title">PC Budget from RM3,000</div><div class="hot-desc">Balanced Build</div></div></div>
-    <div class="hot-card"><img src="images/custompc.jpg"><span class="preorder-badge">PRE-ORDER</span><div class="hot-card-content"><div class="hot-title">Custom PC</div><div class="hot-desc">Free Setup</div></div></div>
+    <div class="hot-card tilt-card"><img src="images/pc2000.jpg"><span class="preorder-badge">PRE-ORDER</span><div class="hot-card-content"><div class="hot-title">PC Budget from RM2,000</div><div class="hot-desc">Entry Gaming</div></div></div>
+    <div class="hot-card tilt-card"><img src="images/pc3000.jpg"><span class="preorder-badge">PRE-ORDER</span><div class="hot-card-content"><div class="hot-title">PC Budget from RM3,000</div><div class="hot-desc">Balanced Build</div></div></div>
+    <div class="hot-card tilt-card"><img src="images/custompc.jpg"><span class="preorder-badge">PRE-ORDER</span><div class="hot-card-content"><div class="hot-title">Custom PC</div><div class="hot-desc">Free Setup</div></div></div>
   </div>
 </section>
 
@@ -728,6 +760,37 @@ document.querySelectorAll('[data-scroll]').forEach(chip => {
     const target = document.getElementById(chip.dataset.scroll);
     if(target) target.scrollIntoView({behavior: 'smooth'});
   };
+});
+</script>
+<script>
+const cards = document.querySelectorAll('.tilt-card');
+
+cards.forEach(card => {
+
+  // Disable on touch devices
+  if ('ontouchstart' in window) return;
+
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = -(y - centerY) / 12;
+    const rotateY = (x - centerX) / 12;
+
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+    card.style.setProperty('--x', `${x}px`);
+    card.style.setProperty('--y', `${y}px`);
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+  });
+
 });
 </script>
 </body>
