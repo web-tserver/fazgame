@@ -71,15 +71,22 @@ header { position: sticky; top: 0; z-index: 1000; background: rgba(0, 0, 0, .9);
 .installment-banner { margin-top: 20px; font-size: 13px; text-align: center; color: rgba(255,216,77,.9); font-weight: 600; letter-spacing: .5px; animation: fadeInInstall 1.2s ease forwards; opacity: 0; }
 @keyframes fadeInInstall { to { opacity: 1; } }
 
-/* Grids */
-section { padding: 60px 20px; max-width: 1200px; margin: auto; }
+/* Base Section Adjustments */
+section { padding: 40px 14px; max-width: 1200px; margin: auto; } /* Fixed mobile margins */
 .section-title { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-.section-subtitle { font-size: 13px; color: var(--accent); margin-bottom: 24px; opacity: 0.9; }
-.hot-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.section-subtitle { font-size: 13px; color: var(--accent); margin-bottom: 20px; opacity: 0.9; }
 
-/* Advanced Card Effects + Tilt */
+/* =========================================
+   MOBILE 2-CARD GRID SYSTEM 
+========================================= */
+.hot-grid { 
+  display: grid; 
+  gap: 12px; 
+  grid-template-columns: repeat(2, 1fr); /* FORCES 2 CARDS PER ROW ON MOBILE */
+}
+
 .hot-card { 
-  position: relative; border-radius: 20px; overflow: hidden; background: #111; aspect-ratio: 4/5; 
+  position: relative; border-radius: 16px; overflow: hidden; background: #111; aspect-ratio: 4/5; 
   transition: transform 0.4s ease, box-shadow 0.4s ease; cursor: pointer;
   transform-style: preserve-3d; perspective: 1400px; will-change: transform;
 }
@@ -103,16 +110,28 @@ section { padding: 60px 20px; max-width: 1200px; margin: auto; }
 }
 .hot-card:hover::before { opacity: 1; }
 
-.hot-card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; background: linear-gradient(transparent, rgba(0,0,0,0.95)); z-index: 4; transform: translateZ(60px); }
-.hot-title { font-weight: 800; font-size: 16px; margin-bottom: 4px; }
-.hot-desc { font-size: 13px; color: var(--muted); font-weight: 600; }
+/* Adjusted padding and font sizes inside cards to fit small screens */
+.hot-card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px; background: linear-gradient(transparent, rgba(0,0,0,0.95)); z-index: 4; transform: translateZ(60px); }
+.hot-title { font-weight: 800; font-size: 13px; margin-bottom: 2px; line-height: 1.2; }
+.hot-desc { font-size: 11px; color: var(--muted); font-weight: 600; }
 
-/* Badges */
-.badge { position: absolute; top: 15px; z-index: 5; font-size: 10px; font-weight: 800; padding: 6px 12px; border-radius: 20px; transform: translateZ(60px); }
-.badge-left { left: 15px; background: rgba(255,255,255,0.9); color: #000; }
-.badge-right { right: 15px; background: var(--accent); color: #000; }
+/* Adjusted badge sizing for mobile */
+.badge { position: absolute; top: 10px; z-index: 5; font-size: 8px; font-weight: 800; padding: 4px 8px; border-radius: 20px; transform: translateZ(60px); }
+.badge-left { left: 10px; background: rgba(255,255,255,0.9); color: #000; }
+.badge-right { right: 10px; background: var(--accent); color: #000; }
 .badge-red { background: #ff3b3b; color: #fff; }
-.badge-green { background: #3cff7f; color: #000; }
+
+/* Desktop overrides to expand the grid and sizes back to normal */
+@media (min-width: 600px) {
+  section { padding: 60px 20px; }
+  .hot-grid { gap: 20px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .hot-card-content { padding: 24px; }
+  .hot-title { font-size: 16px; margin-bottom: 4px; }
+  .hot-desc { font-size: 13px; }
+  .badge { font-size: 10px; padding: 6px 12px; top: 15px; }
+  .badge-left { left: 15px; }
+  .badge-right { right: 15px; }
+}
 
 /* Stock Grid */
 .search-box { width: 100%; max-width: 400px; padding: 14px 24px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: #111; color: #fff; margin-bottom: 20px; font-size: 14px; outline: none; transition: var(--transition); }
@@ -124,7 +143,11 @@ section { padding: 60px 20px; max-width: 1200px; margin: auto; }
 .filter-count { margin-left: 6px; background: #000; color: #fff; padding: 2px 6px; border-radius: 999px; font-size: 10px; }
 .filter-btn.active .filter-count { background: rgba(0,0,0,0.2); color: #000; }
 
-.product-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+.product-grid { display: grid; gap: 14px; grid-template-columns: 1fr; } /* Mobile 1 column for list view */
+@media (min-width: 768px) {
+  .product-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); } /* Desktop expands */
+}
+
 .product-card { background: var(--card); border-radius: 16px; padding: 16px; display: flex; gap: 16px; align-items: center; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition); position: relative; }
 .product-card:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,216,77,0.2); }
 .product-icon { width: 64px; height: 64px; background: #111; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
@@ -254,10 +277,10 @@ footer { text-align: center; padding: 40px 20px; color: #aaa; font-size: 13px; b
   <h2 class="section-title">Preorder PC Builds</h2>
   <div class="section-subtitle">🖥 Custom Gaming PCs • Built On Demand</div>
   <div class="hot-grid">
-    <div class="hot-card tilt-card"><span class="badge badge-right">PRE-ORDER</span><img src="images/pc1000.jpg" alt="PC"><div class="hot-card-content"><div class="hot-title">PC Budget from RM1,000</div><div class="hot-desc">Entry Gaming</div></div></div>
-    <div class="hot-card tilt-card"><span class="badge badge-right">PRE-ORDER</span><img src="images/pc2000.jpg" alt="PC"><div class="hot-card-content"><div class="hot-title">PC Budget from RM2,000</div><div class="hot-desc">Entry Gaming</div></div></div>
-    <div class="hot-card tilt-card"><span class="badge badge-right">PRE-ORDER</span><img src="images/pc3000.jpg" alt="PC"><div class="hot-card-content"><div class="hot-title">PC Budget from RM3,000</div><div class="hot-desc">Balanced Build</div></div></div>
-    <div class="hot-card tilt-card"><span class="badge badge-right">PRE-ORDER</span><img src="images/pc3500.jpg" alt="PC"><div class="hot-card-content"><div class="hot-title">PC Budget from RM3,500</div><div class="hot-desc">High Performance</div></div></div>
+    <div class="hot-card tilt-card"><span class="badge badge-right">PRE-ORDER</span><img src="images/pc1000.jpg" alt="PC"><div class="hot-card-content"><div class="hot-title">PC Budget RM1,000+</div><div class="hot-desc">Entry Gaming</div></div></div>
+    <div class="hot-card tilt-card"><span class="badge badge-right">PRE-ORDER</span><img src="images/pc2000.jpg" alt="PC"><div class="hot-card-content"><div class="hot-title">PC Budget RM2,000+</div><div class="hot-desc">Entry Gaming</div></div></div>
+    <div class="hot-card tilt-card"><span class="badge badge-right">PRE-ORDER</span><img src="images/pc3000.jpg" alt="PC"><div class="hot-card-content"><div class="hot-title">PC Budget RM3,000+</div><div class="hot-desc">Balanced Build</div></div></div>
+    <div class="hot-card tilt-card"><span class="badge badge-right">PRE-ORDER</span><img src="images/pc3500.jpg" alt="PC"><div class="hot-card-content"><div class="hot-title">PC Budget RM3,500+</div><div class="hot-desc">High Performance</div></div></div>
     <div class="hot-card tilt-card"><span class="badge badge-right">PRE-ORDER</span><img src="images/custompc.jpg" alt="PC"><div class="hot-card-content"><div class="hot-title">Custom PC</div><div class="hot-desc">Free Setup</div></div></div>
   </div>
 </section>
@@ -297,7 +320,7 @@ footer { text-align: center; padding: 40px 20px; color: #aaa; font-size: 13px; b
     <div class="hot-card tilt-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-lite.jpg" alt="Switch Lite">
-      <div class="hot-card-content"><div class="hot-title">Nintendo Switch Lite</div><div class="hot-desc">RM400</div></div>
+      <div class="hot-card-content"><div class="hot-title">Switch Lite</div><div class="hot-desc">RM400</div></div>
     </div>
     <div class="hot-card tilt-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
@@ -312,22 +335,22 @@ footer { text-align: center; padding: 40px 20px; color: #aaa; font-size: 13px; b
     <div class="hot-card tilt-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-zelda.jpg" alt="OLED Zelda">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED Zelda Edition</div><div class="hot-desc">RM850</div></div>
+      <div class="hot-card-content"><div class="hot-title">Switch OLED Zelda</div><div class="hot-desc">RM850</div></div>
     </div>
     <div class="hot-card tilt-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-splatoon.jpg" alt="OLED Splatoon">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED Splatoon Edition</div><div class="hot-desc">RM850</div></div>
+      <div class="hot-card-content"><div class="hot-title">Switch OLED Splatoon</div><div class="hot-desc">RM850</div></div>
     </div>
     <div class="hot-card tilt-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-mario.jpg" alt="OLED Mario">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED Mario Edition</div><div class="hot-desc">RM850</div></div>
+      <div class="hot-card-content"><div class="hot-title">Switch OLED Mario</div><div class="hot-desc">RM850</div></div>
     </div>
     <div class="hot-card tilt-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-pokemon.jpg" alt="OLED Pokemon">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED Pokemon Edition</div><div class="hot-desc">RM850</div></div>
+      <div class="hot-card-content"><div class="hot-title">Switch OLED Pokemon</div><div class="hot-desc">RM850</div></div>
     </div>
     <div class="hot-card tilt-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
@@ -403,7 +426,6 @@ function renderProducts() {
       // Determine badge colors dynamically based on your original setup
       const condClass = p.cond === 'new' ? 'rgba(255,216,77,.45)' : 'rgba(255,255,255,.12)';
       const typeClass = p.type === 'game' ? 'var(--badge-green)' : 'var(--accent)';
-      const typeText = p.type === 'game' ? '#000' : '#000';
       
       return `
       <div class="product-card">
@@ -429,7 +451,7 @@ function renderProducts() {
 search.oninput = renderProducts;
 renderProducts();
 
-/* --- 2. FAST SALES SORT (From your original code) --- */
+/* --- 2. FAST SALES SORT --- */
 const fastGrid = document.querySelector('#fast-sales .hot-grid');
 if(fastGrid) {
   const cardsList = Array.from(fastGrid.children);
@@ -531,7 +553,7 @@ tiltCards.forEach(card => {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = -(y - centerY) / 10; // adjusted for smoother rotation
+    const rotateX = -(y - centerY) / 10;
     const rotateY = (x - centerX) / 10;
 
     card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
