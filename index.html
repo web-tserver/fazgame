@@ -146,6 +146,7 @@ section{padding:60px 20px;max-width:1200px;margin:auto}
   transform: translateY(-6px);
   z-index: 5;
 }
+ 
 /* ===================================
    STRONG GAMING HOVER GLOW
 =================================== */
@@ -874,6 +875,19 @@ cards.forEach(card => {
     card.style.transform = `rotateX(0deg) rotateY(0deg)`;
   });
 
+});
+</script>
+  <script>
+document.getElementById("wa-float").addEventListener("click", function(e){
+  e.preventDefault();
+
+  const phone = "60163691936";
+  const message = "Hi FAZGAME 👋 I'm interested in your products.";
+  const encoded = encodeURIComponent(message);
+
+  const webUrl = "https://api.whatsapp.com/send?phone=" + phone + "&text=" + encoded;
+
+  window.location.href = webUrl;
 });
 </script>
 </body>
