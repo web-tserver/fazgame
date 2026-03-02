@@ -22,7 +22,6 @@
 
   <style>
     /* ===== LIGHTNING BOLT CURSOR ===== */
-    /* Define custom cursor using inline SVG */
     .theme-toggle,
     .btn-primary,
     .chip,
@@ -33,7 +32,6 @@
       cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ffd84d" d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>') 12 0, pointer;
     }
 
-    /* Fallback for browsers that don't support custom cursors */
     @media (pointer: coarse) {
       .theme-toggle,
       .btn-primary,
@@ -70,8 +68,9 @@
       --lamp-color: #ffd84d;
       --lamp-off-color: #94a3b8;
       --header-bg: rgba(11, 11, 15, 0.8);
-      --card-glow: 0 0 25px rgba(255,216,77,0.2); /* subtle glow in dark mode */
-      --card-shadow: none; /* no shadow in dark mode */
+      --card-glow-dark: 0 0 5px rgba(255,216,77,0.3), 0 0 10px rgba(255,216,77,0.2); /* sharper edge glow */
+      --card-glow-dark-hot: 0 0 5px rgba(255,216,77,0.4), 0 0 15px rgba(255,216,77,0.25);
+      --card-shadow: none;
     }
 
     /* Light mode - with black pill for used badge and iOS shadow */
@@ -96,8 +95,9 @@
       --lamp-color: #eab308;
       --lamp-off-color: #94a3b8;
       --header-bg: rgba(255, 255, 255, 0.9);
-      --card-glow: none;
-      --card-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02); /* iOS soft shadow */
+      --card-glow-dark: none;
+      --card-glow-dark-hot: none;
+      --card-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
     }
 
     body.light-mode .header-logos img {
@@ -985,9 +985,9 @@
       box-shadow: var(--card-shadow);
     }
 
-    /* Dark mode glow effect */
+    /* Dark mode edge glow - sharper */
     body:not(.light-mode) .product-card {
-      box-shadow: 0 0 25px rgba(255,216,77,0.15);
+      box-shadow: var(--card-glow-dark);
     }
 
     @media (min-width: 768px) {
@@ -1161,9 +1161,9 @@
       box-shadow: var(--card-shadow);
     }
 
-    /* Dark mode glow for hot cards */
+    /* Dark mode edge glow for hot cards - sharper */
     body:not(.light-mode) .hot-card {
-      box-shadow: 0 0 30px rgba(255,216,77,0.2);
+      box-shadow: var(--card-glow-dark-hot);
     }
 
     @media (min-width: 768px) {
@@ -1595,7 +1595,7 @@
       </div>
     </div>
 
-    <!-- YOUR LOCAL FLOATING IMAGE - eager loading for fast display -->
+    <!-- YOUR LOCAL FLOATING IMAGE -->
     <div class="banner-visual">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
@@ -1671,7 +1671,7 @@
   <h2 class="section-title">Preorder Consoles</h2>
   <div class="section-subtitle">🎮 Used Units • Reserve Before Stock Arrival</div>
   <div class="hot-grid">
-    <!-- console cards -->
+    <!-- console cards (lightbox disabled) -->
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/ps4-slim.jpg" alt="PS4 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Slim';">
@@ -1873,17 +1873,21 @@
       }
     }, 40);
 
-    // Lightbox for all product images (hot cards and product cards)
+    // Lightbox - only for PC build cards (not stock or preorder consoles)
     const modal = document.getElementById("imageModal");
     const modalImg = document.getElementById("modalImg");
     document.addEventListener("click", (e) => {
       const card = e.target.closest(".hot-card") || e.target.closest(".product-card");
       if (card) {
-        const img = card.querySelector("img");
-        if (img) {
-          modalImg.src = img.src;
-          modal.classList.add("show");
-          document.body.style.overflow = "hidden";
+        // Exclude stock and preorder consoles
+        const isExcluded = card.closest('#stock') || card.closest('#preorder-console');
+        if (!isExcluded) {
+          const img = card.querySelector("img");
+          if (img) {
+            modalImg.src = img.src;
+            modal.classList.add("show");
+            document.body.style.overflow = "hidden";
+          }
         }
       }
     });
@@ -1941,24 +1945,21 @@
   // Check for saved theme or system preference
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) {
-    // Use saved theme
     if (savedTheme === 'light') {
       document.body.classList.add('light-mode');
     }
   } else {
-    // No saved theme: check system preference
     const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
     if (systemPrefersLight) {
       document.body.classList.add('light-mode');
       localStorage.setItem('theme', 'light');
     } else {
-      localStorage.setItem('theme', 'dark'); // default
+      localStorage.setItem('theme', 'dark');
     }
   }
 
   // Listen for system theme changes
   window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
-    // Only apply if user hasn't manually toggled (i.e., no saved theme)
     if (!localStorage.getItem('theme')) {
       if (e.matches) {
         document.body.classList.add('light-mode');
@@ -1969,7 +1970,6 @@
   });
 
   themeToggle.addEventListener('click', () => {
-    // Add a quick pull effect
     const lampWrap = document.querySelector('.lamp-wrap');
     lampWrap.style.transition = 'transform 0.1s';
     lampWrap.style.transform = 'rotate(0deg) scale(0.98)';
@@ -1978,10 +1978,8 @@
       lampWrap.style.transition = '';
     }, 150);
 
-    // Toggle theme
     document.body.classList.toggle('light-mode');
     
-    // Save preference
     if (document.body.classList.contains('light-mode')) {
       localStorage.setItem('theme', 'light');
     } else {
