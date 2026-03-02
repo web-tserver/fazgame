@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>FAZGAME | Faz Service, Faz Gaming</title>
   <meta name="description" content="FAZGAME – Faz Service, Faz Gaming. Preorder consoles, custom PCs, and used gaming gear with 0% installment.">
 
@@ -68,8 +68,8 @@
       --lamp-color: #ffd84d;
       --lamp-off-color: #94a3b8;
       --header-bg: rgba(11, 11, 15, 0.8);
-      --card-glow-dark: none;          /* removed glow */
-      --card-glow-dark-hot: none;      /* removed glow */
+      --card-glow-dark: none;
+      --card-glow-dark-hot: none;
       --card-shadow: none;
     }
 
@@ -1465,7 +1465,7 @@
       }
     }
 
-    /* Lightbox */
+    /* Lightbox - now zoomable */
     #imageModal {
       position: fixed;
       inset: 0;
@@ -1476,18 +1476,30 @@
       align-items: center;
       justify-content: center;
       cursor: zoom-out;
-      padding: 20px;
+      padding: 0; /* remove padding to allow full use of space */
+      overflow: auto; /* allow scrolling/panning */
+      -webkit-overflow-scrolling: touch;
     }
-    #imageModal.show { display: flex; }
+    #imageModal.show {
+      display: flex;
+    }
     #modalImg {
-      max-width: 95%;
-      max-height: 90vh;
-      border-radius: 16px;
+      /* Natural size, allow zoom via browser pinch/scroll */
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      display: block;
+      margin: auto;
       box-shadow: 0 0 50px rgba(0,0,0,0.6);
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
+      cursor: zoom-out;
+      /* optional: add a slight transition for smoothness */
+      transition: transform 0.2s;
     }
-    #imageModal.show #modalImg { transform: scale(1); }
+    /* Optional: double-tap to zoom? we rely on browser's native pinch */
+    #modalImg:active {
+      transform: scale(1.02); /* subtle feedback */
+    }
 
     /* Preloader */
     #preloader {
