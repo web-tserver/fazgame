@@ -71,7 +71,7 @@
       --card-glow-dark: none;
       --card-glow-dark-hot: none;
       --card-shadow: none;
-      --hover-glow: 0 0 20px var(--accent); /* increased glow */
+      --hover-glow: 0 0 20px var(--accent);
     }
 
     /* Light mode - with black pill for used badge and iOS shadow */
@@ -115,8 +115,19 @@
       filter: invert(0);
     }
 
-    body.light-mode .payment-item img {
+    /* Payment icons: default filter for non-Shopee */
+    .payment-item img {
+      transition: filter 0.2s ease;
+    }
+    /* Shopee icon always orange - no inversion in any mode */
+    .payment-item img[alt="Shopee"] {
+      filter: none !important;
+    }
+    body.light-mode .payment-item img:not([alt="Shopee"]) {
       filter: invert(0);
+    }
+    body:not(.light-mode) .payment-item img:not([alt="Shopee"]) {
+      filter: invert(1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -285,7 +296,7 @@
       100% { transform: rotate(4deg); }
     }
 
-    /* ===== HEADER - NO GLOW ON HOVER ===== */
+    /* ===== HEADER - with logo image ===== */
     header {
       position: sticky;
       top: 0;
@@ -310,27 +321,13 @@
       align-items: center;
       justify-content: space-between;
     }
-    .logo {
-      font-family: 'Clash Display', sans-serif;
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: -0.5px;
+
+    .logo img {
+      height: 40px;
+      width: auto;
+      display: block;
     }
 
-    @media (min-width: 768px) {
-      .logo {
-        font-size: 24px;
-      }
-    }
-
-    .logo span:first-child {
-      color: var(--text);
-      transition: color 0.2s ease;
-    }
-    .logo span:last-child {
-      color: var(--accent);
-      transition: color 0.2s ease;
-    }
     .header-logos {
       display: flex;
       gap: 12px;
@@ -356,11 +353,9 @@
       }
     }
 
-    /* NO GLOW ON HOVER - only opacity change */
     .header-logos img:hover {
       opacity: 1;
       transform: translateY(-2px);
-      /* removed drop-shadow */
     }
 
     /* ===== BANNER ===== */
@@ -679,12 +674,10 @@
       }
     }
 
-    /* NO GLOW ON HOVER - only background and color change */
     .social-link:hover {
       background: var(--accent);
       border-color: var(--accent);
       transform: translateY(-4px);
-      /* removed box-shadow */
     }
     .social-link:hover img {
       opacity: 1;
@@ -791,7 +784,7 @@
       color: #000;
       border: none;
       padding: 14px 0;
-      border-radius: 0; /* square corners */
+      border-radius: 0;
       font-weight: 700;
       font-size: 15px;
       transition: var(--transition);
@@ -986,7 +979,6 @@
       box-shadow: var(--card-shadow);
     }
 
-    /* Dark mode - no glow (variables set to none) */
     body:not(.light-mode) .product-card {
       box-shadow: var(--card-glow-dark);
     }
@@ -1003,7 +995,6 @@
       border-color: var(--accent);
     }
 
-    /* Light mode - remove shadow from stock cards only */
     body.light-mode .product-card {
       box-shadow: none;
     }
@@ -1155,7 +1146,7 @@
       }
     }
 
-    /* ===== PREORDER CARDS (PC & CONSOLE) - INCREASED POPUP ===== */
+    /* ===== PREORDER CARDS (PC & CONSOLE) ===== */
     .hot-card {
       position: relative;
       border-radius: 20px;
@@ -1169,7 +1160,6 @@
       box-shadow: var(--card-shadow);
     }
 
-    /* Dark mode - no glow (variables set to none) */
     body:not(.light-mode) .hot-card {
       box-shadow: var(--card-glow-dark-hot);
     }
@@ -1180,11 +1170,20 @@
       }
     }
 
-    /* Hover popup - increased scale and glow */
+    /* Hover effect - glow only in dark mode */
     .hot-card:hover {
       transform: scale(1.08) translateY(-8px);
-      box-shadow: var(--hover-glow), 0 20px 40px rgba(0,0,0,0.4);
       z-index: 10;
+    }
+
+    /* Dark mode hover glow */
+    body:not(.light-mode) .hot-card:hover {
+      box-shadow: var(--hover-glow), 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    /* Light mode hover - no glow */
+    body.light-mode .hot-card:hover {
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1); /* subtle shadow but no glow */
     }
 
     .hot-card img {
@@ -1447,18 +1446,6 @@
       }
     }
 
-    .payment-item img {
-      height: 24px;
-      filter: invert(1);
-      transition: filter 0.2s ease;
-    }
-
-    @media (min-width: 768px) {
-      .payment-item img {
-        height: 28px;
-      }
-    }
-
     footer {
       text-align: center;
       padding: 30px 20px;
@@ -1475,7 +1462,7 @@
       }
     }
 
-    /* Lightbox - image fits viewport but zoomable */
+    /* Lightbox */
     #imageModal {
       position: fixed;
       inset: 0;
@@ -1487,7 +1474,7 @@
       justify-content: center;
       cursor: zoom-out;
       padding: 0;
-      overflow: auto; /* enable scrolling/pinch zoom */
+      overflow: auto;
       -webkit-overflow-scrolling: touch;
     }
     #imageModal.show {
@@ -1496,7 +1483,7 @@
     #modalImg {
       width: auto;
       height: auto;
-      max-width: 90vw;      /* fit within viewport */
+      max-width: 90vw;
       max-height: 90vh;
       display: block;
       margin: auto;
@@ -1563,7 +1550,8 @@
 <header>
   <div class="header-inner">
     <div class="logo">
-      <span>FAZ</span><span>GAME</span>
+      <!-- Replace with your actual logo file -->
+      <img src="images/logo.png" alt="FAZGAME" style="height: 40px; width: auto;">
     </div>
     <div class="header-logos">
       <img src="https://api.iconify.design/simple-icons/playstation.svg" alt="PlayStation">
