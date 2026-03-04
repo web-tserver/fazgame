@@ -1298,6 +1298,19 @@
       }
     }
 
+    .hot-card:hover {
+      transform: scale(1.05) translateY(-5px);
+      z-index: 10;
+    }
+
+    body:not(.light-mode) .hot-card:hover {
+      box-shadow: var(--hover-glow), 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    body.light-mode .hot-card:hover {
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+
     .hot-card img {
       width: 100%;
       height: 100%;
@@ -1376,6 +1389,11 @@
       padding: 3px 8px;  /* matching badge */
     }
 
+    .hot-card .reserve-btn:hover {
+      background: var(--accent-dark);
+      transform: scale(1.05);
+    }
+
     @media (min-width: 768px) {
       .hot-card-content {
         padding: 24px;
@@ -1392,44 +1410,67 @@
       }
     }
 
-    /* All hover effects for .hot-card are restricted to devices that support hover (desktops) */
-    @media (hover: hover) and (pointer: fine) {
-      .hot-card:hover {
-        transform: scale(1.05) translateY(-5px);
-        z-index: 10;
+    .hot-card:hover .hot-title {
+      transform: translateY(-2px);
+      transition: transform 0.2s ease;
+    }
+    .hot-card:hover .hot-desc,
+    .hot-card:hover .reserve-btn {
+      transform: translateY(-2px);
+      transition: transform 0.2s ease 0.05s;
+    }
+    .hot-card .reserve-btn {
+      transform: none;
+    }
+
+    .hot-card::after {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -150%;
+      width: 70%;
+      height: 200%;
+      background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.5) 48%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.5) 52%, rgba(255,255,255,0.05) 65%, transparent 100%);
+      transform: skewX(-25deg);
+      z-index: 6;
+      pointer-events: none;
+      opacity: 0;
+      filter: blur(1px);
+    }
+    .hot-card:hover::after {
+      animation: metallicShine 0.7s forwards;
+      opacity: 1;
+    }
+    @keyframes metallicShine {
+      to { left: 180%; }
+    }
+    .hot-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 5;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.2), transparent 60%);
+    }
+    .hot-card:hover::before {
+      opacity: 1;
+    }
+
+    /* ===== OPTIMIZATIONS FOR MOBILE ===== */
+    /* Disable metallic shine animation on touch devices (phones/tablets) */
+    @media (hover: none) and (pointer: coarse) {
+      .hot-card::after {
+        display: none !important;
       }
-      body:not(.light-mode) .hot-card:hover {
-        box-shadow: var(--hover-glow), 0 20px 40px rgba(0,0,0,0.4);
-      }
-      body.light-mode .hot-card:hover {
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      }
-      .hot-card:hover .hot-title {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease;
-      }
-      .hot-card:hover .hot-desc,
-      .hot-card:hover .reserve-btn {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease 0.05s;
-      }
-      .hot-card .reserve-btn:hover {
-        background: var(--accent-dark);
-        transform: scale(1.05);
-      }
-      .hot-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        z-index: 5;
-        background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.2), transparent 60%);
-      }
-      .hot-card:hover::before {
-        opacity: 1;
+    }
+
+    /* Pause lamp animation on mobile for performance */
+    @media (max-width: 768px) {
+      .lamp-wrap {
+        animation-play-state: paused;
       }
     }
 
@@ -1937,7 +1978,7 @@
   <div class="hot-grid">
     <div class="hot-card">
       <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/pc1000.jpg" alt="PC Budget RM1000" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM1000';">
+      <img src="images/pc1000.webp" alt="PC Budget RM1000" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM1000';">
       <div class="hot-card-content">
         <div class="hot-title">PC Budget RM1,000+</div>
         <div class="hot-desc">Entry Gaming</div>
@@ -1945,7 +1986,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/pc2000.jpg" alt="PC Budget RM2000" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM2000';">
+      <img src="images/pc2000.webp" alt="PC Budget RM2000" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM2000';">
       <div class="hot-card-content">
         <div class="hot-title">PC Budget RM2,000+</div>
         <div class="hot-desc">Entry Gaming</div>
@@ -1953,7 +1994,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/pc3000.jpg" alt="PC Budget RM3000" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM3000';">
+      <img src="images/pc3000.webp" alt="PC Budget RM3000" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM3000';">
       <div class="hot-card-content">
         <div class="hot-title">PC Budget RM3,000+</div>
         <div class="hot-desc">Balanced Build</div>
@@ -1961,7 +2002,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/pc3500.jpg" alt="PC Budget RM3500" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM3500';">
+      <img src="images/pc3500.webp" alt="PC Budget RM3500" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM3500';">
       <div class="hot-card-content">
         <div class="hot-title">PC Budget RM3,500+</div>
         <div class="hot-desc">High Performance</div>
@@ -1969,7 +2010,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/custompc.jpg" alt="Custom PC" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Custom+PC';">
+      <img src="images/custompc.webp" alt="Custom PC" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Custom+PC';">
       <div class="hot-card-content">
         <div class="hot-title">Custom PC</div>
         <div class="hot-desc">Free Setup</div>
@@ -1988,7 +2029,7 @@
     <!-- Console cards with RESERVE button -->
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/ps4-slim.jpg" alt="PS4 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Slim';">
+      <img src="images/ps4-slim.webp" alt="PS4 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Slim';">
       <div class="hot-card-content">
         <div class="hot-title">PS4 Slim 500GB</div>
         <div class="hot-price-row">
@@ -1999,7 +2040,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/ps4-pro.jpg" alt="PS4 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Pro';">
+      <img src="images/ps4-pro.webp" alt="PS4 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Pro';">
       <div class="hot-card-content">
         <div class="hot-title">PS4 Pro 1TB</div>
         <div class="hot-price-row">
@@ -2010,7 +2051,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/ps5-fat.jpg" alt="PS5 Fat" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Fat';">
+      <img src="images/ps5-fat.webp" alt="PS5 Fat" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Fat';">
       <div class="hot-card-content">
         <div class="hot-title">PS5 Fat Disc</div>
         <div class="hot-price-row">
@@ -2021,7 +2062,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/ps5-slim.jpg" alt="PS5 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Slim';">
+      <img src="images/ps5-slim.webp" alt="PS5 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Slim';">
       <div class="hot-card-content">
         <div class="hot-title">PS5 Slim Disc</div>
         <div class="hot-price-row">
@@ -2032,7 +2073,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/ps5-pro.jpg" alt="PS5 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Pro';">
+      <img src="images/ps5-pro.webp" alt="PS5 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Pro';">
       <div class="hot-card-content">
         <div class="hot-title">PS5 Pro Digital</div>
         <div class="hot-price-row">
@@ -2043,7 +2084,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/switch-lite.jpg" alt="Switch Lite" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+Lite';">
+      <img src="images/switch-lite.webp" alt="Switch Lite" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+Lite';">
       <div class="hot-card-content">
         <div class="hot-title">Switch Lite</div>
         <div class="hot-price-row">
@@ -2054,7 +2095,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/switch-oled-white.jpg" alt="Switch OLED White" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+White';">
+      <img src="images/switch-oled-white.webp" alt="Switch OLED White" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+White';">
       <div class="hot-card-content">
         <div class="hot-title">Switch OLED White</div>
         <div class="hot-price-row">
@@ -2065,7 +2106,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/switch-oled-neon.jpg" alt="Switch OLED Neon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+Neon';">
+      <img src="images/switch-oled-neon.webp" alt="Switch OLED Neon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+Neon';">
       <div class="hot-card-content">
         <div class="hot-title">Switch OLED Neon</div>
         <div class="hot-price-row">
@@ -2076,7 +2117,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/switch-zelda.jpg" alt="Switch OLED Zelda" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Zelda+OLED';">
+      <img src="images/switch-zelda.webp" alt="Switch OLED Zelda" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Zelda+OLED';">
       <div class="hot-card-content">
         <div class="hot-title">Switch OLED Zelda</div>
         <div class="hot-price-row">
@@ -2087,7 +2128,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/switch-splatoon.jpg" alt="Switch OLED Splatoon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Splatoon+OLED';">
+      <img src="images/switch-splatoon.webp" alt="Switch OLED Splatoon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Splatoon+OLED';">
       <div class="hot-card-content">
         <div class="hot-title">Switch OLED Splatoon</div>
         <div class="hot-price-row">
@@ -2098,7 +2139,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/switch-mario.jpg" alt="Switch OLED Mario" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Mario+OLED';">
+      <img src="images/switch-mario.webp" alt="Switch OLED Mario" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Mario+OLED';">
       <div class="hot-card-content">
         <div class="hot-title">Switch OLED Mario</div>
         <div class="hot-price-row">
@@ -2109,7 +2150,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/switch-pokemon.jpg" alt="Switch OLED Pokemon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Pokemon+OLED';">
+      <img src="images/switch-pokemon.webp" alt="Switch OLED Pokemon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Pokemon+OLED';">
       <div class="hot-card-content">
         <div class="hot-title">Switch OLED Pokemon</div>
         <div class="hot-price-row">
@@ -2120,7 +2161,7 @@
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-      <img src="images/switch-2.jpg" alt="Switch 2" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+2';">
+      <img src="images/switch-2.webp" alt="Switch 2" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+2';">
       <div class="hot-card-content">
         <div class="hot-title">Switch 2 Edition</div>
         <div class="hot-price-row">
@@ -2218,7 +2259,7 @@
             <h4>${p.n}</h4>
             <div class="price-row">
               <span class="product-price">RM${p.p}</span>
-              <button class="product-buy" data-product-name="${p.n}">CHECK</button>
+              <button class="product-buy" data-product-name="${p.n}">CHECK STOCK</button>
             </div>
           </div>
         </div>`}).join('');
