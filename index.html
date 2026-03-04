@@ -61,7 +61,9 @@
     .floating-image,
     .social-link,
     .back-to-top,
-    .trade-btn {
+    .trade-btn,
+    .reserve-btn,
+    .product-buy {
       cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ffd84d" d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>') 12 0, pointer;
     }
 
@@ -74,7 +76,9 @@
       .floating-image,
       .social-link,
       .back-to-top,
-      .trade-btn {
+      .trade-btn,
+      .reserve-btn,
+      .product-buy {
         cursor: pointer;
       }
     }
@@ -195,6 +199,7 @@
       transition: filter 0.3s ease;
       transform: scale(0.8);
       transform-origin: top right;
+      user-select: none; /* prevent selection while dragging */
     }
 
     @media (min-width: 768px) {
@@ -219,12 +224,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: transform 0.1s ease; /* for smooth dragging */
     }
 
-    .theme-toggle:hover .lamp-wrap {
-      animation-play-state: paused;
-      transform: rotate(0deg) scale(1.02);
-      transition: 0.3s;
+    /* Dragging state – remove animation and allow free rotation */
+    .theme-toggle.dragging .lamp-wrap {
+      animation: none;
+      transition: none;
     }
 
     .wire {
@@ -601,6 +607,95 @@
       }
     }
 
+    /* ===== IMPROVED TAP TARGETS ===== */
+    .btn-primary,
+    .chip,
+    .social-link,
+    .reserve-btn,
+    .product-buy,
+    .back-to-top,
+    .trade-btn {
+      min-width: 44px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Active state scaling for touch feedback */
+    .btn-primary:active,
+    .chip:active,
+    .social-link:active,
+    .reserve-btn:active,
+    .product-buy:active,
+    .back-to-top:active,
+    .trade-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Ensure chips and social links have proper dimensions */
+    .chip {
+      padding: 10px 18px; /* already good */
+    }
+    .social-link {
+      width: 44px;
+      height: 44px;
+    }
+    .reserve-btn,
+    .product-buy {
+      padding: 8px 16px;
+    }
+    .back-to-top {
+      width: 50px;
+      height: 50px;
+    }
+    .trade-btn {
+      padding: 14px 36px;
+    }
+
+    /* RESERVE button animations */
+    .reserve-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .reserve-btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s;
+    }
+    .reserve-btn:active::after {
+      width: 200px;
+      height: 200px;
+    }
+    /* Pulse animation on hover */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .reserve-btn:hover {
+      animation: pulse 0.6s infinite;
+    }
+    /* Click effect – scale and checkmark */
+    .reserve-btn.clicked {
+      animation: clickPop 0.3s ease;
+    }
+    @keyframes clickPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+    /* Optional checkmark simulation (we'll use JavaScript to add a class and change text) */
+
+    /* Service chips */
     .service-chips {
       display: flex;
       flex-wrap: wrap;
@@ -618,12 +713,10 @@
     .chip {
       background: rgba(128, 128, 128, 0.1);
       border: 1px solid var(--border-color);
-      padding: 8px 16px;
       border-radius: 60px;
       font-size: 13px;
       font-weight: 500;
       color: var(--text);
-      transition: var(--transition);
       backdrop-filter: blur(8px);
     }
 
@@ -706,35 +799,16 @@
     }
 
     .social-link {
-      width: 40px;
-      height: 40px;
       border-radius: 50%;
       background: rgba(128, 128, 128, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       border: 1px solid var(--border-color);
-      transition: var(--transition);
-    }
-
-    @media (min-width: 768px) {
-      .social-link {
-        width: 46px;
-        height: 46px;
-      }
     }
 
     .social-link img {
-      width: 18px;
+      width: 20px;
       filter: invert(1);
       opacity: 0.6;
       transition: var(--transition);
-    }
-
-    @media (min-width: 768px) {
-      .social-link img {
-        width: 20px;
-      }
     }
 
     .social-link:hover {
@@ -850,10 +924,8 @@
       border-radius: 0;
       font-weight: 700;
       font-size: 15px;
-      transition: var(--transition);
       box-shadow: 0 10px 30px -10px rgba(255,216,77,0.3);
       border: 1px solid rgba(255,216,77,0.3);
-      text-decoration: none;
     }
 
     @media (min-width: 768px) {
@@ -970,6 +1042,7 @@
       font-size: 12px;
       font-weight: 600;
       transition: var(--transition);
+      min-height: 44px; /* tap target */
     }
 
     @media (min-width: 768px) {
@@ -1149,7 +1222,6 @@
       border-radius: 8px;
       font-weight: 800;
       font-size: 11px;
-      transition: var(--transition);
       display: inline-block;
     }
 
@@ -1310,7 +1382,6 @@
       border-radius: 8px;
       font-weight: 800;
       font-size: 11px;
-      transition: var(--transition);
       pointer-events: auto;
       cursor: pointer;
       z-index: 10;
@@ -1786,10 +1857,10 @@
 <!-- Lightbox Modal -->
 <div id="imageModal"><img id="modalImg" src="" alt="Preview"></div>
 
-<!-- Premium 3D Swing Lamp -->
+<!-- Premium 3D Swing Lamp (draggable) -->
 <div class="theme-toggle" id="themeToggle">
   <div class="lamp-scene">
-    <div class="lamp-wrap">
+    <div class="lamp-wrap" id="lampWrap">
       <div class="wire"></div>
       <div class="lamp-head">
         <div class="bulb"></div>
@@ -2232,6 +2303,12 @@
 
     const reserveBtn = e.target.closest('.reserve-btn');
     if (reserveBtn) {
+      // Animate the button
+      reserveBtn.classList.add('clicked');
+      setTimeout(() => {
+        reserveBtn.classList.remove('clicked');
+      }, 300);
+
       const consoleName = reserveBtn.getAttribute('data-console');
       if (consoleName) {
         const phone = "60163691936";
@@ -2239,6 +2316,77 @@
         window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`, '_blank');
       }
     }
+  });
+
+  // ===== 3D LAMP DRAGGING =====
+  const lampToggle = document.getElementById('themeToggle');
+  const lampWrap = document.getElementById('lampWrap');
+  let isDragging = false;
+  let startX, startY, currentRotateX = 0, currentRotateY = 0;
+
+  lampToggle.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    isDragging = true;
+    lampToggle.classList.add('dragging');
+    startX = e.clientX;
+    startY = e.clientY;
+    // Get current rotation (if any)
+    const transform = lampWrap.style.transform;
+    if (transform) {
+      const match = transform.match(/rotateX\(([-\d.]+)deg\) rotateY\(([-\d.]+)deg\)/);
+      if (match) {
+        currentRotateX = parseFloat(match[1]);
+        currentRotateY = parseFloat(match[2]);
+      }
+    }
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - startX;
+    const deltaY = e.clientY - startY;
+    // Map mouse movement to rotation (sensitivity factor)
+    const rotateY = currentRotateY + deltaX * 0.5;
+    const rotateX = currentRotateX - deltaY * 0.5; // invert Y for natural feel
+    lampWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      lampToggle.classList.remove('dragging');
+    }
+  });
+
+  // Touch support for mobile
+  lampToggle.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    isDragging = true;
+    lampToggle.classList.add('dragging');
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    const transform = lampWrap.style.transform;
+    if (transform) {
+      const match = transform.match(/rotateX\(([-\d.]+)deg\) rotateY\(([-\d.]+)deg\)/);
+      if (match) {
+        currentRotateX = parseFloat(match[1]);
+        currentRotateY = parseFloat(match[2]);
+      }
+    }
+  });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.touches[0].clientX - startX;
+    const deltaY = e.touches[0].clientY - startY;
+    const rotateY = currentRotateY + deltaX * 0.5;
+    const rotateX = currentRotateX - deltaY * 0.5;
+    lampWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  window.addEventListener('touchend', () => {
+    isDragging = false;
+    lampToggle.classList.remove('dragging');
   });
 
   // ===== 3D TILT EFFECT =====
@@ -2371,7 +2519,9 @@
     }
   });
 
-  themeToggle.addEventListener('click', () => {
+  themeToggle.addEventListener('click', (e) => {
+    // Only toggle theme if not dragging
+    if (isDragging) return;
     const lampWrap = document.querySelector('.lamp-wrap');
     lampWrap.style.transition = 'transform 0.1s';
     lampWrap.style.transform = 'rotate(0deg) scale(0.98)';
@@ -2388,6 +2538,17 @@
       localStorage.setItem('theme', 'dark');
     }
   });
+
+  // ===== SERVICE WORKER REGISTRATION =====
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').then(registration => {
+        console.log('ServiceWorker registered with scope:', registration.scope);
+      }).catch(error => {
+        console.log('ServiceWorker registration failed:', error);
+      });
+    });
+  }
 </script>
 </body>
 </html>
