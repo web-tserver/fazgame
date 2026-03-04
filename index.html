@@ -636,11 +636,11 @@
       height: 44px;
     }
 
-    /* ===== BUTTONS WITH REDUCED PADDING ===== */
+    /* ===== BUTTONS AS COMPACT AS BADGES ===== */
     .reserve-btn,
     .product-buy {
-      padding: 2px 8px;        /* smaller vertical padding */
-      border-radius: 6px;
+      padding: 3px 8px;        /* matching badge padding */
+      border-radius: 8px;
       font-weight: 800;
       font-size: 11px;
     }
@@ -651,6 +651,11 @@
     }
     .trade-btn {
       padding: 14px 36px;
+    }
+
+    /* Badge padding reference */
+    .card-badge {
+      padding: 3px 8px;
     }
 
     /* RESERVE button animations */
@@ -1209,12 +1214,12 @@
       }
     }
 
-    /* CHECK button uses same reduced padding */
+    /* CHECK button uses same compact padding */
     .product-buy {
       background: var(--accent);
       color: #000;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: 800;
       font-size: 11px;
       display: inline-block;
@@ -1373,7 +1378,7 @@
       background: var(--accent);
       color: #000;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: 800;
       font-size: 11px;
       pointer-events: auto;
@@ -1381,7 +1386,7 @@
       z-index: 10;
       position: relative;
       white-space: nowrap;
-      padding: 2px 8px;  /* reduced */
+      padding: 3px 8px;  /* matching badge */
     }
 
     .hot-card .reserve-btn:hover {
@@ -1401,7 +1406,7 @@
       }
       .hot-card .reserve-btn {
         font-size: 13px;
-        padding: 4px 14px; /* slightly taller on desktop but still compact */
+        padding: 4px 12px; /* slightly larger on desktop but still compact */
       }
     }
 
