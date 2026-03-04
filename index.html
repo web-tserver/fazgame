@@ -189,7 +189,7 @@
     }
     a { text-decoration: none; color: inherit; }
 
-    /* ===== PREMIUM 3D SWING LAMP ===== */
+    /* ===== PREMIUM 3D SWING LAMP - CLICKABLE ONLY ===== */
     .theme-toggle {
       position: fixed;
       top: 70px;
@@ -199,7 +199,7 @@
       transition: filter 0.3s ease;
       transform: scale(0.8);
       transform-origin: top right;
-      user-select: none; /* prevent selection while dragging */
+      cursor: pointer;
     }
 
     @media (min-width: 768px) {
@@ -224,13 +224,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: transform 0.1s ease; /* for smooth dragging */
-    }
-
-    /* Dragging state – remove animation and allow free rotation */
-    .theme-toggle.dragging .lamp-wrap {
-      animation: none;
-      transition: none;
+      transition: transform 0.1s ease;
     }
 
     .wire {
@@ -634,7 +628,6 @@
       transform: scale(0.97);
     }
 
-    /* Ensure chips and social links have proper dimensions */
     .chip {
       padding: 10px 18px;
     }
@@ -642,9 +635,13 @@
       width: 44px;
       height: 44px;
     }
+    /* RESERVE button height reduced */
     .reserve-btn,
     .product-buy {
-      padding: 8px 16px;
+      padding: 4px 12px; /* reduced vertical padding */
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 11px;
     }
     .back-to-top {
       width: 50px;
@@ -675,7 +672,6 @@
       width: 200px;
       height: 200px;
     }
-    /* Pulse animation on hover */
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
@@ -684,7 +680,6 @@
     .reserve-btn:hover {
       animation: pulse 0.6s infinite;
     }
-    /* Click effect – scale */
     .reserve-btn.clicked {
       animation: clickPop 0.3s ease;
     }
@@ -694,7 +689,6 @@
       100% { transform: scale(1); }
     }
 
-    /* Service chips */
     .service-chips {
       display: flex;
       flex-wrap: wrap;
@@ -1217,7 +1211,7 @@
       background: var(--accent);
       color: #000;
       border: none;
-      padding: 6px 12px;
+      padding: 4px 12px; /* reduced height */
       border-radius: 8px;
       font-weight: 800;
       font-size: 11px;
@@ -1377,7 +1371,7 @@
       background: var(--accent);
       color: #000;
       border: none;
-      padding: 6px 12px;
+      padding: 4px 12px; /* reduced height */
       border-radius: 8px;
       font-weight: 800;
       font-size: 11px;
@@ -1405,7 +1399,7 @@
       }
       .hot-card .reserve-btn {
         font-size: 13px;
-        padding: 8px 16px;
+        padding: 6px 16px; /* slightly taller on desktop */
       }
     }
 
@@ -1835,7 +1829,7 @@
       .product-card { padding: 14px 10px; }
       .product-info h4 { font-size: 13px; }
       .product-price { font-size: 15px; }
-      .product-buy { padding: 5px 10px; font-size: 10px; }
+      .product-buy { padding: 4px 8px; font-size: 10px; }
       .card-badge { font-size: 8px; padding: 2px 6px; }
     }
   </style>
@@ -1856,7 +1850,7 @@
 <!-- Lightbox Modal -->
 <div id="imageModal"><img id="modalImg" src="" alt="Preview"></div>
 
-<!-- Premium 3D Swing Lamp (draggable) -->
+<!-- Premium 3D Swing Lamp (clickable only) -->
 <div class="theme-toggle" id="themeToggle">
   <div class="lamp-scene">
     <div class="lamp-wrap" id="lampWrap">
@@ -2005,7 +1999,7 @@
 
 <div class="installment-banner reveal">💳 0% Interest Installment Available • SPayLater</div>
 
-<!-- Preorder Consoles (original styling, no background) -->
+<!-- Preorder Consoles -->
 <section id="preorder-console" class="reveal">
   <h2 class="section-title">Preorder Consoles</h2>
   <div class="section-subtitle">🎮 Used Units • Reserve Before Stock Arrival</div>
@@ -2317,137 +2311,6 @@
     }
   });
 
-  // ===== 3D LAMP DRAGGING WITH MOBILE FIX =====
-  const lampToggle = document.getElementById('themeToggle');
-  const lampWrap = document.getElementById('lampWrap');
-  let isDragging = false;
-  let dragThreshold = 5; // pixels
-  let dragStarted = false;
-  let startX, startY, currentRotateX = 0, currentRotateY = 0;
-
-  // Mouse events
-  lampToggle.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-    startX = e.clientX;
-    startY = e.clientY;
-    currentRotateX = parseFloat(lampWrap.style.transform?.match(/rotateX\(([-\d.]+)deg/)?.[1]) || 0;
-    currentRotateY = parseFloat(lampWrap.style.transform?.match(/rotateY\(([-\d.]+)deg/)?.[1]) || 0;
-    dragStarted = false;
-  });
-
-  window.addEventListener('mousemove', (e) => {
-    if (startX === undefined) return;
-    const deltaX = e.clientX - startX;
-    const deltaY = e.clientY - startY;
-    if (!dragStarted && (Math.abs(deltaX) > dragThreshold || Math.abs(deltaY) > dragThreshold)) {
-      dragStarted = true;
-      lampToggle.classList.add('dragging');
-    }
-    if (dragStarted) {
-      const rotateY = currentRotateY + deltaX * 0.5;
-      const rotateX = currentRotateX - deltaY * 0.5;
-      lampWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    }
-  });
-
-  window.addEventListener('mouseup', () => {
-    if (dragStarted) {
-      isDragging = true; // we were dragging
-    } else {
-      isDragging = false;
-    }
-    startX = undefined;
-    startY = undefined;
-    lampToggle.classList.remove('dragging');
-    // Reset isDragging after a short delay so click handler can check
-    setTimeout(() => { isDragging = false; }, 100);
-  });
-
-  // Touch events for mobile
-  lampToggle.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    currentRotateX = parseFloat(lampWrap.style.transform?.match(/rotateX\(([-\d.]+)deg/)?.[1]) || 0;
-    currentRotateY = parseFloat(lampWrap.style.transform?.match(/rotateY\(([-\d.]+)deg/)?.[1]) || 0;
-    dragStarted = false;
-  });
-
-  window.addEventListener('touchmove', (e) => {
-    if (startX === undefined) return;
-    const deltaX = e.touches[0].clientX - startX;
-    const deltaY = e.touches[0].clientY - startY;
-    if (!dragStarted && (Math.abs(deltaX) > dragThreshold || Math.abs(deltaY) > dragThreshold)) {
-      dragStarted = true;
-      lampToggle.classList.add('dragging');
-    }
-    if (dragStarted) {
-      e.preventDefault(); // prevent page scroll while dragging
-      const rotateY = currentRotateY + deltaX * 0.5;
-      const rotateX = currentRotateX - deltaY * 0.5;
-      lampWrap.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    }
-  });
-
-  window.addEventListener('touchend', () => {
-    if (dragStarted) {
-      isDragging = true;
-    } else {
-      isDragging = false;
-    }
-    startX = undefined;
-    startY = undefined;
-    lampToggle.classList.remove('dragging');
-    setTimeout(() => { isDragging = false; }, 100);
-  });
-
-  // ===== THEME TOGGLE WITH AUTO DETECTION =====
-  const themeToggle = document.getElementById('themeToggle');
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    if (savedTheme === 'light') {
-      document.body.classList.add('light-mode');
-    }
-  } else {
-    const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-    if (systemPrefersLight) {
-      document.body.classList.add('light-mode');
-      localStorage.setItem('theme', 'light');
-    } else {
-      localStorage.setItem('theme', 'dark');
-    }
-  }
-
-  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
-    if (!localStorage.getItem('theme')) {
-      if (e.matches) {
-        document.body.classList.add('light-mode');
-      } else {
-        document.body.classList.remove('light-mode');
-      }
-    }
-  });
-
-  themeToggle.addEventListener('click', (e) => {
-    // Ignore if this was a drag
-    if (isDragging) return;
-    const lampWrap = document.querySelector('.lamp-wrap');
-    lampWrap.style.transition = 'transform 0.1s';
-    lampWrap.style.transform = 'rotate(0deg) scale(0.98)';
-    setTimeout(() => {
-      lampWrap.style.transform = '';
-      lampWrap.style.transition = '';
-    }, 150);
-
-    document.body.classList.toggle('light-mode');
-    
-    if (document.body.classList.contains('light-mode')) {
-      localStorage.setItem('theme', 'light');
-    } else {
-      localStorage.setItem('theme', 'dark');
-    }
-  });
-
   // ===== 3D TILT EFFECT =====
   const tiltCards = document.querySelectorAll('.hot-card');
   tiltCards.forEach(card => {
@@ -2549,6 +2412,54 @@
     const phone = "60163691936";
     const message = "Hi FAZGAME 👋 I would like to inquire about your products.";
     window.open("https://api.whatsapp.com/send?phone=" + phone + "&text=" + encodeURIComponent(message), '_blank');
+  });
+
+  // ===== THEME TOGGLE WITH AUTO DETECTION =====
+  const themeToggle = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('theme');
+  
+  // Set initial theme based on saved preference or system preference
+  if (savedTheme) {
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-mode');
+    }
+  } else {
+    const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    if (systemPrefersLight) {
+      document.body.classList.add('light-mode');
+    }
+  }
+
+  // Listen for system theme changes – only apply if user hasn't manually overridden
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+      if (e.matches) {
+        document.body.classList.add('light-mode');
+      } else {
+        document.body.classList.remove('light-mode');
+      }
+    }
+  });
+
+  themeToggle.addEventListener('click', () => {
+    // Add a quick pull effect
+    const lampWrap = document.querySelector('.lamp-wrap');
+    lampWrap.style.transition = 'transform 0.1s';
+    lampWrap.style.transform = 'rotate(0deg) scale(0.98)';
+    setTimeout(() => {
+      lampWrap.style.transform = '';
+      lampWrap.style.transition = '';
+    }, 150);
+
+    // Toggle theme
+    document.body.classList.toggle('light-mode');
+    
+    // Save preference
+    if (document.body.classList.contains('light-mode')) {
+      localStorage.setItem('theme', 'light');
+    } else {
+      localStorage.setItem('theme', 'dark');
+    }
   });
 
   // ===== SERVICE WORKER REGISTRATION =====
