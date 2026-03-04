@@ -1298,19 +1298,6 @@
       }
     }
 
-    .hot-card:hover {
-      transform: scale(1.05) translateY(-5px);
-      z-index: 10;
-    }
-
-    body:not(.light-mode) .hot-card:hover {
-      box-shadow: var(--hover-glow), 0 20px 40px rgba(0,0,0,0.4);
-    }
-
-    body.light-mode .hot-card:hover {
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    }
-
     .hot-card img {
       width: 100%;
       height: 100%;
@@ -1389,11 +1376,6 @@
       padding: 3px 8px;  /* matching badge */
     }
 
-    .hot-card .reserve-btn:hover {
-      background: var(--accent-dark);
-      transform: scale(1.05);
-    }
-
     @media (min-width: 768px) {
       .hot-card-content {
         padding: 24px;
@@ -1410,53 +1392,67 @@
       }
     }
 
-    .hot-card:hover .hot-title {
-      transform: translateY(-2px);
-      transition: transform 0.2s ease;
-    }
-    .hot-card:hover .hot-desc,
-    .hot-card:hover .reserve-btn {
-      transform: translateY(-2px);
-      transition: transform 0.2s ease 0.05s;
-    }
-    .hot-card .reserve-btn {
-      transform: none;
+    /* All hover effects for .hot-card are restricted to devices that support hover (desktops) */
+    @media (hover: hover) and (pointer: fine) {
+      .hot-card:hover {
+        transform: scale(1.05) translateY(-5px);
+        z-index: 10;
+      }
+      body:not(.light-mode) .hot-card:hover {
+        box-shadow: var(--hover-glow), 0 20px 40px rgba(0,0,0,0.4);
+      }
+      body.light-mode .hot-card:hover {
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      }
+      .hot-card:hover .hot-title {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+      .hot-card:hover .hot-desc,
+      .hot-card:hover .reserve-btn {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease 0.05s;
+      }
+      .hot-card .reserve-btn:hover {
+        background: var(--accent-dark);
+        transform: scale(1.05);
+      }
+      .hot-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 5;
+        background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.2), transparent 60%);
+      }
+      .hot-card:hover::before {
+        opacity: 1;
+      }
+      .hot-card::after {
+        content: "";
+        position: absolute;
+        top: -40%;
+        left: -150%;
+        width: 70%;
+        height: 200%;
+        background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.5) 48%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.5) 52%, rgba(255,255,255,0.05) 65%, transparent 100%);
+        transform: skewX(-25deg);
+        z-index: 6;
+        pointer-events: none;
+        opacity: 0;
+        filter: blur(1px);
+      }
+      .hot-card:hover::after {
+        animation: metallicShine 0.7s forwards;
+        opacity: 1;
+      }
     }
 
-    .hot-card::after {
-      content: "";
-      position: absolute;
-      top: -40%;
-      left: -150%;
-      width: 70%;
-      height: 200%;
-      background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.5) 48%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.5) 52%, rgba(255,255,255,0.05) 65%, transparent 100%);
-      transform: skewX(-25deg);
-      z-index: 6;
-      pointer-events: none;
-      opacity: 0;
-      filter: blur(1px);
-    }
-    .hot-card:hover::after {
-      animation: metallicShine 0.7s forwards;
-      opacity: 1;
-    }
     @keyframes metallicShine {
       to { left: 180%; }
-    }
-    .hot-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 5;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.2), transparent 60%);
-    }
-    .hot-card:hover::before {
-      opacity: 1;
     }
 
     #fast-sales { display: none; }
