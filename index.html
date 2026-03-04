@@ -146,6 +146,7 @@
 
     body {
       transition: var(--theme-transition);
+      overflow-x: hidden; /* prevents horizontal scroll from full-width button */
     }
     body * {
       transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.2s ease;
@@ -868,11 +869,12 @@
       50% { opacity: 0.6; transform: scale(1.2); }
     }
 
+    /* ===== REDUCED GLOW ON FLOATING IMAGE ===== */
     .floating-image {
       width: 100%;
       max-width: 400px;
-      filter: drop-shadow(0 0 20px rgba(255,216,77,0.6)) drop-shadow(0 0 40px rgba(255,216,77,0.3));
-      animation: levitate 6s ease-in-out infinite, glowPulse 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 10px rgba(255,216,77,0.4)) drop-shadow(0 0 20px rgba(255,216,77,0.2));
+      animation: levitate 6s ease-in-out infinite, glowPulse 4s ease-in-out infinite;
       transform-origin: center;
       position: relative;
       z-index: 5;
@@ -883,12 +885,12 @@
     @media (min-width: 768px) {
       .floating-image {
         max-width: 650px;
-        filter: drop-shadow(0 0 30px rgba(255,216,77,0.8)) drop-shadow(0 0 60px rgba(255,216,77,0.4));
+        filter: drop-shadow(0 0 15px rgba(255,216,77,0.5)) drop-shadow(0 0 30px rgba(255,216,77,0.25));
       }
     }
 
     body.light-mode .floating-image {
-      filter: drop-shadow(0 0 20px rgba(234,179,8,0.3)) drop-shadow(0 0 40px rgba(234,179,8,0.15));
+      filter: drop-shadow(0 0 10px rgba(234,179,8,0.2)) drop-shadow(0 0 20px rgba(234,179,8,0.1));
     }
 
     @keyframes levitate {
@@ -897,20 +899,19 @@
       100% { transform: translateY(0) rotate(0deg); }
     }
     @keyframes glowPulse {
-      0%, 100% { filter: drop-shadow(0 0 20px rgba(255,216,77,0.6)) drop-shadow(0 0 40px rgba(255,216,77,0.3)); }
-      50% { filter: drop-shadow(0 0 30px rgba(255,216,77,0.8)) drop-shadow(0 0 60px rgba(255,216,77,0.5)); }
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(255,216,77,0.4)) drop-shadow(0 0 20px rgba(255,216,77,0.2)); }
+      50% { filter: drop-shadow(0 0 15px rgba(255,216,77,0.6)) drop-shadow(0 0 30px rgba(255,216,77,0.3)); }
     }
 
-    /* ===== FULL-WIDTH WHATSAPP BUTTON - NO ROUND CORNERS ===== */
+    /* ===== FULL-WIDTH WHATSAPP BUTTON - NO GAPS ===== */
     .sticky-cta {
       position: sticky;
       top: 70px;
       z-index: 900;
       background: transparent;
-      padding: 12px 16px;
+      padding: 12px 0;        /* removed left/right padding */
       text-align: center;
       width: 100%;
-      max-width: none;
       margin: 0;
     }
 
@@ -926,6 +927,7 @@
       font-size: 15px;
       box-shadow: 0 10px 30px -10px rgba(255,216,77,0.3);
       border: 1px solid rgba(255,216,77,0.3);
+      max-width: none;        /* ensure no max-width restriction */
     }
 
     @media (min-width: 768px) {
@@ -1406,7 +1408,7 @@
       }
       .hot-card .reserve-btn {
         font-size: 13px;
-        padding: 4px 12px; /* slightly larger on desktop but still compact */
+        padding: 4px 12px;
       }
     }
 
@@ -1471,6 +1473,14 @@
     @media (max-width: 768px) {
       .lamp-wrap {
         animation-play-state: paused;
+      }
+    }
+
+    /* Faster reveal animation on mobile */
+    @media (max-width: 768px) {
+      .reveal {
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        transform: translateY(15px);
       }
     }
 
@@ -1963,7 +1973,7 @@
   </div>
 </div>
 
-<!-- Sticky CTA -->
+<!-- Sticky CTA - full width, no gaps -->
 <div class="sticky-cta">
   <button id="cta-whatsapp" class="btn-primary">Chat on WhatsApp</button>
 </div>
