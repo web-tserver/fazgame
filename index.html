@@ -1309,6 +1309,37 @@
       opacity: 1;
     }
 
+    /* ===== PREORDER BUTTON FOR CONSOLE CARDS ===== */
+    .hot-card .preorder-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 11px;
+      transition: var(--transition);
+      display: inline-block;
+      margin-top: 8px;
+      pointer-events: auto; /* override parent's pointer-events: none */
+      cursor: pointer;
+      z-index: 10;
+      position: relative;
+    }
+
+    .hot-card .preorder-btn:hover {
+      background: var(--accent-dark);
+      transform: scale(1.05);
+    }
+
+    /* Ensure button appears above gradient */
+    .hot-card .hot-card-content {
+      pointer-events: none; /* keep text non-interactive */
+    }
+    .hot-card .hot-card-content .preorder-btn {
+      pointer-events: auto;
+    }
+
     #fast-sales { display: none; }
 
     .installment-banner {
@@ -1546,7 +1577,7 @@
     }
 
     #preloader .preloader-logo {
-      width: 100px;  /* increased from 80px */
+      width: 100px;
       height: auto;
       margin-bottom: 15px;
       display: block;
@@ -1763,71 +1794,123 @@
   <h2 class="section-title">Preorder Consoles</h2>
   <div class="section-subtitle">🎮 Used Units • Reserve Before Stock Arrival</div>
   <div class="hot-grid">
-    <!-- console cards (lightbox disabled) -->
+    <!-- console cards with PREORDER button -->
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/ps4-slim.jpg" alt="PS4 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Slim';">
-      <div class="hot-card-content"><div class="hot-title">PS4 Slim 500GB</div><div class="hot-desc">RM550</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">PS4 Slim 500GB</div>
+        <div class="hot-desc">RM550</div>
+        <button class="preorder-btn" data-console="PS4 Slim 500GB">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/ps4-pro.jpg" alt="PS4 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Pro';">
-      <div class="hot-card-content"><div class="hot-title">PS4 Pro 1TB</div><div class="hot-desc">RM650</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">PS4 Pro 1TB</div>
+        <div class="hot-desc">RM650</div>
+        <button class="preorder-btn" data-console="PS4 Pro 1TB">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/ps5-fat.jpg" alt="PS5 Fat" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Fat';">
-      <div class="hot-card-content"><div class="hot-title">PS5 Fat Disc</div><div class="hot-desc">RM1450</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">PS5 Fat Disc</div>
+        <div class="hot-desc">RM1450</div>
+        <button class="preorder-btn" data-console="PS5 Fat Disc">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/ps5-slim.jpg" alt="PS5 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Slim';">
-      <div class="hot-card-content"><div class="hot-title">PS5 Slim Disc</div><div class="hot-desc">RM1650</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">PS5 Slim Disc</div>
+        <div class="hot-desc">RM1650</div>
+        <button class="preorder-btn" data-console="PS5 Slim Disc">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/ps5-pro.jpg" alt="PS5 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Pro';">
-      <div class="hot-card-content"><div class="hot-title">PS5 Pro Digital</div><div class="hot-desc">RM2750</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">PS5 Pro Digital</div>
+        <div class="hot-desc">RM2750</div>
+        <button class="preorder-btn" data-console="PS5 Pro Digital">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-lite.jpg" alt="Switch Lite" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+Lite';">
-      <div class="hot-card-content"><div class="hot-title">Switch Lite</div><div class="hot-desc">RM400</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">Switch Lite</div>
+        <div class="hot-desc">RM400</div>
+        <button class="preorder-btn" data-console="Switch Lite">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-oled-white.jpg" alt="Switch OLED White" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+White';">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED White</div><div class="hot-desc">RM750</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED White</div>
+        <div class="hot-desc">RM750</div>
+        <button class="preorder-btn" data-console="Switch OLED White">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-oled-neon.jpg" alt="Switch OLED Neon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+Neon';">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED Neon</div><div class="hot-desc">RM750</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Neon</div>
+        <div class="hot-desc">RM750</div>
+        <button class="preorder-btn" data-console="Switch OLED Neon">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-zelda.jpg" alt="Switch OLED Zelda" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Zelda+OLED';">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED Zelda</div><div class="hot-desc">RM850</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Zelda</div>
+        <div class="hot-desc">RM850</div>
+        <button class="preorder-btn" data-console="Switch OLED Zelda">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-splatoon.jpg" alt="Switch OLED Splatoon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Splatoon+OLED';">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED Splatoon</div><div class="hot-desc">RM850</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Splatoon</div>
+        <div class="hot-desc">RM850</div>
+        <button class="preorder-btn" data-console="Switch OLED Splatoon">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-mario.jpg" alt="Switch OLED Mario" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Mario+OLED';">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED Mario</div><div class="hot-desc">RM850</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Mario</div>
+        <div class="hot-desc">RM850</div>
+        <button class="preorder-btn" data-console="Switch OLED Mario">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-pokemon.jpg" alt="Switch OLED Pokemon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Pokemon+OLED';">
-      <div class="hot-card-content"><div class="hot-title">Switch OLED Pokemon</div><div class="hot-desc">RM850</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Pokemon</div>
+        <div class="hot-desc">RM850</div>
+        <button class="preorder-btn" data-console="Switch OLED Pokemon">PREORDER</button>
+      </div>
     </div>
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/switch-2.jpg" alt="Switch 2" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+2';">
-      <div class="hot-card-content"><div class="hot-title">Switch 2 Edition</div><div class="hot-desc">RM1700</div></div>
+      <div class="hot-card-content">
+        <div class="hot-title">Switch 2 Edition</div>
+        <div class="hot-desc">RM1700</div>
+        <button class="preorder-btn" data-console="Switch 2 Edition">PREORDER</button>
+      </div>
     </div>
   </div>
 </section>
@@ -1857,7 +1940,7 @@
 <!-- Load stock.js -->
 <script src="stock.js"></script>
 
-<!-- Main script with fixed CHECK button handler -->
+<!-- Main script with fixed CHECK button handler and PREORDER button handler -->
 <script>
   // ===== STOCK INVENTORY LOGIC =====
   let products = window.STOCK || [];
@@ -1902,7 +1985,6 @@
         const condColor = p.cond === 'new' ? 'var(--badge-new-text)' : 'var(--badge-used-text)';
         const typeClass = p.type === 'game' ? '#3cff7f' : 'var(--accent)';
         
-        // Note: onclick removed – will handle via event delegation
         return `
         <div class="product-card">
           <span class="card-badge card-badge-cond" style="background: ${condClass}; color: ${condColor};">${p.cond?.toUpperCase() || 'USED'}</span>
@@ -1935,6 +2017,17 @@
       if (productName) {
         const phone = "60163691936";
         const message = `Hi FAZGAME 👋 I would like to inquire about ${productName}.`;
+        window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`, '_blank');
+      }
+    }
+
+    // ===== HANDLE PREORDER BUTTONS =====
+    const preorderBtn = e.target.closest('.preorder-btn');
+    if (preorderBtn) {
+      const consoleName = preorderBtn.getAttribute('data-console');
+      if (consoleName) {
+        const phone = "60163691936";
+        const message = `Hi FAZGAME 👋 I would like to preorder ${consoleName}.`;
         window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`, '_blank');
       }
     }
