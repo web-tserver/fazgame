@@ -1678,10 +1678,10 @@
       box-shadow: 0 20px 30px -10px rgba(255,216,77,0.5);
     }
 
-    /* ===== 3D COVERFLOW SWIPER GALLERY (FIXED SIZE & OVERFLOW) ===== */
+    /* ===== 3D COVERFLOW SWIPER GALLERY (AUTO MARGIN) ===== */
     #gallery .swiper {
       width: 100%;
-      padding: 40px 30px 70px; /* Added horizontal padding to give room for 3D effect */
+      padding: 40px 5% 70px; /* Percentage-based horizontal padding - auto-adjusts to screen width */
       overflow: visible; /* Ensures the 3D effect isn't clipped */
       box-sizing: border-box;
     }
@@ -1763,7 +1763,7 @@
     /* Responsive adjustments */
     @media (max-width: 768px) {
       #gallery .swiper {
-        padding: 20px 20px 50px; /* Smaller horizontal padding on mobile */
+        padding: 20px 4% 50px; /* Slightly smaller percentage on tablets */
       }
       #gallery .swiper-slide {
         width: 250px;
@@ -1773,7 +1773,7 @@
 
     @media (max-width: 480px) {
       #gallery .swiper {
-        padding: 20px 15px 40px;
+        padding: 20px 3% 40px; /* Even smaller on phones, but still auto */
       }
       #gallery .swiper-slide {
         width: 200px;
@@ -2320,7 +2320,7 @@
   <h2 class="section-title">📸 Gallery</h2>
   <div class="section-subtitle">Immersive 3D • Gaming setups, events, and behind the scenes</div>
 
-  <!-- Swiper Container (padding added in CSS) -->
+  <!-- Swiper Container (padding now uses % for auto margins) -->
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
       <!-- Slide 1 - g1.webp -->
