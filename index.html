@@ -1372,6 +1372,25 @@
       opacity: 1;
     }
 
+    /* ===== PREORDER CONSOLE GRID – RESPONSIVE ===== */
+    .hot-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(3, 1fr); /* 3 columns on mobile by default */
+      margin: 0 auto;
+    }
+    @media (min-width: 600px) {
+      .hot-grid {
+        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      }
+    }
+    @media (min-width: 1200px) {
+      .hot-grid {
+        grid-template-columns: repeat(6, minmax(140px, 1fr));
+      }
+    }
+
     /* ===== OPTIMIZATIONS FOR MOBILE ===== */
     @media (hover: none) and (pointer: coarse) {
       .hot-card::after {
@@ -1446,19 +1465,6 @@
       section:not(#stock) .section-subtitle {
         font-size: 14px;
         margin-bottom: 30px;
-      }
-    }
-
-    .hot-grid {
-      display: grid;
-      gap: 14px;
-      grid-template-columns: repeat(2, 1fr);
-      margin: 0 auto;
-    }
-    @media (min-width: 600px) {
-      .hot-grid {
-        gap: 20px;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       }
     }
 
@@ -1730,7 +1736,7 @@
       }
     }
 
-    /* ===== PAYMENT SECTION WITH TRUST BADGES (FIXED ICONS) ===== */
+    /* ===== PAYMENT SECTION WITH TRUST BADGES ===== */
     .payment-icons {
       display: flex;
       justify-content: center;
@@ -1770,7 +1776,6 @@
       }
     }
 
-    /* Trust badges with emoji icons (always load) */
     .trust-badges {
       display: flex;
       justify-content: center;
@@ -2112,12 +2117,12 @@
 
 <div class="installment-banner reveal">0% Interest Installment Available • SPayLater</div>
 
-<!-- Preorder Consoles -->
+<!-- Preorder Consoles (13 cards – grid now 3 columns on mobile) -->
 <section id="preorder-console" class="reveal">
   <h2 class="section-title">Preorder Consoles</h2>
   <div class="section-subtitle">Used Units • Reserve Before Stock Arrival</div>
   <div class="hot-grid">
-    <!-- All console cards as before, but without scarcity badges or countdown -->
+    <!-- 13 console cards (unchanged) -->
     <div class="hot-card">
       <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/ps5-pro.webp" alt="PS5 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Pro';">
@@ -2350,7 +2355,7 @@
   </div>
 </section>
 
-<!-- Payment Methods with Fixed Trust Badges -->
+<!-- Payment Methods with Trust Badges -->
 <section id="payment" class="reveal">
   <h2 class="section-title" style="text-align:center">Payment Methods</h2>
   <div class="trust-badges">
@@ -2376,7 +2381,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-  // ===== STOCK INVENTORY LOGIC (same as before) =====
+  // ===== STOCK INVENTORY LOGIC =====
   let products = window.STOCK || [
     { n: "PS5 Digital Edition", p: "1850", c: "ps5", cond: "new", type: "console" },
     { n: "Xbox Series X", p: "2100", c: "xbox", cond: "new", type: "console" },
@@ -2541,7 +2546,7 @@
     });
   });
 
-  // ===== EVENT DELEGATION FOR CHECK, RESERVE, LIGHTBOX =====
+  // ===== EVENT DELEGATION =====
   document.addEventListener('click', function(e) {
     const button = e.target.closest('.product-buy');
     if (button) {
@@ -2583,7 +2588,7 @@
     }
   });
 
-  // ===== 3D TILT EFFECT FOR HOT CARDS =====
+  // ===== 3D TILT EFFECT =====
   const tiltCards = document.querySelectorAll('.hot-card');
   tiltCards.forEach(card => {
     if ('ontouchstart' in window) return;
@@ -2604,7 +2609,7 @@
     });
   });
 
-  // ===== 3D COVERFLOW GALLERY INITIALIZATION =====
+  // ===== 3D COVERFLOW GALLERY =====
   if (document.querySelector('.mySwiper')) {
     const swiper = new Swiper(".mySwiper", {
       effect: "coverflow",
