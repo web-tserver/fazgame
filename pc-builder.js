@@ -1,215 +1,165 @@
-// ===== PC BUILDER DATA – EDIT HERE TO CHANGE COMPONENTS =====
-// Each item now has newPrice and usedPrice
-const componentData = {
+// pc-builder.js
+
+// 1. YOUR COMPONENT DATABASE
+// Add, remove, or edit your items here!
+const pcData = {
   cpu: {
-    label: "💻 CPU / Processor",
+    label: "Processor (CPU)",
     items: [
-      { name: "Intel Core i3-12100", newPrice: 450, usedPrice: 350, selected: true },
-      { name: "Intel Core i5-12400F", newPrice: 650, usedPrice: 500 },
-      { name: "Intel Core i5-13400", newPrice: 850, usedPrice: 650 },
-      { name: "Intel Core i7-13700K", newPrice: 1450, usedPrice: 1100 },
-      { name: "Intel Core i9-13900K", newPrice: 2250, usedPrice: 1700 },
-      { name: "AMD Ryzen 5 5600X", newPrice: 750, usedPrice: 550 },
-      { name: "AMD Ryzen 7 7700X", newPrice: 1450, usedPrice: 1100 },
-      { name: "AMD Ryzen 9 7900X", newPrice: 2150, usedPrice: 1600 }
-    ]
-  },
-  cooler: {
-    label: "❄️ CPU Cooler",
-    items: [
-      { name: "Stock Cooler (included)", newPrice: 0, usedPrice: 0, selected: true },
-      { name: "Air Cooler (e.g. Cooler Master Hyper 212)", newPrice: 150, usedPrice: 100 },
-      { name: "240mm AIO Liquid Cooler", newPrice: 350, usedPrice: 250 },
-      { name: "360mm AIO Liquid Cooler", newPrice: 550, usedPrice: 400 }
+      { name: "Select Processor", price: 0, condition: "" },
+      { name: "Intel Core i3-12100F", condition: "New", price: 400 },
+      { name: "Intel Core i3-12100F", condition: "Used", price: 250 },
+      { name: "Intel Core i5-12400F", condition: "New", price: 650 },
+      { name: "Intel Core i5-12400F", condition: "Used", price: 450 },
+      { name: "AMD Ryzen 5 5600", condition: "New", price: 550 },
+      { name: "AMD Ryzen 5 5600", condition: "Used", price: 380 }
     ]
   },
   motherboard: {
-    label: "🔧 Motherboard",
+    label: "Motherboard",
     items: [
-      { name: "H610 / A620 (Budget)", newPrice: 350, usedPrice: 250, selected: true },
-      { name: "B660 / B650 (Mid-range)", newPrice: 550, usedPrice: 400 },
-      { name: "Z690 / X670 (High-end)", newPrice: 850, usedPrice: 600 },
-      { name: "Z790 / X670E (Premium)", newPrice: 1200, usedPrice: 850 }
-    ]
-  },
-  ram: {
-    label: "🧠 RAM",
-    items: [
-      { name: "8GB DDR4 3200MHz", newPrice: 150, usedPrice: 100 },
-      { name: "16GB DDR4 3200MHz", newPrice: 250, usedPrice: 180, selected: true },
-      { name: "32GB DDR4 3200MHz", newPrice: 450, usedPrice: 320 },
-      { name: "16GB DDR5 5200MHz", newPrice: 350, usedPrice: 250 },
-      { name: "32GB DDR5 5600MHz", newPrice: 650, usedPrice: 450 }
+      { name: "Select Motherboard", price: 0, condition: "" },
+      { name: "H610M Motherboard", condition: "New", price: 350 },
+      { name: "H610M Motherboard", condition: "Used", price: 250 },
+      { name: "B550M Motherboard (AMD)", condition: "New", price: 450 }
     ]
   },
   gpu: {
-    label: "🎮 Graphics Card (GPU)",
+    label: "Graphics Card (GPU)",
     items: [
-      { name: "Integrated Graphics", newPrice: 0, usedPrice: 0 },
-      { name: "GTX 1650 4GB", newPrice: 550, usedPrice: 400 },
-      { name: "RTX 3060 12GB", newPrice: 850, usedPrice: 650, selected: true },
-      { name: "RTX 4060 Ti 8GB", newPrice: 1350, usedPrice: 1000 },
-      { name: "RTX 4070 12GB", newPrice: 1950, usedPrice: 1450 },
-      { name: "RTX 4080 16GB", newPrice: 3200, usedPrice: 2400 },
-      { name: "AMD RX 6600 8GB", newPrice: 750, usedPrice: 550 },
-      { name: "AMD RX 7700 XT 12GB", newPrice: 1650, usedPrice: 1200 }
+      { name: "Select GPU", price: 0, condition: "" },
+      { name: "GTX 1660 Super 6GB", condition: "Used", price: 500 },
+      { name: "RTX 3060 12GB", condition: "New", price: 1350 },
+      { name: "RTX 3060 12GB", condition: "Used", price: 850 },
+      { name: "RTX 4060 8GB", condition: "New", price: 1500 }
+    ]
+  },
+  ram: {
+    label: "Memory (RAM)",
+    items: [
+      { name: "Select RAM", price: 0, condition: "" },
+      { name: "8GB (8x1) DDR4 3200MHz", condition: "New", price: 100 },
+      { name: "16GB (8x2) DDR4 3200MHz", condition: "New", price: 190 },
+      { name: "16GB (8x2) DDR4 3200MHz", condition: "Used", price: 120 }
     ]
   },
   storage: {
-    label: "💾 Storage",
+    label: "Storage (SSD/HDD)",
     items: [
-      { name: "256GB NVMe SSD", newPrice: 120, usedPrice: 80 },
-      { name: "512GB NVMe SSD", newPrice: 200, usedPrice: 140, selected: true },
-      { name: "1TB NVMe SSD", newPrice: 350, usedPrice: 250 },
-      { name: "2TB NVMe SSD", newPrice: 550, usedPrice: 400 },
-      { name: "1TB HDD + 256GB SSD", newPrice: 250, usedPrice: 180 }
+      { name: "Select Storage", price: 0, condition: "" },
+      { name: "512GB NVMe SSD", condition: "New", price: 180 },
+      { name: "1TB NVMe SSD", condition: "New", price: 280 },
+      { name: "1TB HDD", condition: "Used", price: 80 }
     ]
   },
   psu: {
-    label: "⚡ Power Supply (PSU)",
+    label: "Power Supply (PSU)",
     items: [
-      { name: "500W 80+ Bronze", newPrice: 200, usedPrice: 140, selected: true },
-      { name: "650W 80+ Bronze", newPrice: 280, usedPrice: 200 },
-      { name: "750W 80+ Gold", newPrice: 450, usedPrice: 320 },
-      { name: "850W 80+ Gold", newPrice: 550, usedPrice: 400 },
-      { name: "1000W 80+ Gold", newPrice: 750, usedPrice: 550 }
+      { name: "Select PSU", price: 0, condition: "" },
+      { name: "500W 80+ Standard", condition: "New", price: 150 },
+      { name: "650W 80+ Bronze", condition: "New", price: 250 },
+      { name: "750W 80+ Gold", condition: "New", price: 400 }
     ]
   },
-  case: {
-    label: "🖥️ PC Case",
+  casing: {
+    label: "Casing",
     items: [
-      { name: "Budget ATX (e.g. Tecware)", newPrice: 150, usedPrice: 100, selected: true },
-      { name: "Mid Tower with Tempered Glass", newPrice: 250, usedPrice: 180 },
-      { name: "Premium RGB Case (e.g. Lian Li)", newPrice: 450, usedPrice: 320 },
-      { name: "Small Form Factor (ITX)", newPrice: 300, usedPrice: 220 }
-    ]
-  },
-  monitor: {
-    label: "🖥️ Monitor",
-    items: [
-      { name: "None", newPrice: 0, usedPrice: 0 },
-      { name: '22" 75Hz IPS', newPrice: 350, usedPrice: 250 },
-      { name: '24" 144Hz Gaming', newPrice: 550, usedPrice: 400, selected: true },
-      { name: '27" 165Hz Curved', newPrice: 850, usedPrice: 600 },
-      { name: '32" 4K UHD', newPrice: 1350, usedPrice: 950 }
-    ]
-  },
-  accessories: {
-    label: "🎧 Accessories (Keyboard + Mouse)",
-    items: [
-      { name: "None", newPrice: 0, usedPrice: 0 },
-      { name: "Basic Combo", newPrice: 100, usedPrice: 70, selected: true },
-      { name: "Mechanical + Gaming Mouse", newPrice: 250, usedPrice: 180 },
-      { name: "RGB Mechanical + Wireless Mouse", newPrice: 400, usedPrice: 280 }
+      { name: "Select Casing", price: 0, condition: "" },
+      { name: "Standard mATX Case + 4 Fans", condition: "New", price: 150 },
+      { name: "ATX Gaming Case + ARGB Fans", condition: "New", price: 250 }
     ]
   }
 };
 
-// ===== DO NOT EDIT BELOW THIS LINE =====
-let currentCondition = "new"; // 'new' or 'used'
-
-function buildPCBuilder() {
+// 2. GENERATE THE UI
+function renderPCBuilder() {
   const container = document.getElementById('pc-builder-container');
   if (!container) return;
 
-  // Add condition toggle
-  let html = `
-    <div class="condition-toggle">
-      <span class="condition-label">Condition:</span>
-      <button class="condition-btn ${currentCondition === 'new' ? 'active' : ''}" data-condition="new">🆕 New</button>
-      <button class="condition-btn ${currentCondition === 'used' ? 'active' : ''}" data-condition="used">♻️ Used</button>
-    </div>
-    <div class="builder-group-list">
-  `;
-
-  for (const [key, category] of Object.entries(componentData)) {
+  // We removed the condition toggle buttons. Just generating the lists now.
+  let html = '<div class="builder-group-list">';
+  
+  // Loop through each category to build the dropdowns
+  for (const [key, category] of Object.entries(pcData)) {
     html += `
       <div class="builder-group">
         <label>${category.label}</label>
-        <select id="${key}Select" class="pc-builder-select">
+        <select class="pc-builder-select" id="select-${key}" data-category="${key}">
     `;
-    category.items.forEach((item, idx) => {
-      const price = currentCondition === 'new' ? item.newPrice : item.usedPrice;
-      const selectedAttr = item.selected ? 'selected' : '';
-      html += `<option value="${price}" data-new-price="${item.newPrice}" data-used-price="${item.usedPrice}" ${selectedAttr}>${item.name} - RM${price}</option>`;
+    
+    // Build options for this category
+    category.items.forEach((item, index) => {
+      if (index === 0) {
+        // First item is the "Select..." placeholder
+        html += `<option value="0">${item.name}</option>`;
+      } else {
+        // Formats as: ItemName (Condition) - RMPrice
+        html += `<option value="${item.price}" data-name="${item.name}" data-cond="${item.condition}">
+          ${item.name} (${item.condition}) - RM${item.price}
+        </option>`;
+      }
     });
+    
     html += `</select></div>`;
   }
-  html += '</div>';
+  
+  html += '</div>'; // End list grid
 
+  // Add the Total Price display and the WhatsApp button
   html += `
-    <div class="total-price">
-      Estimated Total (<span id="conditionLabel">New</span>): <span id="totalPrice">RM0</span>
-    </div>
-    <button id="quoteBtn" class="quote-btn">Request Quote via WhatsApp</button>
+    <div class="total-price">Estimated Total: <span>RM<span id="pc-total">0</span></span></div>
+    <button id="pc-quote-btn" class="quote-btn">Get WhatsApp Quote</button>
   `;
+
   container.innerHTML = html;
 
-  // Attach event listeners to condition buttons
-  document.querySelectorAll('.condition-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      currentCondition = btn.dataset.condition;
-      document.querySelectorAll('.condition-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('conditionLabel').textContent = currentCondition === 'new' ? 'New' : 'Used';
-      updateAllPrices();
-      updateTotal();
-    });
+  // Add event listeners to calculate price on change
+  const selects = document.querySelectorAll('.pc-builder-select');
+  selects.forEach(select => {
+    select.addEventListener('change', calculatePCTotal);
   });
 
-  // Attach change listeners to selects
-  document.querySelectorAll('.pc-builder-select').forEach(select => {
-    select.addEventListener('change', updateTotal);
-  });
-  updateTotal();
-
-  document.getElementById('quoteBtn').addEventListener('click', requestQuote);
+  // Add event listener to the quote button
+  document.getElementById('pc-quote-btn').addEventListener('click', generatePCQuote);
 }
 
-function updateAllPrices() {
-  // Update each select's displayed price based on current condition
-  document.querySelectorAll('.pc-builder-select').forEach(select => {
-    const options = select.options;
-    for (let i = 0; i < options.length; i++) {
-      const opt = options[i];
-      const newPrice = parseInt(opt.dataset.newPrice);
-      const usedPrice = parseInt(opt.dataset.usedPrice);
-      const price = currentCondition === 'new' ? newPrice : usedPrice;
-      opt.value = price;
-      // Update displayed text
-      const originalText = opt.text.split(' - RM')[0];
-      opt.text = `${originalText} - RM${price}`;
-    }
-  });
-}
-
-function updateTotal() {
+// 3. CALCULATE PRICE FUNCTION
+function calculatePCTotal() {
   let total = 0;
   document.querySelectorAll('.pc-builder-select').forEach(select => {
     total += parseInt(select.value) || 0;
   });
-  const totalSpan = document.getElementById('totalPrice');
-  if (totalSpan) totalSpan.textContent = `RM${total.toLocaleString()}`;
+  document.getElementById('pc-total').innerText = total;
 }
 
-function requestQuote() {
-  let message = `Hi FAZGAME 👋 I'd like to request a quote for a ${currentCondition === 'new' ? 'NEW' : 'USED'} custom PC with these components:\n\n`;
-  for (const [key, category] of Object.entries(componentData)) {
-    const select = document.getElementById(`${key}Select`);
-    if (select) {
-      const selectedOption = select.options[select.selectedIndex];
-      message += `- ${category.label}: ${selectedOption.text}\n`;
+// 4. WHATSAPP QUOTE FUNCTION
+function generatePCQuote() {
+  let total = 0;
+  let buildDetails = "Hi FAZGAME 👋 I would like to get a quote for this Custom PC build:%0A%0A";
+  
+  document.querySelectorAll('.pc-builder-select').forEach(select => {
+    const option = select.options[select.selectedIndex];
+    const price = parseInt(select.value) || 0;
+    
+    // Only include items they actually selected
+    if (price > 0) {
+      const name = option.getAttribute('data-name');
+      const cond = option.getAttribute('data-cond');
+      buildDetails += `• ${name} (${cond}) - RM${price}%0A`;
+      total += price;
     }
+  });
+  
+  if (total === 0) {
+    alert("Please select at least one component.");
+    return;
   }
-  const totalSpan = document.getElementById('totalPrice');
-  const total = totalSpan ? totalSpan.textContent : "RM0";
-  message += `\nCondition: ${currentCondition === 'new' ? 'New' : 'Used'}\nEstimated Total: ${total}\n\nCan you provide a final price and availability?`;
-  window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent(message)}`, '_blank');
+  
+  buildDetails += `%0A*Estimated Total: RM${total}*`;
+  
+  // Send to your WhatsApp
+  window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${buildDetails}`, '_blank');
 }
 
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', buildPCBuilder);
-} else {
-  buildPCBuilder();
-}
+// 5. RUN SCRIPT WHEN PAGE LOADS
+document.addEventListener('DOMContentLoaded', renderPCBuilder);
