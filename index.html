@@ -2435,9 +2435,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<!-- ==================== STOCK.JS (Inventory Logic) ==================== -->
+<script src="stock.js?v=3"></script>
+
 <script>
-  // Stock inventory data (original stock.js content)
+  // Stock inventory data (falls back to this array if stock.js fails to load)
   let products = window.STOCK || [
     { n: "PS5 Digital Edition", p: "1850", c: "ps5", cond: "new", type: "console" },
     { n: "Xbox Series X", p: "2100", c: "xbox", cond: "new", type: "console" },
@@ -2517,7 +2518,6 @@
   renderProducts();
 </script>
 
-<!-- ==================== PC-BUILDER.JS (Full Component List) ==================== -->
 <script>
   (function() {
     const componentData = {
@@ -2819,7 +2819,6 @@
   })();
 </script>
 
-<!-- ==================== COMMON SITE INTERACTIONS ==================== -->
 <script>
   // Back to top
   const backToTop = document.getElementById('backToTop');
