@@ -95,9 +95,6 @@
       --hover-glow: 0 0 20px var(--accent);
       --preloader-faz: #ffffff;
       --theme-transition: background-color 0.5s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-      --modal-image-frame-bg: transparent;
-      --modal-image-padding: 0px;
-      --modal-image-radius: 20px;
     }
 
     body.light-mode {
@@ -126,9 +123,6 @@
       --card-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
       --hover-glow: 0 0 20px var(--accent);
       --preloader-faz: #0f172a;
-      --modal-image-frame-bg: #ffffff;
-      --modal-image-padding: 12px;
-      --modal-image-radius: 24px;
     }
 
     body {
@@ -1405,7 +1399,7 @@
       }
     }
 
-    /* MODAL - keep previous design, only add image frame + lightbox */
+    /* MODAL - no frame, image 1:1 */
     .modal {
       display: none;
       position: fixed;
@@ -1442,30 +1436,18 @@
         max-width: 92vw;
       }
     }
-    /* Image frame wrapper */
-    .modal-image-frame {
-      background: var(--modal-image-frame-bg);
-      padding: var(--modal-image-padding);
-      border-radius: var(--modal-image-radius);
-      margin: -10px -10px 0 -10px;
-      transition: background 0.3s ease, padding 0.3s ease;
-    }
+    /* Image 1:1 aspect ratio, cover, no external frame */
     .modal-img {
       width: 100%;
-      max-height: 280px;
-      object-fit: contain;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       border-radius: 20px;
-      margin-bottom: 0;
+      margin-bottom: 16px;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
     .modal-img:hover {
       transform: scale(1.02);
-    }
-    @media (max-width: 480px) {
-      .modal-img {
-        max-height: 220px;
-      }
     }
     .modal-close {
       position: absolute;
@@ -1492,7 +1474,7 @@
     .modal-title {
       font-size: 22px;
       font-weight: 800;
-      margin: 16px 0 6px;
+      margin: 8px 0 6px;
       color: var(--text);
     }
     .modal-price {
@@ -2207,9 +2189,7 @@
 <div id="detailModal" class="modal">
   <div class="modal-content">
     <button class="modal-close" id="modalCloseBtn">&times;</button>
-    <div class="modal-image-frame">
-      <img id="modalProductImg" class="modal-img" src="" alt="Product">
-    </div>
+    <img id="modalProductImg" class="modal-img" src="" alt="Product">
     <h2 id="modalProductTitle" class="modal-title"></h2>
     <div id="modalProductPrice" class="modal-price"></div>
     <div id="modalSubtitle" class="modal-subtitle"></div>
@@ -2317,7 +2297,7 @@
   <h2 class="section-title">Preorder PC Builds</h2>
   <div class="section-subtitle">Custom Gaming PCs • Built On Demand</div>
   <div class="hot-grid">
-    <div class="hot-card" data-product='{"name":"PC Gaming Ryzen 5 + RX570","price":"RM1,200","image":"images/pc1000.webp","specs":["Processor: AMD Ryzen 5 1600","Motherboard: A520M","Graphics: RX570 4GB","RAM: 8GB DDR4","Storage: 256GB NVMe SSD","PSU: 600W Bronze 80+","Case: Aquaron Duplex","Warranty: 1 Year"]}'>
+    <div class="hot-card" data-product='{"name":"PC Gaming Ryzen 5 + RX570","price":"RM1,200","image":"images/pc1000.webp","specs":["Processor: AMD Ryzen 5 1600","Motherboard: A520M","Graphics: RX570 4GB","RAM: 8GB DDR4","Storage: 256GB NVMe SSD","PSU: 600W Bronze 80+","Case: Aquaron Duplex","Warranty: Up to 3-Year Warranty"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc1000.webp" alt="PC Gaming Ryzen 5 RX570" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+Ryzen+RX570';">
       <div class="hot-card-content">
@@ -2326,7 +2306,7 @@
       </div>
     </div>
 
-    <div class="hot-card" data-product='{"name":"PC Gaming Intel (ARC A750)","price":"RM2,400","image":"images/pc2000.webp","specs":["Processor: Intel Core i5-10400F","Motherboard: H410M","Graphics: Intel ARC A750 8GB","RAM: 16GB DDR4","Storage: 256GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO with Custom LCD Screen","Case: Invasion The View 5","Warranty: 1 Year"]}'>
+    <div class="hot-card" data-product='{"name":"PC Gaming Intel (ARC A750)","price":"RM2,400","image":"images/pc2000.webp","specs":["Processor: Intel Core i5-10400F","Motherboard: H410M","Graphics: Intel ARC A750 8GB","RAM: 16GB DDR4","Storage: 256GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO with Custom LCD Screen","Case: Invasion The View 5","Warranty: Up to 3-Year Warranty"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc2000.webp" alt="PC Gaming Intel ARC A750" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+Intel+ARC';">
       <div class="hot-card-content">
@@ -2335,7 +2315,7 @@
       </div>
     </div>
 
-    <div class="hot-card" data-product='{"name":"PC Gaming RTX 3070 Ti","price":"RM3,500","image":"images/pc3000.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M","Graphics: RTX 3070 Ti 8GB","RAM: 16GB DDR4","Storage: 500GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO with Custom LCD Screen","Case: Techware VX PRISM","Warranty: 1 Year"]}'>
+    <div class="hot-card" data-product='{"name":"PC Gaming RTX 3070 Ti","price":"RM3,500","image":"images/pc3000.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M","Graphics: RTX 3070 Ti 8GB","RAM: 16GB DDR4","Storage: 500GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO with Custom LCD Screen","Case: Techware VX PRISM","Warranty: Up to 3-Year Warranty"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc3000.webp" alt="PC Gaming RTX 3070 Ti" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RTX3070Ti';">
       <div class="hot-card-content">
@@ -2344,7 +2324,7 @@
       </div>
     </div>
 
-    <div class="hot-card" data-product='{"name":"PC Gaming RTX 5060","price":"RM3,500","image":"images/pc3500.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M AM4","Graphics: RTX 5060 8GB Black","RAM: 16GB DDR4 3200MHz","Storage: 500GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO Thermalright Aqua 120","Case: Invasion GT50","Warranty: 1 Year"]}'>
+    <div class="hot-card" data-product='{"name":"PC Gaming RTX 5060","price":"RM3,500","image":"images/pc3500.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M AM4","Graphics: RTX 5060 8GB Black","RAM: 16GB DDR4 3200MHz","Storage: 500GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO Thermalright Aqua 120","Case: Invasion GT50","Warranty: Up to 3-Year Warranty"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc3500.webp" alt="PC Gaming RTX 5060" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RTX5060';">
       <div class="hot-card-content">
@@ -2353,7 +2333,7 @@
       </div>
     </div>
 
-    <div class="hot-card" data-product='{"name":"Custom PC","price":"Custom Price","image":"images/custompc.webp","specs":["Build your dream rig","Choose CPU, GPU, RAM, Storage","Free assembly & testing","RGB lighting optional","Warranty: 1 Year","Personalized cable management"]}'>
+    <div class="hot-card" data-product='{"name":"Custom PC","price":"Custom Price","image":"images/custompc.webp","specs":["Build your dream rig","Choose CPU, GPU, RAM, Storage","Free assembly & testing","RGB lighting optional","Warranty: Up to 3-Year Warranty","Personalized cable management"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/custompc.webp" alt="Custom PC" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Custom+PC';">
       <div class="hot-card-content">
@@ -2621,7 +2601,7 @@
     });
   });
 
-  // Modal functions (with image frame + lightbox)
+  // Modal functions (no frame, 1:1 image, fixed Custom PC spec display)
   const modalElem = document.getElementById('detailModal');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
   const modalImgElem = document.getElementById('modalProductImg');
@@ -2639,7 +2619,7 @@
 
   function openModal(productData) {
     modalImgElem.src = productData.image;
-    modalImgElem.onerror = function() { this.src = 'https://placehold.co/600x400/222/ffd84d?text=Product'; };
+    modalImgElem.onerror = function() { this.src = 'https://placehold.co/600x600/222/ffd84d?text=Product'; };
     modalTitleElem.textContent = productData.name;
     modalPriceElem.textContent = productData.price;
 
@@ -2652,21 +2632,26 @@
     if (!subtitle) modalSubtitleElem.style.display = 'none';
     else modalSubtitleElem.style.display = 'block';
 
-    // Build spec list
+    // Build spec list - handle lines without colon (Custom PC fix)
     let warrantyText = '';
     const specItems = [];
     for (let spec of (productData.specs || [])) {
-      const [label, ...valueParts] = spec.split(':');
-      const cleanLabel = label.trim();
-      const value = valueParts.join(':').trim();
-      if (cleanLabel.toLowerCase() === 'warranty') {
-        warrantyText = value || spec;
+      const colonIndex = spec.indexOf(':');
+      if (colonIndex !== -1) {
+        const label = spec.substring(0, colonIndex).trim();
+        const value = spec.substring(colonIndex + 1).trim();
+        if (label.toLowerCase() === 'warranty') {
+          warrantyText = value || spec;
+        } else {
+          specItems.push({ label, value });
+        }
       } else {
-        specItems.push({ label: cleanLabel, value: value || spec });
+        // No colon: treat as a plain feature (e.g., "Build your dream rig")
+        specItems.push({ label: '•', value: spec });
       }
     }
     modalSpecListElem.innerHTML = specItems.map(item => `
-      <li><strong>${item.label}:</strong> ${item.value}</li>
+      <li><strong>${item.label !== '•' ? item.label + ':' : ''}</strong> ${item.value}</li>
     `).join('');
     if (warrantyText) {
       modalWarrantyElem.innerHTML = `✅ ${warrantyText} · Full Functional Test`;
