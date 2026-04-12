@@ -1365,6 +1365,7 @@
     #preorder-console .hot-card .hot-desc {
       font-size: clamp(10px, 3vw, 12px);
     }
+    /* Mobile: 2 cards side by side for PC preorder cards */
     @media (max-width: 768px) {
       .hot-grid {
         gap: 10px;
@@ -1379,7 +1380,7 @@
         grid-template-columns: repeat(2, 1fr);
       }
       #hot .hot-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
       }
     }
     @media (min-width: 600px) and (max-width: 1199px) {
@@ -2269,8 +2270,8 @@
           <p>Happy Customers</p>
         </div>
         <div class="stat-item">
-          <h3 data-target="1">0</h3>
-          <p>Years Warranty</p>
+          <h3 data-target="4">0</h3>
+          <p>up to 4 Years Warranty</p>
         </div>
       </div>
       <div class="social-row">
@@ -2297,7 +2298,7 @@
   <h2 class="section-title">Preorder PC Builds</h2>
   <div class="section-subtitle">Custom Gaming PCs • Built On Demand</div>
   <div class="hot-grid">
-    <div class="hot-card" data-product='{"name":"PC Gaming Ryzen 5 + RX570","price":"RM1,200","image":"images/pc1000.webp","specs":["Processor: AMD Ryzen 5 1600","Motherboard: A520M","Graphics: RX570 4GB","RAM: 8GB DDR4","Storage: 256GB NVMe SSD","PSU: 600W Bronze 80+","Case: Aquaron Duplex","Warranty: 1 Year"]}'>
+    <div class="hot-card" data-product='{"name":"PC Gaming Ryzen 5 + RX570","price":"RM1,200","image":"images/pc1000.webp","specs":["Processor: AMD Ryzen 5 1600","Motherboard: A520M","Graphics: RX570 4GB","RAM: 8GB DDR4","Storage: 256GB NVMe SSD","PSU: 600W Bronze 80+","Case: Aquaron Duplex","Warranty: up to 4 Years"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc1000.webp" alt="PC Gaming Ryzen 5 RX570" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+Ryzen+RX570';">
       <div class="hot-card-content">
@@ -2306,7 +2307,7 @@
       </div>
     </div>
 
-    <div class="hot-card" data-product='{"name":"PC Gaming Intel (ARC A750)","price":"RM2,400","image":"images/pc2000.webp","specs":["Processor: Intel Core i5-10400F","Motherboard: H410M","Graphics: Intel ARC A750 8GB","RAM: 16GB DDR4","Storage: 256GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO with Custom LCD Screen","Case: Invasion The View 5","Warranty: 1 Year"]}'>
+    <div class="hot-card" data-product='{"name":"PC Gaming Intel (ARC A750)","price":"RM2,400","image":"images/pc2000.webp","specs":["Processor: Intel Core i5-10400F","Motherboard: H410M","Graphics: Intel ARC A750 8GB","RAM: 16GB DDR4","Storage: 256GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO with Custom LCD Screen","Case: Invasion The View 5","Warranty: up to 4 Years"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc2000.webp" alt="PC Gaming Intel ARC A750" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+Intel+ARC';">
       <div class="hot-card-content">
@@ -2315,7 +2316,7 @@
       </div>
     </div>
 
-    <div class="hot-card" data-product='{"name":"PC Gaming RTX 3070 Ti","price":"RM3,500","image":"images/pc3000.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M","Graphics: RTX 3070 Ti 8GB","RAM: 16GB DDR4","Storage: 500GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO with Custom LCD Screen","Case: Techware VX PRISM","Warranty: 1 Year"]}'>
+    <div class="hot-card" data-product='{"name":"PC Gaming RTX 3070 Ti","price":"RM3,500","image":"images/pc3000.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M","Graphics: RTX 3070 Ti 8GB","RAM: 16GB DDR4","Storage: 500GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO with Custom LCD Screen","Case: Techware VX PRISM","Warranty: up to 4 Years"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc3000.webp" alt="PC Gaming RTX 3070 Ti" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RTX3070Ti';">
       <div class="hot-card-content">
@@ -2324,7 +2325,7 @@
       </div>
     </div>
 
-    <div class="hot-card" data-product='{"name":"PC Gaming RTX 5060","price":"RM3,500","image":"images/pc3500.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M AM4","Graphics: RTX 5060 8GB Black","RAM: 16GB DDR4 3200MHz","Storage: 500GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO Thermalright Aqua 120","Case: Invasion GT50","Warranty: 1 Year"]}'>
+    <div class="hot-card" data-product='{"name":"PC Gaming RTX 5060","price":"RM3,500","image":"images/pc3500.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M AM4","Graphics: RTX 5060 8GB Black","RAM: 16GB DDR4 3200MHz","Storage: 500GB NVMe SSD","PSU: 600W Bronze 80+","Cooler: AIO Thermalright Aqua 120","Case: Invasion GT50","Warranty: up to 4 Years"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc3500.webp" alt="PC Gaming RTX 5060" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RTX5060';">
       <div class="hot-card-content">
@@ -2333,7 +2334,7 @@
       </div>
     </div>
 
-    <div class="hot-card" data-product='{"name":"Custom PC","price":"Custom Price","image":"images/custompc.webp","specs":["Build your dream rig","Choose CPU, GPU, RAM, Storage","Free assembly & testing","RGB lighting optional","Warranty: 1 Year","Personalized cable management"]}'>
+    <div class="hot-card" data-product='{"name":"Custom PC","price":"Custom Price","image":"images/custompc.webp","specs":["Build your dream rig","Choose CPU, GPU, RAM, Storage","Free assembly & testing","RGB lighting optional","Warranty: up to 4 Years","Personalized cable management"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/custompc.webp" alt="Custom PC" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Custom+PC';">
       <div class="hot-card-content">
@@ -2347,7 +2348,7 @@
 <section id="pc-builder" class="reveal">
   <div class="pc-builder">
     <h2 class="builder-title">🛠️ Custom PC Builder</h2>
-    <div class="builder-subtitle">Select your components and get an instant price estimate</div>
+    <div class="builder-subtitle" style="font-size: 0.85rem; margin-top: -15px; margin-bottom: 20px;">Estimated price only. Final price may vary based on current market prices.</div>
     <div id="pc-builder-container">
       <div class="no-data-message">Loading PC Builder...</div>
     </div>
