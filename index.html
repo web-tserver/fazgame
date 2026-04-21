@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>FAZGAME | Faz Service, Faz Gaming</title>
-  <meta name="description" content="FAZGAME – Faz Service, Faz Gaming. Preorder consoles, custom PCs, and used gaming gear with 0% installment.">
+  <meta name="description" content="FAZGAME – Faz Service, Faz Gaming. Preorder consoles, custom PCs, and used gaming gear.">
 
   <meta property="og:title" content="FAZGAME - Faz Service, Faz Gaming">
-  <meta property="og:description" content="Preorder consoles, custom PCs, and used gaming gear with 0% installment.">
+  <meta property="og:description" content="Preorder consoles, custom PCs, and used gaming gear.">
   <meta property="og:image" content="https://yourdomain.com/images/og-image.jpg">
   <meta property="og:url" content="https://yourdomain.com">
   <meta property="og:type" content="website">
@@ -141,9 +141,6 @@
 
     .payment-item img {
       transition: filter 0.2s ease;
-    }
-    .payment-item img[alt="Shopee"] {
-      filter: none !important;
     }
     body.light-mode .payment-item img:not([alt="Shopee"]) {
       filter: invert(0);
@@ -1685,26 +1682,7 @@
         transform: translateY(15px);
       }
     }
-    .installment-banner {
-      margin: 20px auto;
-      max-width: 1200px;
-      font-size: 12px;
-      text-align: center;
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: .5px;
-      animation: fadeInInstall 1.2s ease forwards;
-      opacity: 0;
-      transition: color 0.2s ease;
-      padding: 0 16px;
-    }
-    @media (min-width: 768px) {
-      .installment-banner {
-        font-size: 13px;
-      }
-    }
-    @keyframes fadeInInstall { to { opacity: 1; } }
-
+    /* Installment banner REMOVED - no longer needed */
     section:not(#stock) {
       padding: 40px 16px;
       max-width: 1200px;
@@ -1983,9 +1961,6 @@
       filter: invert(1);
       transition: filter 0.2s ease;
     }
-    .payment-item img[alt="Shopee"] {
-      filter: none !important;
-    }
     @media (min-width: 768px) {
       .payment-item {
         gap: 8px;
@@ -2249,7 +2224,7 @@
   <div class="banner-container">
     <div class="banner-content reveal">
       <h1 class="hero-title">LEVEL UP<br>YOUR <span>GAMING</span></h1>
-      <p class="hero-desc">Pre‑order the latest consoles, custom PCs, and exclusive accessories with 0% installment.</p>
+      <p class="hero-desc">Pre‑order the latest consoles, custom PCs, and exclusive accessories.</p>
       <div class="service-chips">
         <span class="chip primary" data-scroll="hot">Custom PC Build</span>
         <span class="chip" data-scroll="preorder-console">Preorder</span>
@@ -2355,7 +2330,7 @@
   </div>
 </section>
 
-<div class="installment-banner reveal">0% Interest Installment Available • SPayLater</div>
+<!-- Installment banner REMOVED -->
 
 <section id="preorder-console" class="reveal">
   <h2 class="section-title">Preorder Consoles</h2>
@@ -2504,13 +2479,7 @@
 <section id="faq" class="reveal">
   <h2 class="section-title">Frequently Asked Questions</h2>
   <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
-        <span>How does 0% installment work?</span>
-        <span class="faq-icon">+</span>
-      </div>
-      <div class="faq-answer">We partner with SPayLater to offer 0% installment for 3, 6, or 12 months. No interest, no hidden fees.</div>
-    </div>
+    <!-- FAQ about installment REMOVED -->
     <div class="faq-item">
       <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
         <span>How long does pre‑order take?</span>
@@ -2536,7 +2505,7 @@
     <div class="trust-badge"><span class="icon">🔄</span> 7-Day Returns</div>
   </div>
   <div class="payment-icons">
-    <div class="payment-item"><img src="https://cdn.simpleicons.org/shopee/ee4d2d" alt="Shopee"><span class="shopee-text">SPayLater Available</span></div>
+    <!-- SPayLater payment item REMOVED -->
     <div class="payment-item"><img src="https://cdn.simpleicons.org/visa/1a1f71" alt="Visa"><span>FPX Online Banking</span></div>
   </div>
 </section>
