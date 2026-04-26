@@ -176,6 +176,46 @@
       opacity: 1;
     }
 
+    /* ===== AUTO-PLAY POPUP TOAST (fades out) ===== */
+    .autoplay-toast {
+      position: fixed;
+      bottom: 100px;
+      left: 20px;
+      z-index: 9999;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: var(--glass-border);
+      border-radius: 40px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      pointer-events: none;
+      animation: fadeOutToast 0.6s ease-out 3.5s forwards;
+      transform-origin: left center;
+    }
+    .autoplay-toast span {
+      font-size: 18px;
+    }
+    @keyframes fadeOutToast {
+      0% { opacity: 1; transform: translateX(0); }
+      70% { opacity: 0.8; transform: translateX(5px); }
+      100% { opacity: 0; visibility: hidden; transform: translateX(15px); }
+    }
+    @media (max-width: 480px) {
+      .autoplay-toast {
+        bottom: 80px;
+        left: 12px;
+        padding: 8px 14px;
+        font-size: 11px;
+      }
+    }
+
     /* ===== MUSIC TOGGLE BUTTON ===== */
     .music-toggle {
       position: fixed;
@@ -2598,7 +2638,7 @@
 <script src="pc-builder.js?v=3"></script>
 
 <script>
-  // Background music toggle
+  // Background music toggle + AUTO-PLAY POPUP (fades out after preloader)
   const bgMusic = document.getElementById('bg-music');
   const musicToggle = document.getElementById('musicToggle');
   
@@ -2614,29 +2654,75 @@
     }
   }
 
+  // Start muted (autoplay policy)
+  bgMusic.muted = true;
+  bgMusic.loop = true;
+  bgMusic.play().catch(() => {});
+  updateMusicIcon();
+
   musicToggle.addEventListener('click', () => {
     if (bgMusic.paused) {
-      bgMusic.play().catch(() => {}); // in case autoplay blocked
+      bgMusic.play().catch(() => {});
     }
     bgMusic.muted = !bgMusic.muted;
     updateMusicIcon();
   });
 
-  // Ensure music starts playing muted as fallback (browsers may still block)
-  window.addEventListener('load', () => {
-    if (bgMusic.paused) {
-      bgMusic.play().then(() => {
-        if (!bgMusic.muted) {
-          bgMusic.muted = true;
-          updateMusicIcon();
-        }
-      }).catch(() => {
-        // If play fails, try again with muted on next user interaction (handled by toggle)
-        console.log('Autoplay blocked, user can unmute via button.');
-      });
-    }
+  // Auto-play popup toast
+  function showAutoplayToast() {
+    const toast = document.createElement('div');
+    toast.className = 'autoplay-toast';
+    toast.innerHTML = `<span>🎵</span> <span>Background audio ready · Tap music button to hear</span>`;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      if (toast && toast.parentNode) toast.remove();
+    }, 4200);
+  }
+
+  // Preloader & counters (original)
+  window.addEventListener("DOMContentLoaded", () => {
+    let progress = 0;
+    const bar = document.getElementById("loaderBar");
+    const preloader = document.getElementById("preloader");
+    const interval = setInterval(() => {
+      progress += 5;
+      if(bar) bar.style.width = progress + "%";
+      if(progress >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          preloader.classList.add("hide");
+          startCounters();
+          showAutoplayToast();   // popup appears after preloader
+        }, 400);
+      }
+    }, 40);
+    setTimeout(() => {
+      if (preloader && !preloader.classList.contains('hide')) {
+        preloader.classList.add('hide');
+        startCounters();
+        showAutoplayToast();
+      }
+    }, 2000);
   });
 
+  function startCounters() {
+    document.querySelectorAll(".stat-item h3").forEach(counter => {
+      const target = parseInt(counter.dataset.target);
+      let current = 0;
+      const update = () => {
+        current += target / 60;
+        if(current < target) {
+          counter.innerText = Math.ceil(current);
+          requestAnimationFrame(update);
+        } else {
+          counter.innerText = target + "+";
+        }
+      };
+      update();
+    });
+  }
+
+  // ===== ALL ORIGINAL JAVASCRIPT BELOW (stock, modal, swiper, etc.) =====
   // Back to top
   const backToTop = document.getElementById('backToTop');
   window.addEventListener('scroll', () => {
@@ -2687,7 +2773,7 @@
     });
   });
 
-  // Modal functions
+  // Modal functions (full original)
   const modalElem = document.getElementById('detailModal');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
   const modalImgElem = document.getElementById('modalProductImg');
@@ -2697,7 +2783,6 @@
   const modalSpecListElem = document.getElementById('modalSpecList');
   const modalWarrantyElem = document.getElementById('modalWarranty');
   const modalReserveBtnElem = document.getElementById('modalReserveBtn');
-
   const modalLightbox = document.getElementById('modalLightbox');
   const modalLightboxImg = document.getElementById('modalLightboxImg');
   const modalLightboxClose = document.getElementById('modalLightboxClose');
@@ -2806,7 +2891,7 @@
     }
   });
 
-  // Stock section
+  // Stock section (original)
   function initStock() {
     const grid = document.getElementById('grid');
     const filters = document.getElementById('filters');
@@ -2980,46 +3065,6 @@
     const swiperContainer = document.querySelector('.mySwiper');
     swiperContainer.addEventListener('mouseenter', () => swiper.autoplay.stop());
     swiperContainer.addEventListener('mouseleave', () => swiper.autoplay.start());
-  }
-
-  // Preloader & counters
-  window.addEventListener("DOMContentLoaded", () => {
-    let progress = 0;
-    const bar = document.getElementById("loaderBar");
-    const preloader = document.getElementById("preloader");
-    const interval = setInterval(() => {
-      progress += 5;
-      if(bar) bar.style.width = progress + "%";
-      if(progress >= 100) {
-        clearInterval(interval);
-        setTimeout(() => {
-          preloader.classList.add("hide");
-          startCounters();
-        }, 400);
-      }
-    }, 40);
-    setTimeout(() => {
-      if (preloader && !preloader.classList.contains('hide')) {
-        preloader.classList.add('hide');
-        startCounters();
-      }
-    }, 2000);
-  });
-  function startCounters() {
-    document.querySelectorAll(".stat-item h3").forEach(counter => {
-      const target = parseInt(counter.dataset.target);
-      let current = 0;
-      const update = () => {
-        current += target / 60;
-        if(current < target) {
-          counter.innerText = Math.ceil(current);
-          requestAnimationFrame(update);
-        } else {
-          counter.innerText = target + "+";
-        }
-      };
-      update();
-    });
   }
 
   document.querySelectorAll('[data-scroll]').forEach(chip => {
