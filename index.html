@@ -16,6 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.iconify.design">
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="preconnect" href="https://placehold.co">
   <link rel="preconnect" href="https://cdn.simpleicons.org">
 
@@ -173,6 +174,7 @@
       opacity: 1;
     }
 
+    /* ===== AUTO-PLAY HINT ===== */
     .autoplay-hint {
       position: fixed;
       bottom: 100px;
@@ -213,6 +215,7 @@
       }
     }
 
+    /* ===== MUSIC TOGGLE ===== */
     .music-toggle {
       position: fixed;
       bottom: 30px;
@@ -612,6 +615,7 @@
       }
     }
 
+    /* ===== TAP TARGETS ===== */
     .btn-primary,
     .chip,
     .social-link,
@@ -2283,563 +2287,860 @@
   </style>
 </head>
 <body>
-  <audio id="bg-music" src="music/background.mp3" loop></audio>
-  <button class="music-toggle" id="musicToggle" aria-label="Toggle music" title="Music on">🎵</button>
-  <div id="autoplayHint" class="autoplay-hint"><span>🎵</span> Tap anywhere to enable background music</div>
 
-  <div id="preloader">
-    <div class="preloader-content">
-      <img src="images/logo1.png" alt="FAZGAME Logo" class="preloader-logo" onerror="this.onerror=null; this.src='https://placehold.co/100x100/222/ffd84d?text=FAZ';">
-      <div class="logo">
+<audio id="bg-music" src="music/background.mp3" loop></audio>
+<button class="music-toggle" id="musicToggle" aria-label="Toggle music" title="Music on">🎵</button>
+<div id="autoplayHint" class="autoplay-hint"><span>🎵</span> Tap anywhere to enable background music</div>
+
+<div id="preloader">
+  <div class="preloader-content">
+    <img src="images/logo1.png" alt="FAZGAME Logo" class="preloader-logo" onerror="this.onerror=null; this.src='https://placehold.co/100x100/222/ffd84d?text=FAZ';">
+    <div class="logo">
+      <span>FAZ</span><span>GAME</span>
+    </div>
+    <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  </div>
+</div>
+
+<div id="imageModal"><img id="modalImg" src="" alt="Preview"></div>
+
+<div id="detailModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" id="modalCloseBtn">&times;</button>
+    <img id="modalProductImg" class="modal-img" src="" alt="Product">
+    <div class="modal-details">
+      <h2 id="modalProductTitle" class="modal-title"></h2>
+      <div id="modalProductPrice" class="modal-price"></div>
+      <div id="modalSubtitle" class="modal-subtitle"></div>
+      <div class="modal-specs">
+        <ul id="modalSpecList"></ul>
+        <div id="modalWarranty" class="warranty-badge"></div>
+      </div>
+      <button id="modalReserveBtn" class="modal-reserve">Reserve Now</button>
+    </div>
+  </div>
+</div>
+
+<div id="modalLightbox" class="modal-lightbox">
+  <button class="modal-lightbox-close" id="modalLightboxClose">&times;</button>
+  <img id="modalLightboxImg" class="modal-lightbox-img" alt="Zoomed view">
+</div>
+
+<div class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+  <div class="lamp-scene">
+    <div class="lamp-wrap" id="lampWrap">
+      <div class="wire"></div>
+      <div class="lamp-head">
+        <div class="bulb"></div>
+      </div>
+      <div class="beam"></div>
+      <div class="floor"></div>
+    </div>
+  </div>
+</div>
+
+<div class="back-to-top" id="backToTop">↑</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <img src="images/logo1.png" alt="FAZGAME Logo" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/300x300/222/ffd84d?text=FAZGAME';">
+      <div class="logo-text">
         <span>FAZ</span><span>GAME</span>
       </div>
-      <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+    </div>
+    <div class="header-logos">
+      <img src="https://api.iconify.design/simple-icons/playstation.svg" alt="PlayStation">
+      <img src="https://api.iconify.design/simple-icons/xbox.svg" alt="Xbox">
+      <img src="https://api.iconify.design/simple-icons/nintendoswitch.svg" alt="Nintendo Switch">
+      <img src="https://api.iconify.design/mdi/desktop-classic.svg" alt="PC">
     </div>
   </div>
+</header>
 
-  <div id="imageModal"><img id="modalImg" src="" alt="Preview"></div>
-
-  <div id="detailModal" class="modal">
-    <div class="modal-content">
-      <button class="modal-close" id="modalCloseBtn">&times;</button>
-      <img id="modalProductImg" class="modal-img" src="" alt="Product">
-      <div class="modal-details">
-        <h2 id="modalProductTitle" class="modal-title"></h2>
-        <div id="modalProductPrice" class="modal-price"></div>
-        <div id="modalSubtitle" class="modal-subtitle"></div>
-        <div class="modal-specs">
-          <ul id="modalSpecList"></ul>
-          <div id="modalWarranty" class="warranty-badge"></div>
+<div class="banner">
+  <div class="banner-bg">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  <div class="banner-container">
+    <div class="banner-content reveal">
+      <h1 class="hero-title">LEVEL UP<br>YOUR <span>GAMING</span></h1>
+      <p class="hero-desc">Pre‑order the latest consoles, custom PCs, and exclusive accessories.</p>
+      <div class="service-chips">
+        <span class="chip primary" data-scroll="hot">Custom PC Build</span>
+        <span class="chip" data-scroll="preorder-console">Preorder</span>
+        <span class="chip" data-scroll="stock">Consoles</span>
+        <span class="chip" data-scroll="stock">Games</span>
+        <span class="chip" data-scroll="pc-builder">PC Builder</span>
+        <span class="chip" data-scroll="trade-section">Trade-in</span>
+        <span class="chip" data-scroll="gallery">Gallery</span>
+        <span class="chip" data-scroll="faq">FAQ</span>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3 data-target="50">0</h3>
+          <p>Custom Builds</p>
         </div>
-        <button id="modalReserveBtn" class="modal-reserve">Reserve Now</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="modalLightbox" class="modal-lightbox">
-    <button class="modal-lightbox-close" id="modalLightboxClose">&times;</button>
-    <img id="modalLightboxImg" class="modal-lightbox-img" alt="Zoomed view">
-  </div>
-
-  <div class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
-    <div class="lamp-scene">
-      <div class="lamp-wrap" id="lampWrap">
-        <div class="wire"></div>
-        <div class="lamp-head"><div class="bulb"></div></div>
-        <div class="beam"></div>
-        <div class="floor"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="back-to-top" id="backToTop">↑</div>
-
-  <header>
-    <div class="header-inner">
-      <div class="header-left">
-        <img src="images/logo1.png" alt="FAZGAME Logo" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/300x300/222/ffd84d?text=FAZGAME';">
-        <div class="logo-text"><span>FAZ</span><span>GAME</span></div>
-      </div>
-      <div class="header-logos">
-        <img src="https://api.iconify.design/simple-icons/playstation.svg" alt="PlayStation">
-        <img src="https://api.iconify.design/simple-icons/xbox.svg" alt="Xbox">
-        <img src="https://api.iconify.design/simple-icons/nintendoswitch.svg" alt="Nintendo Switch">
-        <img src="https://api.iconify.design/mdi/desktop-classic.svg" alt="PC">
-      </div>
-    </div>
-  </header>
-
-  <div class="banner">
-    <div class="banner-bg">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-    </div>
-    <div class="banner-container">
-      <div class="banner-content reveal">
-        <h1 class="hero-title">LEVEL UP<br>YOUR <span>GAMING</span></h1>
-        <p class="hero-desc">Pre‑order the latest consoles, custom PCs, and exclusive accessories.</p>
-        <div class="service-chips">
-          <span class="chip primary" data-scroll="hot">Custom PC Build</span>
-          <span class="chip" data-scroll="preorder-console">Preorder</span>
-          <span class="chip" data-scroll="stock">Consoles</span>
-          <span class="chip" data-scroll="stock">Games</span>
-          <span class="chip" data-scroll="pc-builder">PC Builder</span>
-          <span class="chip" data-scroll="trade-section">Trade-in</span>
-          <span class="chip" data-scroll="gallery">Gallery</span>
-          <span class="chip" data-scroll="faq">FAQ</span>
+        <div class="stat-item">
+          <h3 data-target="500">0</h3>
+          <p>Happy Customers</p>
         </div>
-        <div class="hero-stats">
-          <div class="stat-item"><h3 data-target="50">0</h3><p>Custom Builds</p></div>
-          <div class="stat-item"><h3 data-target="500">0</h3><p>Happy Customers</p></div>
-          <div class="stat-item"><h3 data-target="4">0</h3><p>up to 4 Years Warranty</p></div>
-        </div>
-        <div class="social-row">
-          <a class="social-link" href="https://www.tiktok.com/@syazeone" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/tiktok.svg" alt="TikTok"></a>
-          <a class="social-link" href="https://wa.me/60163691936" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/whatsapp.svg" alt="WhatsApp"></a>
-          <a class="social-link" href="https://www.instagram.com/fazgame_empire/" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/instagram.svg" alt="Instagram"></a>
-          <a class="social-link" href="https://www.facebook.com/share/1DHZdLi62G/" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/facebook.svg" alt="Facebook"></a>
-          <a class="social-link" href="https://t.me/fazgameofficial" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/telegram.svg" alt="Telegram"></a>
+        <div class="stat-item">
+          <h3 data-target="4">0</h3>
+          <p>up to 4 Years Warranty</p>
         </div>
       </div>
-      <div class="banner-visual reveal">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <img class="floating-image" src="images/your-floating-image.png" alt="Your Custom Image" loading="eager" onerror="this.onerror=null; this.src='https://placehold.co/600x600/222/ffd84d?text=YOUR+IMAGE';">
+      <div class="social-row">
+        <a class="social-link" href="https://www.tiktok.com/@syazeone" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/tiktok.svg" alt="TikTok"></a>
+        <a class="social-link" href="https://wa.me/60163691936" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/whatsapp.svg" alt="WhatsApp"></a>
+        <a class="social-link" href="https://www.instagram.com/fazgame_empire/" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/instagram.svg" alt="Instagram"></a>
+        <a class="social-link" href="https://www.facebook.com/share/1DHZdLi62G/" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/facebook.svg" alt="Facebook"></a>
+        <a class="social-link" href="https://t.me/fazgameofficial" target="_blank" rel="noopener"><img src="https://api.iconify.design/simple-icons/telegram.svg" alt="Telegram"></a>
       </div>
+    </div>
+    <div class="banner-visual reveal">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <img class="floating-image" src="images/your-floating-image.png" alt="Your Custom Image" loading="eager" onerror="this.onerror=null; this.src='https://placehold.co/600x600/222/ffd84d?text=YOUR+IMAGE';">
+    </div>
+  </div>
+</div>
+
+<div class="sticky-cta">
+  <button id="cta-whatsapp" class="btn-primary">Chat on WhatsApp</button>
+</div>
+
+<section id="hot" class="reveal">
+  <h2 class="section-title">Preorder PC Builds</h2>
+  <div class="section-subtitle">Custom Gaming PCs • Built On Demand</div>
+ <div class="hot-grid">
+  <!-- BLACK SETUP RTX 3050 – RM2,500 (using pc1000.webp) -->
+  <div class="hot-card" data-product='{"name":"BLACK SETUP CUSTOM LCD Screen (RTX 3050)","price":"RM2,500","image":"images/pc1000.webp","specs":["Processor: AMD Ryzen 5 5500","Motherboard: A520M","Graphics: RTX 3050 6GB","RAM: 16GB DDR4","Storage: 512GB NVMe SSD","PSU: 500W Bronze 80+","Case: Black Custom LCD","Warranty: up to 4 Years"]}'>
+    <span class="badge badge-right">PRE-ORDER</span>
+    <img src="images/pc1000.webp" alt="BLACK SETUP RTX 3050" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM2500';">
+    <div class="hot-card-content">
+      <div class="hot-title">BLACK SETUP Custom LCD (RTX 3050)</div>
+      <div class="hot-desc">RM2,500</div>
     </div>
   </div>
 
-  <div class="sticky-cta">
-    <button id="cta-whatsapp" class="btn-primary">Chat on WhatsApp</button>
+  <!-- WHITE SETUP RTX 5060 – RM3,500 (using pc2000.webp) -->
+  <div class="hot-card" data-product='{"name":"WHITE SETUP CUSTOM LCD Screen (RTX 5060)","price":"RM3,500","image":"images/pc2000.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M","Graphics: RTX 5060 8GB","RAM: 16GB DDR4","Storage: 512GB NVMe SSD","PSU: 600W Bronze 80+","Case: White Custom LCD","Warranty: up to 4 Years"]}'>
+    <span class="badge badge-right">PRE-ORDER</span>
+    <img src="images/pc2000.webp" alt="WHITE SETUP RTX 5060" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM3500';">
+    <div class="hot-card-content">
+      <div class="hot-title">WHITE SETUP Custom LCD (RTX 5060)</div>
+      <div class="hot-desc">RM3,500</div>
+    </div>
   </div>
 
-  <section id="hot" class="reveal">
-    <h2 class="section-title">Preorder PC Builds</h2>
-    <div class="section-subtitle">Custom Gaming PCs • Built On Demand</div>
-    <div class="hot-grid">
-      <div class="hot-card" data-product='{"name":"BLACK SETUP CUSTOM LCD Screen (RTX 3050)","price":"RM2,500","image":"images/pc1000.webp","specs":["Processor: AMD Ryzen 5 5500","Motherboard: A520M","Graphics: RTX 3050 6GB","RAM: 16GB DDR4","Storage: 512GB NVMe SSD","PSU: 500W Bronze 80+","Case: Black Custom LCD","Warranty: up to 4 Years"]}'>
-        <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/pc1000.webp" alt="BLACK SETUP RTX 3050" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM2500';">
-        <div class="hot-card-content"><div class="hot-title">BLACK SETUP Custom LCD (RTX 3050)</div><div class="hot-desc">RM2,500</div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"WHITE SETUP CUSTOM LCD Screen (RTX 5060)","price":"RM3,500","image":"images/pc2000.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M","Graphics: RTX 5060 8GB","RAM: 16GB DDR4","Storage: 512GB NVMe SSD","PSU: 600W Bronze 80+","Case: White Custom LCD","Warranty: up to 4 Years"]}'>
-        <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/pc2000.webp" alt="WHITE SETUP RTX 5060" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM3500';">
-        <div class="hot-card-content"><div class="hot-title">WHITE SETUP Custom LCD (RTX 5060)</div><div class="hot-desc">RM3,500</div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"BLACK SETUP CUSTOM LCD Screen (RTX 5060 Ti)","price":"RM4,000","image":"images/pc3000.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M","Graphics: RTX 5060 Ti 8GB","RAM: 16GB DDR4","Storage: 512GB NVMe SSD","PSU: 650W Bronze 80+","Case: Black Custom LCD","Warranty: up to 4 Years"]}'>
-        <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/pc3000.webp" alt="BLACK SETUP RTX 5060 Ti" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM4000';">
-        <div class="hot-card-content"><div class="hot-title">BLACK SETUP Custom LCD (RTX 5060 Ti)</div><div class="hot-desc">RM4,000</div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"Custom PC","price":"Custom Price","image":"images/custompc.webp","specs":["Build your dream rig","Choose CPU, GPU, RAM, Storage","Free assembly & testing","RGB lighting optional","Warranty: up to 4 Years","Personalized cable management"]}'>
-        <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/custompc.webp" alt="Custom PC" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Custom+PC';">
-        <div class="hot-card-content"><div class="hot-title">Custom PC</div><div class="hot-desc">Free Setup</div></div>
+  <!-- BLACK SETUP RTX 5060 Ti – RM4,000 (using pc3000.webp) -->
+  <div class="hot-card" data-product='{"name":"BLACK SETUP CUSTOM LCD Screen (RTX 5060 Ti)","price":"RM4,000","image":"images/pc3000.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: A520M","Graphics: RTX 5060 Ti 8GB","RAM: 16GB DDR4","Storage: 512GB NVMe SSD","PSU: 650W Bronze 80+","Case: Black Custom LCD","Warranty: up to 4 Years"]}'>
+    <span class="badge badge-right">PRE-ORDER</span>
+    <img src="images/pc3000.webp" alt="BLACK SETUP RTX 5060 Ti" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM4000';">
+    <div class="hot-card-content">
+      <div class="hot-title">BLACK SETUP Custom LCD (RTX 5060 Ti)</div>
+      <div class="hot-desc">RM4,000</div>
+    </div>
+  </div>
+
+  <!-- Custom PC (unchanged) -->
+  <div class="hot-card" data-product='{"name":"Custom PC","price":"Custom Price","image":"images/custompc.webp","specs":["Build your dream rig","Choose CPU, GPU, RAM, Storage","Free assembly & testing","RGB lighting optional","Warranty: up to 4 Years","Personalized cable management"]}'>
+    <span class="badge badge-right">PRE-ORDER</span>
+    <img src="images/custompc.webp" alt="Custom PC" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Custom+PC';">
+    <div class="hot-card-content">
+      <div class="hot-title">Custom PC</div>
+      <div class="hot-desc">Free Setup</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="pc-builder" class="reveal">
+  <div class="pc-builder">
+    <h2 class="builder-title">🛠️ Custom PC Builder</h2>
+    <div class="builder-subtitle" style="font-size: 0.85rem; margin-top: -15px; margin-bottom: 20px;">Estimated price only. Final price may vary based on current market prices.</div>
+    <div id="pc-builder-container">
+      <div class="no-data-message">Loading PC Builder...</div>
+    </div>
+  </div>
+</section>
+
+<section id="preorder-console" class="reveal">
+  <h2 class="section-title">Preorder Consoles</h2>
+  <div class="section-subtitle">Used Units • Reserve Before Stock Arrival</div>
+  <div class="hot-grid">
+    <div class="hot-card" data-product='{"name":"PS5 Pro Digital","price":"RM2750","image":"images/ps5-pro.webp","specs":["Condition: Used","Storage: 2TB SSD","Includes: DualSense Controller","Wi-Fi 6, 4K Gaming","Backwards Compatible","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/ps5-pro.webp" alt="PS5 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Pro';">
+      <div class="hot-card-content">
+        <div class="hot-title">PS5 Pro Digital</div>
+        <div class="hot-price-row"><span class="hot-desc">RM2750</span></div>
       </div>
     </div>
-  </section>
-
-  <section id="pc-builder" class="reveal">
-    <div class="pc-builder">
-      <h2 class="builder-title">🛠️ Custom PC Builder</h2>
-      <div class="builder-subtitle" style="font-size:0.85rem; margin-top:-15px; margin-bottom:20px;">Estimated price only. Final price may vary based on current market prices.</div>
-      <div id="pc-builder-container"><div class="no-data-message">Loading PC Builder...</div></div>
-    </div>
-  </section>
-
-  <section id="preorder-console" class="reveal">
-    <h2 class="section-title">Preorder Consoles</h2>
-    <div class="section-subtitle">Used Units • Reserve Before Stock Arrival</div>
-    <div class="hot-grid">
-      <div class="hot-card" data-product='{"name":"PS5 Pro Digital","price":"RM2750","image":"images/ps5-pro.webp","specs":["Condition: Used","Storage: 2TB SSD","Includes: DualSense Controller","Wi-Fi 6, 4K Gaming","Backwards Compatible","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/ps5-pro.webp" alt="PS5 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Pro';"><div class="hot-card-content"><div class="hot-title">PS5 Pro Digital</div><div class="hot-price-row"><span class="hot-desc">RM2750</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"PS4 Slim 500GB","price":"RM550","image":"images/ps4-slim.webp","specs":["Condition: Used","Storage: 500GB HDD","Includes: DualShock 4","HDMI Cable","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/ps4-slim.webp" alt="PS4 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Slim';"><div class="hot-card-content"><div class="hot-title">PS4 Slim 500GB</div><div class="hot-price-row"><span class="hot-desc">RM550</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"PS4 Pro 1TB","price":"RM650","image":"images/ps4-pro.webp","specs":["Condition: Used","Storage: 1TB HDD","4K Gaming","Includes: DualShock 4","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/ps4-pro.webp" alt="PS4 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Pro';"><div class="hot-card-content"><div class="hot-title">PS4 Pro 1TB</div><div class="hot-price-row"><span class="hot-desc">RM650</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"PS5 Fat Disc","price":"RM1500","image":"images/ps5-fat.webp","specs":["Condition: Used (Like New)","Storage: 825GB SSD","Version: Disc Edition (4K UHD)","Includes: DualSense Controller","Warranty: 14 Days (Return & Testing)"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/ps5-fat.webp" alt="PS5 Fat" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Fat';"><div class="hot-card-content"><div class="hot-title">PS5 Fat Disc</div><div class="hot-price-row"><span class="hot-desc">RM1500</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"PS5 Slim Disc","price":"RM1700","image":"images/ps5-slim.webp","specs":["Condition: Used","Storage: 1TB SSD","Slim Design","Disc Version","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/ps5-slim.webp" alt="PS5 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Slim';"><div class="hot-card-content"><div class="hot-title">PS5 Slim Disc</div><div class="hot-price-row"><span class="hot-desc">RM1700</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"Switch Lite","price":"RM400","image":"images/switch-lite.webp","specs":["Condition: Used","Handheld Only","Battery: 3-7 hours","Includes: Charger","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/switch-lite.webp" alt="Switch Lite" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+Lite';"><div class="hot-card-content"><div class="hot-title">Switch Lite</div><div class="hot-price-row"><span class="hot-desc">RM400</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"Switch OLED White","price":"RM750","image":"images/switch-oled-white.webp","specs":["Condition: Used","7-inch OLED Screen","64GB Storage","Includes: Joy-Cons","Dock Included","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/switch-oled-white.webp" alt="Switch OLED White" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+White';"><div class="hot-card-content"><div class="hot-title">Switch OLED White</div><div class="hot-price-row"><span class="hot-desc">RM750</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"Switch OLED Neon","price":"RM750","image":"images/switch-oled-neon.webp","specs":["Condition: Used","7-inch OLED Screen","64GB Storage","Neon Joy-Cons","Dock Included","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/switch-oled-neon.webp" alt="Switch OLED Neon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+Neon';"><div class="hot-card-content"><div class="hot-title">Switch OLED Neon</div><div class="hot-price-row"><span class="hot-desc">RM750</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"Switch OLED Zelda","price":"RM850","image":"images/switch-zelda.webp","specs":["Condition: Used","Limited Edition","7-inch OLED Screen","Zelda Themed Dock","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/switch-zelda.webp" alt="Switch OLED Zelda" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Zelda+OLED';"><div class="hot-card-content"><div class="hot-title">Switch OLED Zelda</div><div class="hot-price-row"><span class="hot-desc">RM850</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"Switch OLED Splatoon","price":"RM850","image":"images/switch-splatoon.webp","specs":["Condition: Used","Limited Edition","Splatoon Themed","OLED Screen","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/switch-splatoon.webp" alt="Switch OLED Splatoon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Splatoon+OLED';"><div class="hot-card-content"><div class="hot-title">Switch OLED Splatoon</div><div class="hot-price-row"><span class="hot-desc">RM850</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"Switch OLED Mario","price":"RM850","image":"images/switch-mario.webp","specs":["Condition: Used","Mario Red Edition","OLED Screen","Includes: Carry Case","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/switch-mario.webp" alt="Switch OLED Mario" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Mario+OLED';"><div class="hot-card-content"><div class="hot-title">Switch OLED Mario</div><div class="hot-price-row"><span class="hot-desc">RM850</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"Switch OLED Pokemon","price":"RM850","image":"images/switch-pokemon.webp","specs":["Condition: Used","Pokemon Edition","OLED Screen","Special Backplate","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/switch-pokemon.webp" alt="Switch OLED Pokemon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Pokemon+OLED';"><div class="hot-card-content"><div class="hot-title">Switch OLED Pokemon</div><div class="hot-price-row"><span class="hot-desc">RM850</span></div></div>
-      </div>
-      <div class="hot-card" data-product='{"name":"Switch 2 Edition","price":"RM1700","image":"images/switch-2.webp","specs":["Condition: Used","Next-gen Switch","Enhanced Performance","Larger Screen","Backwards Compatible","Warranty: 14 Days"]}'>
-        <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
-        <img src="images/switch-2.webp" alt="Switch 2" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+2';"><div class="hot-card-content"><div class="hot-title">Switch 2 Edition</div><div class="hot-price-row"><span class="hot-desc">RM1700</span></div></div>
+    <div class="hot-card" data-product='{"name":"PS4 Slim 500GB","price":"RM550","image":"images/ps4-slim.webp","specs":["Condition: Used","Storage: 500GB HDD","Includes: DualShock 4","HDMI Cable","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/ps4-slim.webp" alt="PS4 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Slim';">
+      <div class="hot-card-content">
+        <div class="hot-title">PS4 Slim 500GB</div>
+        <div class="hot-price-row"><span class="hot-desc">RM550</span></div>
       </div>
     </div>
-  </section>
-
-  <section id="stock" class="reveal">
-    <h2 class="section-title">Stock Available</h2>
-    <div class="controls"><input id="search" class="search-box" placeholder="Search item..."></div>
-    <div class="filter-tabs" id="filters"></div>
-    <div class="product-grid" id="grid"><div class="no-data-message">Loading stock data...</div></div>
-  </section>
-
-  <section id="trade-section" class="trade-section reveal">
-    <h2 class="trade-title">Game & Console Trade‑In</h2>
-    <p class="trade-desc">Got old games or consoles? Trade them in!</p>
-    <button class="trade-btn" id="tradeBtn">Inquire About Trade‑In</button>
-  </section>
-
-  <section id="gallery" class="reveal" style="max-width:1200px; margin:0 auto;">
-    <h2 class="section-title">Gallery</h2>
-    <div class="section-subtitle">Immersive 3D • Custom PC builds and gaming setups</div>
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="images/g1.webp" alt="Custom PC 1" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+1';"><div class="slide-caption">Custom PC</div></div>
-        <div class="swiper-slide"><img src="images/g2.webp" alt="Custom PC 2" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+2';"><div class="slide-caption">Custom PC</div></div>
-        <div class="swiper-slide"><img src="images/g3.webp" alt="Custom PC 3" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+3';"><div class="slide-caption">Custom PC</div></div>
-        <div class="swiper-slide"><img src="images/g4.webp" alt="Custom PC 4" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+4';"><div class="slide-caption">Custom PC</div></div>
-        <div class="swiper-slide"><img src="images/g5.webp" alt="Custom PC 5" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x800/222/ffd84d?text=Custom+PC+5';"><div class="slide-caption">Custom PC</div></div>
-        <div class="swiper-slide"><img src="images/g6.webp" alt="Custom PC 6" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+6';"><div class="slide-caption">Custom PC</div></div>
-      </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
-    </div>
-  </section>
-
-  <section id="faq" class="reveal">
-    <h2 class="section-title">Frequently Asked Questions</h2>
-    <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-question" tabindex="0" role="button" aria-expanded="false"><span>How long does pre‑order take?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">Pre‑ordered items typically arrive within 7‑14 working days after payment. You'll receive tracking info via WhatsApp.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question" tabindex="0" role="button" aria-expanded="false"><span>What's the trade‑in process?</span><span class="faq-icon">+</span></div>
-        <div class="faq-answer">Send us photos of your item via WhatsApp, we'll quote you within 24h. If accepted, ship it to us or drop by our store.</div>
+    <div class="hot-card" data-product='{"name":"PS4 Pro 1TB","price":"RM650","image":"images/ps4-pro.webp","specs":["Condition: Used","Storage: 1TB HDD","4K Gaming","Includes: DualShock 4","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/ps4-pro.webp" alt="PS4 Pro" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS4+Pro';">
+      <div class="hot-card-content">
+        <div class="hot-title">PS4 Pro 1TB</div>
+        <div class="hot-price-row"><span class="hot-desc">RM650</span></div>
       </div>
     </div>
-  </section>
-
-  <section id="payment" class="reveal">
-    <h2 class="section-title" style="text-align:center">Payment Methods</h2>
-    <div class="trust-badges">
-      <div class="trust-badge"><span class="icon">✓</span> Verified Business</div>
-      <div class="trust-badge"><span class="icon">🔒</span> Secure Checkout</div>
-      <div class="trust-badge"><span class="icon">🔄</span> 7-Day Returns</div>
+    <div class="hot-card" data-product='{"name":"PS5 Fat Disc","price":"RM1500","image":"images/ps5-fat.webp","specs":["Condition: Used (Like New)","Storage: 825GB SSD","Version: Disc Edition (4K UHD)","Includes: DualSense Controller","Warranty: 14 Days (Return & Testing)"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/ps5-fat.webp" alt="PS5 Fat" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Fat';">
+      <div class="hot-card-content">
+        <div class="hot-title">PS5 Fat Disc</div>
+        <div class="hot-price-row"><span class="hot-desc">RM1500</span></div>
+      </div>
     </div>
-    <div class="payment-icons">
-      <div class="payment-item"><img src="https://cdn.simpleicons.org/visa/1a1f71" alt="Visa"><span>FPX Online Banking</span></div>
+    <div class="hot-card" data-product='{"name":"PS5 Slim Disc","price":"RM1700","image":"images/ps5-slim.webp","specs":["Condition: Used","Storage: 1TB SSD","Slim Design","Disc Version","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/ps5-slim.webp" alt="PS5 Slim" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=PS5+Slim';">
+      <div class="hot-card-content">
+        <div class="hot-title">PS5 Slim Disc</div>
+        <div class="hot-price-row"><span class="hot-desc">RM1700</span></div>
+      </div>
     </div>
-  </section>
+    <div class="hot-card" data-product='{"name":"Switch Lite","price":"RM400","image":"images/switch-lite.webp","specs":["Condition: Used","Handheld Only","Battery: 3-7 hours","Includes: Charger","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/switch-lite.webp" alt="Switch Lite" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+Lite';">
+      <div class="hot-card-content">
+        <div class="hot-title">Switch Lite</div>
+        <div class="hot-price-row"><span class="hot-desc">RM400</span></div>
+      </div>
+    </div>
+    <div class="hot-card" data-product='{"name":"Switch OLED White","price":"RM750","image":"images/switch-oled-white.webp","specs":["Condition: Used","7-inch OLED Screen","64GB Storage","Includes: Joy-Cons","Dock Included","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/switch-oled-white.webp" alt="Switch OLED White" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+White';">
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED White</div>
+        <div class="hot-price-row"><span class="hot-desc">RM750</span></div>
+      </div>
+    </div>
+    <div class="hot-card" data-product='{"name":"Switch OLED Neon","price":"RM750","image":"images/switch-oled-neon.webp","specs":["Condition: Used","7-inch OLED Screen","64GB Storage","Neon Joy-Cons","Dock Included","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/switch-oled-neon.webp" alt="Switch OLED Neon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=OLED+Neon';">
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Neon</div>
+        <div class="hot-price-row"><span class="hot-desc">RM750</span></div>
+      </div>
+    </div>
+    <div class="hot-card" data-product='{"name":"Switch OLED Zelda","price":"RM850","image":"images/switch-zelda.webp","specs":["Condition: Used","Limited Edition","7-inch OLED Screen","Zelda Themed Dock","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/switch-zelda.webp" alt="Switch OLED Zelda" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Zelda+OLED';">
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Zelda</div>
+        <div class="hot-price-row"><span class="hot-desc">RM850</span></div>
+      </div>
+    </div>
+    <div class="hot-card" data-product='{"name":"Switch OLED Splatoon","price":"RM850","image":"images/switch-splatoon.webp","specs":["Condition: Used","Limited Edition","Splatoon Themed","OLED Screen","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/switch-splatoon.webp" alt="Switch OLED Splatoon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Splatoon+OLED';">
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Splatoon</div>
+        <div class="hot-price-row"><span class="hot-desc">RM850</span></div>
+      </div>
+    </div>
+    <div class="hot-card" data-product='{"name":"Switch OLED Mario","price":"RM850","image":"images/switch-mario.webp","specs":["Condition: Used","Mario Red Edition","OLED Screen","Includes: Carry Case","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/switch-mario.webp" alt="Switch OLED Mario" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Mario+OLED';">
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Mario</div>
+        <div class="hot-price-row"><span class="hot-desc">RM850</span></div>
+      </div>
+    </div>
+    <div class="hot-card" data-product='{"name":"Switch OLED Pokemon","price":"RM850","image":"images/switch-pokemon.webp","specs":["Condition: Used","Pokemon Edition","OLED Screen","Special Backplate","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/switch-pokemon.webp" alt="Switch OLED Pokemon" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Pokemon+OLED';">
+      <div class="hot-card-content">
+        <div class="hot-title">Switch OLED Pokemon</div>
+        <div class="hot-price-row"><span class="hot-desc">RM850</span></div>
+      </div>
+    </div>
+    <div class="hot-card" data-product='{"name":"Switch 2 Edition","price":"RM1700","image":"images/switch-2.webp","specs":["Condition: Used","Next-gen Switch","Enhanced Performance","Larger Screen","Backwards Compatible","Warranty: 14 Days"]}'>
+      <span class="badge badge-left">USED</span> <span class="badge badge-right">PRE-ORDER</span>
+      <img src="images/switch-2.webp" alt="Switch 2" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/400x500/222/ffd84d?text=Switch+2';">
+      <div class="hot-card-content">
+        <div class="hot-title">Switch 2 Edition</div>
+        <div class="hot-price-row"><span class="hot-desc">RM1700</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <footer>© 2026 FAZGAME • Faz Service, Faz Gaming</footer>
+<section id="stock" class="reveal">
+  <h2 class="section-title">Stock Available</h2>
+  <div class="controls"><input id="search" class="search-box" placeholder="Search item..."></div>
+  <div class="filter-tabs" id="filters"></div>
+  <div class="product-grid" id="grid">
+    <div class="no-data-message">Loading stock data...</div>
+  </div>
+</section>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="stock.js?v=3"></script>
-  <script src="pc-builder.js?v=3"></script>
-  <script>
-    // All JS remains identical to original – kept for functionality
-    const bgMusic = document.getElementById('bg-music');
-    const musicToggle = document.getElementById('musicToggle');
-    const autoplayHint = document.getElementById('autoplayHint');
-    let musicStarted = false;
+<section id="trade-section" class="trade-section reveal">
+  <h2 class="trade-title">Game & Console Trade‑In</h2>
+  <p class="trade-desc">Got old games or consoles? Trade them in!</p>
+  <button class="trade-btn" id="tradeBtn">Inquire About Trade‑In</button>
+</section>
 
-    function updateMusicIcon() {
-      if (bgMusic.muted) {
-        musicToggle.innerHTML = '🔇';
-        musicToggle.classList.add('muted');
-        musicToggle.title = 'Music off';
-      } else {
-        musicToggle.innerHTML = '🎵';
-        musicToggle.classList.remove('muted');
-        musicToggle.title = 'Music on';
-      }
+<section id="gallery" class="reveal" style="max-width: 1200px; margin: 0 auto;">
+  <h2 class="section-title">Gallery</h2>
+  <div class="section-subtitle">Immersive 3D • Custom PC builds and gaming setups</div>
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <!-- Original 6 slides -->
+      <div class="swiper-slide"><img src="images/g1.webp" alt="Custom PC 1" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+1';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g2.webp" alt="Custom PC 2" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+2';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g3.webp" alt="Custom PC 3" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+3';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g4.webp" alt="Custom PC 4" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+4';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g5.webp" alt="Custom PC 5" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x800/222/ffd84d?text=Custom+PC+5';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g6.webp" alt="Custom PC 6" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+6';"><div class="slide-caption">Custom PC</div></div>
+      
+      <!-- 7 additional slides (g7 to g13) -->
+      <div class="swiper-slide"><img src="images/g7.webp" alt="Custom PC 7" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x800/222/ffd84d?text=Custom+PC+7';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g8.webp" alt="Custom PC 8" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+8';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g9.webp" alt="Custom PC 9" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+9';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g10.webp" alt="Custom PC 10" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x800/222/ffd84d?text=Custom+PC+10';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g11.webp" alt="Custom PC 11" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+11';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g12.webp" alt="Custom PC 12" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x400/222/ffd84d?text=Custom+PC+12';"><div class="slide-caption">Custom PC</div></div>
+      <div class="swiper-slide"><img src="images/g13.webp" alt="Custom PC 13" loading="lazy" onerror="this.onerror=null; this.src='https://placehold.co/600x800/222/ffd84d?text=Custom+PC+13';"><div class="slide-caption">Custom PC</div></div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<section id="faq" class="reveal">
+  <h2 class="section-title">Frequently Asked Questions</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+        <span>How long does pre‑order take?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">Pre‑ordered items typically arrive within 7‑14 working days after payment. You'll receive tracking info via WhatsApp.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+        <span>What's the trade‑in process?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">Send us photos of your item via WhatsApp, we'll quote you within 24h. If accepted, ship it to us or drop by our store.</div>
+    </div>
+  </div>
+</section>
+
+<section id="payment" class="reveal">
+  <h2 class="section-title" style="text-align:center">Payment Methods</h2>
+  <div class="trust-badges">
+    <div class="trust-badge"><span class="icon">✓</span> Verified Business</div>
+    <div class="trust-badge"><span class="icon">🔒</span> Secure Checkout</div>
+    <div class="trust-badge"><span class="icon">🔄</span> 7-Day Returns</div>
+  </div>
+  <div class="payment-icons">
+    <div class="payment-item"><img src="https://cdn.simpleicons.org/visa/1a1f71" alt="Visa"><span>FPX Online Banking</span></div>
+  </div>
+</section>
+
+<footer>
+  © 2026 FAZGAME • Faz Service, Faz Gaming
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="stock.js?v=3"></script>
+<script src="pc-builder.js?v=3"></script>
+
+<script>
+  // ========== MUSIC AUTOPLAY (UNMUTED ATTEMPT + ONE-TAP FALLBACK) ==========
+  const bgMusic = document.getElementById('bg-music');
+  const musicToggle = document.getElementById('musicToggle');
+  const autoplayHint = document.getElementById('autoplayHint');
+  let musicStarted = false;
+
+  function updateMusicIcon() {
+    if (bgMusic.muted) {
+      musicToggle.innerHTML = '🔇';
+      musicToggle.classList.add('muted');
+      musicToggle.title = 'Music off';
+    } else {
+      musicToggle.innerHTML = '🎵';
+      musicToggle.classList.remove('muted');
+      musicToggle.title = 'Music on';
     }
+  }
 
-    function startMusic() {
-      if (musicStarted) return;
-      bgMusic.muted = false;
-      bgMusic.loop = true;
-      bgMusic.play().then(() => {
-        musicStarted = true;
-        updateMusicIcon();
-        if (autoplayHint) autoplayHint.classList.remove('show');
-      }).catch(err => console.warn("startMusic error:", err));
-    }
-
+  function startMusic() {
+    if (musicStarted) return;
     bgMusic.muted = false;
+    bgMusic.loop = true;
     bgMusic.play().then(() => {
       musicStarted = true;
       updateMusicIcon();
-    }).catch(() => {
-      if (autoplayHint) autoplayHint.classList.add('show');
-      const startOnInteraction = () => {
-        startMusic();
-        document.removeEventListener('click', startOnInteraction);
-        document.removeEventListener('touchstart', startOnInteraction);
-      };
-      document.addEventListener('click', startOnInteraction);
-      document.addEventListener('touchstart', startOnInteraction);
+      if (autoplayHint) autoplayHint.classList.remove('show');
+    }).catch(err => console.warn("startMusic error:", err));
+  }
+
+  bgMusic.muted = false;
+  bgMusic.play().then(() => {
+    musicStarted = true;
+    updateMusicIcon();
+  }).catch(() => {
+    if (autoplayHint) autoplayHint.classList.add('show');
+    const startOnInteraction = () => {
+      startMusic();
+      document.removeEventListener('click', startOnInteraction);
+      document.removeEventListener('touchstart', startOnInteraction);
+    };
+    document.addEventListener('click', startOnInteraction);
+    document.addEventListener('touchstart', startOnInteraction);
+  });
+
+  musicToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!musicStarted) {
+      startMusic();
+      return;
+    }
+    bgMusic.muted = !bgMusic.muted;
+    updateMusicIcon();
+  });
+
+  // ========== ALL ORIGINAL JAVASCRIPT (unchanged) ==========
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 200) backToTop.classList.add('visible');
+    else backToTop.classList.remove('visible');
+  });
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  const revealElements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.1 });
+  revealElements.forEach(el => observer.observe(el));
 
-    musicToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (!musicStarted) { startMusic(); return; }
-      bgMusic.muted = !bgMusic.muted;
-      updateMusicIcon();
+  document.getElementById('tradeBtn').addEventListener('click', () => {
+    window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent("Hi FAZGAME 👋 I'm interested in trading in my games/consoles.")}`, '_blank');
+  });
+
+  document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true' ? false : true;
+      this.setAttribute('aria-expanded', expanded);
+      const answer = this.nextElementSibling;
+      const icon = this.querySelector('.faq-icon');
+      if (expanded) {
+        answer.classList.add('open');
+        icon.classList.add('open');
+        icon.textContent = '−';
+      } else {
+        answer.classList.remove('open');
+        icon.classList.remove('open');
+        icon.textContent = '+';
+      }
     });
-
-    const backToTop = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 200) backToTop.classList.add('visible');
-      else backToTop.classList.remove('visible');
+    question.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        question.click();
+      }
     });
-    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  });
 
-    const revealElements = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    revealElements.forEach(el => observer.observe(el));
+  const modalElem = document.getElementById('detailModal');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalImgElem = document.getElementById('modalProductImg');
+  const modalTitleElem = document.getElementById('modalProductTitle');
+  const modalPriceElem = document.getElementById('modalProductPrice');
+  const modalSubtitleElem = document.getElementById('modalSubtitle');
+  const modalSpecListElem = document.getElementById('modalSpecList');
+  const modalWarrantyElem = document.getElementById('modalWarranty');
+  const modalReserveBtnElem = document.getElementById('modalReserveBtn');
+  const modalLightbox = document.getElementById('modalLightbox');
+  const modalLightboxImg = document.getElementById('modalLightboxImg');
+  const modalLightboxClose = document.getElementById('modalLightboxClose');
+  const globalLightbox = document.getElementById('imageModal');
 
-    document.getElementById('tradeBtn').addEventListener('click', () => {
-      window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent("Hi FAZGAME 👋 I'm interested in trading in my games/consoles.")}`, '_blank');
-    });
+  function openModal(productData) {
+    modalImgElem.src = productData.image;
+    modalImgElem.onerror = function() { this.src = 'https://placehold.co/600x600/222/ffd84d?text=Product'; };
+    modalTitleElem.textContent = productData.name;
+    modalPriceElem.textContent = productData.price;
 
-    document.querySelectorAll('.faq-question').forEach(question => {
-      question.addEventListener('click', function() {
-        const expanded = this.getAttribute('aria-expanded') === 'true' ? false : true;
-        this.setAttribute('aria-expanded', expanded);
-        const answer = this.nextElementSibling;
-        const icon = this.querySelector('.faq-icon');
-        if (expanded) {
-          answer.classList.add('open');
-          icon.classList.add('open');
-          icon.textContent = '−';
+    let subtitle = '';
+    if (productData.specs && productData.specs.some(s => s.toLowerCase().includes('condition: used'))) {
+      subtitle = 'Pre-Owned · Premium Unit';
+    }
+    modalSubtitleElem.textContent = subtitle;
+    if (!subtitle) modalSubtitleElem.style.display = 'none';
+    else modalSubtitleElem.style.display = 'block';
+
+    let warrantyText = '';
+    const specItems = [];
+    for (let spec of (productData.specs || [])) {
+      const colonIndex = spec.indexOf(':');
+      if (colonIndex !== -1) {
+        const label = spec.substring(0, colonIndex).trim();
+        const value = spec.substring(colonIndex + 1).trim();
+        if (label.toLowerCase() === 'warranty') {
+          warrantyText = value || spec;
         } else {
-          answer.classList.remove('open');
-          icon.classList.remove('open');
-          icon.textContent = '+';
+          specItems.push({ label, value });
         }
-      });
-      question.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); question.click(); }
-      });
-    });
-
-    const modalElem = document.getElementById('detailModal');
-    const modalCloseBtn = document.getElementById('modalCloseBtn');
-    const modalImgElem = document.getElementById('modalProductImg');
-    const modalTitleElem = document.getElementById('modalProductTitle');
-    const modalPriceElem = document.getElementById('modalProductPrice');
-    const modalSubtitleElem = document.getElementById('modalSubtitle');
-    const modalSpecListElem = document.getElementById('modalSpecList');
-    const modalWarrantyElem = document.getElementById('modalWarranty');
-    const modalReserveBtnElem = document.getElementById('modalReserveBtn');
-    const modalLightbox = document.getElementById('modalLightbox');
-    const modalLightboxImg = document.getElementById('modalLightboxImg');
-    const modalLightboxClose = document.getElementById('modalLightboxClose');
-    const globalLightbox = document.getElementById('imageModal');
-
-    function openModal(productData) {
-      modalImgElem.src = productData.image;
-      modalImgElem.onerror = function() { this.src = 'https://placehold.co/600x600/222/ffd84d?text=Product'; };
-      modalTitleElem.textContent = productData.name;
-      modalPriceElem.textContent = productData.price;
-      let subtitle = '';
-      if (productData.specs && productData.specs.some(s => s.toLowerCase().includes('condition: used'))) subtitle = 'Pre-Owned · Premium Unit';
-      modalSubtitleElem.textContent = subtitle;
-      modalSubtitleElem.style.display = subtitle ? 'block' : 'none';
-      let warrantyText = '';
-      const specItems = [];
-      for (let spec of (productData.specs || [])) {
-        const colonIndex = spec.indexOf(':');
-        if (colonIndex !== -1) {
-          const label = spec.substring(0, colonIndex).trim();
-          const value = spec.substring(colonIndex + 1).trim();
-          if (label.toLowerCase() === 'warranty') warrantyText = value || spec;
-          else specItems.push({ label, value });
-        } else specItems.push({ label: '•', value: spec });
+      } else {
+        specItems.push({ label: '•', value: spec });
       }
-      modalSpecListElem.innerHTML = specItems.map(item => `<li><strong>${item.label !== '•' ? item.label + ':' : ''}</strong> ${item.value}</li>`).join('');
-      if (warrantyText) { modalWarrantyElem.innerHTML = `✅ ${warrantyText} · Full Functional Test`; modalWarrantyElem.style.display = 'block'; }
-      else modalWarrantyElem.style.display = 'none';
-      modalElem.classList.add('show');
-      document.body.style.overflow = 'hidden';
-      history.pushState({ modalOpen: true }, '', location.href);
+    }
+    modalSpecListElem.innerHTML = specItems.map(item => `
+      <li><strong>${item.label !== '•' ? item.label + ':' : ''}</strong> ${item.value}</li>
+    `).join('');
+    if (warrantyText) {
+      modalWarrantyElem.innerHTML = `✅ ${warrantyText} · Full Functional Test`;
+      modalWarrantyElem.style.display = 'block';
+    } else {
+      modalWarrantyElem.style.display = 'none';
     }
 
-    function closeModal() { modalElem.classList.remove('show'); document.body.style.overflow = ''; }
-    function closeModalLightboxFunc() { modalLightbox.classList.remove('active'); document.body.style.overflow = ''; }
-    function closeAllModals() {
-      if (modalElem.classList.contains('show')) closeModal();
-      if (modalLightbox.classList.contains('active')) closeModalLightboxFunc();
-      if (globalLightbox.classList.contains('show')) { globalLightbox.classList.remove('show'); document.body.style.overflow = 'auto'; }
+    modalElem.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    history.pushState({ modalOpen: true }, '', location.href);
+  }
+
+  function closeModal() {
+    modalElem.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalLightboxFunc() {
+    modalLightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function closeAllModals() {
+    if (modalElem.classList.contains('show')) closeModal();
+    if (modalLightbox.classList.contains('active')) closeModalLightboxFunc();
+    if (globalLightbox.classList.contains('show')) {
+      globalLightbox.classList.remove('show');
+      document.body.style.overflow = 'auto';
     }
+  }
 
-    modalCloseBtn.addEventListener('click', closeModal);
-    modalElem.addEventListener('click', (e) => { if (e.target === modalElem) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalElem.classList.contains('show')) closeModal(); });
-    modalImgElem.addEventListener('click', () => {
-      modalLightboxImg.src = modalImgElem.src;
-      modalLightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      history.pushState({ modalLightboxOpen: true }, '', location.href);
-    });
-    modalLightboxClose.addEventListener('click', closeModalLightboxFunc);
-    modalLightbox.addEventListener('click', (e) => { if (e.target === modalLightbox) closeModalLightboxFunc(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalLightbox.classList.contains('active')) closeModalLightboxFunc(); });
-    modalReserveBtnElem.addEventListener('click', () => {
-      const productName = modalTitleElem.textContent;
-      const productPrice = modalPriceElem.textContent;
-      window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent(`Hi FAZGAME 👋 I would like to reserve ${productName} (${productPrice}).`)}`, '_blank');
-    });
+  modalCloseBtn.addEventListener('click', closeModal);
+  modalElem.addEventListener('click', (e) => { if (e.target === modalElem) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalElem.classList.contains('show')) closeModal(); });
 
-    document.querySelectorAll('.hot-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        if (e.target.closest('.reserve-btn')) return;
-        const productAttr = card.getAttribute('data-product');
-        if (productAttr) { try { openModal(JSON.parse(productAttr)); } catch (err) { console.warn(err); } }
-      });
-    });
+  modalImgElem.addEventListener('click', () => {
+    modalLightboxImg.src = modalImgElem.src;
+    modalLightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    history.pushState({ modalLightboxOpen: true }, '', location.href);
+  });
+  modalLightboxClose.addEventListener('click', closeModalLightboxFunc);
+  modalLightbox.addEventListener('click', (e) => { if (e.target === modalLightbox) closeModalLightboxFunc(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalLightbox.classList.contains('active')) closeModalLightboxFunc(); });
 
-    window.addEventListener('popstate', function(event) {
-      if (modalElem.classList.contains('show') || modalLightbox.classList.contains('active') || globalLightbox.classList.contains('show')) {
-        closeAllModals();
-        history.pushState(null, '', location.href);
-        event.preventDefault();
+  modalReserveBtnElem.addEventListener('click', () => {
+    const productName = modalTitleElem.textContent;
+    const productPrice = modalPriceElem.textContent;
+    const message = `Hi FAZGAME 👋 I would like to reserve ${productName} (${productPrice}).`;
+    window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent(message)}`, '_blank');
+  });
+
+  document.querySelectorAll('.hot-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.reserve-btn')) return;
+      const productAttr = card.getAttribute('data-product');
+      if (productAttr) {
+        try { openModal(JSON.parse(productAttr)); } catch (err) { console.warn(err); }
       }
     });
+  });
 
-    function initStock() {
-      const grid = document.getElementById('grid');
-      const filters = document.getElementById('filters');
-      const searchInput = document.getElementById('search');
-      if (!window.STOCK || !Array.isArray(window.STOCK) || window.STOCK.length === 0) {
+  window.addEventListener('popstate', function(event) {
+    if (modalElem.classList.contains('show') || modalLightbox.classList.contains('active') || globalLightbox.classList.contains('show')) {
+      closeAllModals();
+      history.pushState(null, '', location.href);
+      event.preventDefault();
+    }
+  });
+
+  function initStock() {
+    const grid = document.getElementById('grid');
+    const filters = document.getElementById('filters');
+    const searchInput = document.getElementById('search');
+    
+    if (!window.STOCK || !Array.isArray(window.STOCK) || window.STOCK.length === 0) {
+      if (grid) grid.innerHTML = '<div class="no-data-message">No data loaded. Please check connection.</div>';
+      return;
+    }
+    
+    const products = window.STOCK;
+    const icons = {
+      console: 'https://api.iconify.design/mdi/console.svg',
+      ps5: 'https://api.iconify.design/simple-icons/playstation.svg',
+      ps4: 'https://api.iconify.design/simple-icons/playstation.svg',
+      xbox: 'https://api.iconify.design/simple-icons/xbox.svg',
+      switch: 'https://api.iconify.design/simple-icons/nintendoswitch.svg',
+      pc: 'https://api.iconify.design/mdi/desktop-classic.svg',
+      other: 'https://api.iconify.design/mdi/gamepad-variant.svg'
+    };
+    const categories = ['all', 'console', 'ps5', 'ps4', 'xbox', 'switch', 'pc', 'other'];
+    let activeCat = 'all';
+    
+    function renderProducts() {
+      const q = searchInput ? searchInput.value.toLowerCase() : '';
+      const filtered = products.filter(p => (activeCat === 'all' || p.c === activeCat) && p.n.toLowerCase().includes(q));
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="no-data-message">No items found matching your search.</div>`;
+      } else {
+        grid.innerHTML = filtered.map(p => {
+          const condClass = p.cond === 'new' ? 'var(--badge-new-bg)' : 'var(--badge-used-bg)';
+          const condColor = p.cond === 'new' ? 'var(--badge-new-text)' : 'var(--badge-used-text)';
+          const typeClass = p.type === 'game' ? '#3cff7f' : 'var(--accent)';
+          return `
+          <div class="product-card">
+            <span class="card-badge card-badge-cond" style="background: ${condClass}; color: ${condColor};">${p.cond?.toUpperCase() || 'USED'}</span>
+            <span class="card-badge card-badge-type" style="background: ${typeClass};">${p.type?.toUpperCase() || 'CONSOLE'}</span>
+            <div class="product-icon">
+              <img src="${icons[p.c] || icons.other}" alt="${p.c}">
+            </div>
+            <div class="product-info">
+              <h4>${p.n}</h4>
+              <div class="price-row">
+                <span class="product-price">RM${p.p}</span>
+                <button class="product-buy" data-product-name="${p.n}">CHECK STOCK</button>
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+      }
+      categories.forEach(c => {
+        const el = document.getElementById('count-' + c);
+        if (el) el.textContent = c === 'all' ? products.length : products.filter(p => p.c === c).length;
+      });
+    }
+    
+    if (filters) {
+      filters.innerHTML = '';
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn' + (cat === 'all' ? ' active' : '');
+        btn.innerHTML = `${cat.toUpperCase()} <span class="filter-count" id="count-${cat}">0</span>`;
+        btn.onclick = () => {
+          activeCat = cat;
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderProducts();
+        };
+        filters.appendChild(btn);
+      });
+    }
+    if (searchInput) searchInput.oninput = renderProducts;
+    renderProducts();
+  }
+  
+  if (window.STOCK && Array.isArray(window.STOCK)) {
+    initStock();
+  } else {
+    const checkStockInterval = setInterval(() => {
+      if (window.STOCK && Array.isArray(window.STOCK)) {
+        clearInterval(checkStockInterval);
+        initStock();
+      }
+    }, 100);
+    setTimeout(() => {
+      clearInterval(checkStockInterval);
+      if (!window.STOCK || !Array.isArray(window.STOCK)) {
+        const grid = document.getElementById('grid');
         if (grid) grid.innerHTML = '<div class="no-data-message">No data loaded. Please check connection.</div>';
-        return;
       }
-      const products = window.STOCK;
-      const icons = {
-        console: 'https://api.iconify.design/mdi/console.svg',
-        ps5: 'https://api.iconify.design/simple-icons/playstation.svg',
-        ps4: 'https://api.iconify.design/simple-icons/playstation.svg',
-        xbox: 'https://api.iconify.design/simple-icons/xbox.svg',
-        switch: 'https://api.iconify.design/simple-icons/nintendoswitch.svg',
-        pc: 'https://api.iconify.design/mdi/desktop-classic.svg',
-        other: 'https://api.iconify.design/mdi/gamepad-variant.svg'
-      };
-      const categories = ['all', 'console', 'ps5', 'ps4', 'xbox', 'switch', 'pc', 'other'];
-      let activeCat = 'all';
-      function renderProducts() {
-        const q = searchInput ? searchInput.value.toLowerCase() : '';
-        const filtered = products.filter(p => (activeCat === 'all' || p.c === activeCat) && p.n.toLowerCase().includes(q));
-        if (filtered.length === 0) grid.innerHTML = '<div class="no-data-message">No items found matching your search.</div>';
-        else {
-          grid.innerHTML = filtered.map(p => {
-            const condClass = p.cond === 'new' ? 'var(--badge-new-bg)' : 'var(--badge-used-bg)';
-            const condColor = p.cond === 'new' ? 'var(--badge-new-text)' : 'var(--badge-used-text)';
-            const typeClass = p.type === 'game' ? '#3cff7f' : 'var(--accent)';
-            return `<div class="product-card"><span class="card-badge card-badge-cond" style="background:${condClass};color:${condColor};">${p.cond?.toUpperCase()||'USED'}</span><span class="card-badge card-badge-type" style="background:${typeClass};">${p.type?.toUpperCase()||'CONSOLE'}</span><div class="product-icon"><img src="${icons[p.c]||icons.other}" alt="${p.c}"></div><div class="product-info"><h4>${p.n}</h4><div class="price-row"><span class="product-price">RM${p.p}</span><button class="product-buy" data-product-name="${p.n}">CHECK STOCK</button></div></div></div>`;
-          }).join('');
+    }, 5000);
+  }
+
+  document.addEventListener('click', function(e) {
+    const button = e.target.closest('.product-buy');
+    if (button) {
+      const productName = button.getAttribute('data-product-name');
+      if (productName) {
+        window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent(`Hi FAZGAME 👋 I would like to inquire about ${productName}.`)}`, '_blank');
+      }
+      return;
+    }
+    const reserveBtn = e.target.closest('.reserve-btn');
+    if (reserveBtn) {
+      reserveBtn.classList.add('clicked');
+      setTimeout(() => reserveBtn.classList.remove('clicked'), 300);
+      const consoleName = reserveBtn.getAttribute('data-console');
+      if (consoleName) {
+        window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent(`Hi FAZGAME 👋 I would like to reserve ${consoleName}.`)}`, '_blank');
+      }
+      return;
+    }
+    const gallerySlide = e.target.closest('.swiper-slide');
+    if (gallerySlide && !e.target.closest('.swiper-button-next') && !e.target.closest('.swiper-button-prev')) {
+      const img = gallerySlide.querySelector('img');
+      if (img) {
+        globalLightboxImg.src = img.src;
+        globalLightbox.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        history.pushState({ galleryLightboxOpen: true }, '', location.href);
+      }
+    }
+  });
+
+  const globalLightboxImg = document.getElementById('modalImg');
+  globalLightbox.onclick = () => {
+    globalLightbox.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  };
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && globalLightbox.classList.contains('show')) {
+      globalLightbox.classList.remove('show');
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  if (!('ontouchstart' in window)) {
+    document.querySelectorAll('.hot-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = -(y - centerY) / 15;
+        const rotateY = (x - centerX) / 15;
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+        card.style.setProperty('--x', `${x}px`);
+        card.style.setProperty('--y', `${y}px`);
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+  }
+
+  if (document.querySelector('.mySwiper')) {
+    const swiper = new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      coverflowEffect: { rotate: 50, stretch: 0, depth: 100, modifier: 1, slideShadows: true },
+      pagination: { el: ".swiper-pagination", clickable: true },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+      loop: true,
+      autoplay: { delay: 3000, disableOnInteraction: false },
+      speed: 800,
+    });
+    const swiperContainer = document.querySelector('.mySwiper');
+    swiperContainer.addEventListener('mouseenter', () => swiper.autoplay.stop());
+    swiperContainer.addEventListener('mouseleave', () => swiper.autoplay.start());
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    let progress = 0;
+    const bar = document.getElementById("loaderBar");
+    const preloader = document.getElementById("preloader");
+    const interval = setInterval(() => {
+      progress += 5;
+      if(bar) bar.style.width = progress + "%";
+      if(progress >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          preloader.classList.add("hide");
+          startCounters();
+        }, 400);
+      }
+    }, 40);
+    setTimeout(() => {
+      if (preloader && !preloader.classList.contains('hide')) {
+        preloader.classList.add('hide');
+        startCounters();
+      }
+    }, 2000);
+  });
+  function startCounters() {
+    document.querySelectorAll(".stat-item h3").forEach(counter => {
+      const target = parseInt(counter.dataset.target);
+      let current = 0;
+      const update = () => {
+        current += target / 60;
+        if(current < target) {
+          counter.innerText = Math.ceil(current);
+          requestAnimationFrame(update);
+        } else {
+          counter.innerText = target + "+";
         }
-        categories.forEach(c => { const el = document.getElementById('count-'+c); if(el) el.textContent = c==='all'?products.length:products.filter(p=>p.c===c).length; });
+      };
+      update();
+    });
+  }
+
+  document.querySelectorAll('[data-scroll]').forEach(chip => {
+    chip.onclick = () => {
+      const target = document.getElementById(chip.dataset.scroll);
+      if(target) {
+        const y = target.getBoundingClientRect().top + window.pageYOffset - 120;
+        window.scrollTo({top: y, behavior: 'smooth'});
       }
-      if(filters){ filters.innerHTML=''; categories.forEach(cat=>{ const btn=document.createElement('button'); btn.className='filter-btn'+(cat==='all'?' active':''); btn.innerHTML=`${cat.toUpperCase()} <span class="filter-count" id="count-${cat}">0</span>`; btn.onclick=()=>{ activeCat=cat; document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderProducts(); }; filters.appendChild(btn); }); }
-      if(searchInput) searchInput.oninput=renderProducts;
-      renderProducts();
+    };
+  });
+
+  document.getElementById("cta-whatsapp").addEventListener("click", function(e){
+    e.preventDefault();
+    window.open("https://api.whatsapp.com/send?phone=60163691936&text=" + encodeURIComponent("Hi FAZGAME 👋 I would like to inquire about your products."), '_blank');
+  });
+
+  const themeToggle = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') document.body.classList.add('light-mode');
+  else if (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches) document.body.classList.add('light-mode');
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+      if (e.matches) document.body.classList.add('light-mode');
+      else document.body.classList.remove('light-mode');
     }
-    if(window.STOCK&&Array.isArray(window.STOCK)) initStock();
-    else { const check=setInterval(()=>{ if(window.STOCK&&Array.isArray(window.STOCK)){ clearInterval(check); initStock(); } },100); setTimeout(()=>{ clearInterval(check); if(!window.STOCK||!Array.isArray(window.STOCK)){ const g=document.getElementById('grid'); if(g) g.innerHTML='<div class="no-data-message">No data loaded.</div>'; } },5000); }
+  });
+  themeToggle.addEventListener('click', () => {
+    const lampWrap = document.querySelector('.lamp-wrap');
+    lampWrap.style.transition = 'transform 0.1s';
+    lampWrap.style.transform = 'rotate(0deg) scale(0.98)';
+    setTimeout(() => {
+      lampWrap.style.transform = '';
+      lampWrap.style.transition = '';
+    }, 150);
+    document.body.classList.toggle('light-mode');
+    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+  });
 
-    document.addEventListener('click', function(e) {
-      const btn = e.target.closest('.product-buy');
-      if(btn){ const n=btn.getAttribute('data-product-name'); if(n) window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent(`Hi FAZGAME 👋 I would like to inquire about ${n}.`)}`,'_blank'); return; }
-      const rsv = e.target.closest('.reserve-btn');
-      if(rsv){ rsv.classList.add('clicked'); setTimeout(()=>rsv.classList.remove('clicked'),300); const cn=rsv.getAttribute('data-console'); if(cn) window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent(`Hi FAZGAME 👋 I would like to reserve ${cn}.`)}`,'_blank'); return; }
-      const slide = e.target.closest('.swiper-slide');
-      if(slide&&!e.target.closest('.swiper-button-next')&&!e.target.closest('.swiper-button-prev')){ const img=slide.querySelector('img'); if(img){ globalLightboxImg.src=img.src; globalLightbox.classList.add('show'); document.body.style.overflow='hidden'; history.pushState({galleryLightboxOpen:true},'',location.href); } }
-    });
-
-    const globalLightboxImg = document.getElementById('modalImg');
-    globalLightbox.onclick = () => { globalLightbox.classList.remove('show'); document.body.style.overflow='auto'; };
-    document.addEventListener('keydown', (e) => { if(e.key==='Escape'&&globalLightbox.classList.contains('show')){ globalLightbox.classList.remove('show'); document.body.style.overflow='auto'; } });
-
-    if(!('ontouchstart' in window)){
-      document.querySelectorAll('.hot-card').forEach(card=>{
-        card.addEventListener('mousemove', e=>{
-          const rect=card.getBoundingClientRect();
-          const x=e.clientX-rect.left, y=e.clientY-rect.top;
-          const cx=rect.width/2, cy=rect.height/2;
-          card.style.transform=`rotateX(${-(y-cy)/15}deg) rotateY(${(x-cx)/15}deg) translateY(-5px)`;
-          card.style.setProperty('--x',`${x}px`); card.style.setProperty('--y',`${y}px`);
-        });
-        card.addEventListener('mouseleave',()=>{card.style.transform='';});
-      });
+  setTimeout(() => {
+    const container = document.getElementById('pc-builder-container');
+    if (container && container.innerHTML.trim() === '<div class="no-data-message">Loading PC Builder...</div>') {
+      container.innerHTML = '<div class="no-data-message">PC Builder failed to load. Please check console or contact support.</div>';
     }
+  }, 5000);
 
-    if(document.querySelector('.mySwiper')){
-      const swiper=new Swiper(".mySwiper",{effect:"coverflow",grabCursor:true,centeredSlides:true,slidesPerView:"auto",coverflowEffect:{rotate:50,stretch:0,depth:100,modifier:1,slideShadows:true},pagination:{el:".swiper-pagination",clickable:true},navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"},loop:true,autoplay:{delay:3000,disableOnInteraction:false},speed:800});
-      const swiperContainer=document.querySelector('.mySwiper');
-      swiperContainer.addEventListener('mouseenter',()=>swiper.autoplay.stop());
-      swiperContainer.addEventListener('mouseleave',()=>swiper.autoplay.start());
-    }
-
-    window.addEventListener("DOMContentLoaded",()=>{
-      let progress=0;
-      const bar=document.getElementById("loaderBar"), preloader=document.getElementById("preloader");
-      const interval=setInterval(()=>{ progress+=5; if(bar) bar.style.width=progress+"%"; if(progress>=100){ clearInterval(interval); setTimeout(()=>{ preloader.classList.add("hide"); startCounters(); },400); } },40);
-      setTimeout(()=>{ if(preloader&&!preloader.classList.contains('hide')){ preloader.classList.add('hide'); startCounters(); } },2000);
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW registration failed:', err));
     });
-    function startCounters(){
-      document.querySelectorAll(".stat-item h3").forEach(counter=>{
-        const target=parseInt(counter.dataset.target);
-        let current=0;
-        const update=()=>{ current+=target/60; if(current<target){ counter.innerText=Math.ceil(current); requestAnimationFrame(update); } else counter.innerText=target+"+"; };
-        update();
-      });
-    }
-
-    document.querySelectorAll('[data-scroll]').forEach(chip=>{
-      chip.onclick=()=>{ const target=document.getElementById(chip.dataset.scroll); if(target){ const y=target.getBoundingClientRect().top+window.pageYOffset-120; window.scrollTo({top:y,behavior:'smooth'}); } };
-    });
-
-    document.getElementById("cta-whatsapp").addEventListener("click",function(e){ e.preventDefault(); window.open("https://api.whatsapp.com/send?phone=60163691936&text="+encodeURIComponent("Hi FAZGAME 👋 I would like to inquire about your products."),'_blank'); });
-
-    const themeToggle=document.getElementById('themeToggle');
-    const savedTheme=localStorage.getItem('theme');
-    if(savedTheme==='light') document.body.classList.add('light-mode');
-    else if(!savedTheme&&window.matchMedia('(prefers-color-scheme: light)').matches) document.body.classList.add('light-mode');
-    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change',e=>{ if(!localStorage.getItem('theme')){ if(e.matches) document.body.classList.add('light-mode'); else document.body.classList.remove('light-mode'); } });
-    themeToggle.addEventListener('click',()=>{
-      const lampWrap=document.querySelector('.lamp-wrap');
-      lampWrap.style.transition='transform 0.1s'; lampWrap.style.transform='rotate(0deg) scale(0.98)';
-      setTimeout(()=>{ lampWrap.style.transform=''; lampWrap.style.transition=''; },150);
-      document.body.classList.toggle('light-mode');
-      localStorage.setItem('theme',document.body.classList.contains('light-mode')?'light':'dark');
-    });
-
-    setTimeout(()=>{ const container=document.getElementById('pc-builder-container'); if(container&&container.innerHTML.trim()==='<div class="no-data-message">Loading PC Builder...</div>') container.innerHTML='<div class="no-data-message">PC Builder failed to load. Please check console or contact support.</div>'; },5000);
-
-    if('serviceWorker' in navigator){ window.addEventListener('load',()=>{ navigator.serviceWorker.register('/sw.js').catch(err=>console.log('SW registration failed:',err)); }); }
-  </script>
+  }
+</script>
 </body>
 </html>
