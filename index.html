@@ -123,7 +123,7 @@
       transition: transform 0.2s ease, background 0.2s ease;
     }
 
-    /* ===== COMPACT RGB GAMING LAMP (same as pc-builder) ===== */
+    /* ===== COMPACT RGB GAMING LAMP ===== */
     .lamp-container {
       position: fixed;
       top: 70px;
@@ -363,7 +363,7 @@
       .header-logos { order: 3; justify-content: center; }
     }
 
-    /* ===== BANNER, CARDS, ETC. (unchanged) ===== */
+    /* ===== BANNER, CARDS, ETC. ===== */
     .banner {
       position: relative;
       min-height: auto;
@@ -394,7 +394,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wNCIgLz48L3N2Zz4=');
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wNCIgLz48/N2ZnPg==');
       opacity: 0.15;
       pointer-events: none;
       z-index: 1;
@@ -548,7 +548,7 @@
     @media (min-width: 768px) { .btn-primary { padding: 14px 0; font-size: 16px; } }
     .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 20px 30px -10px rgba(255,216,77,0.5); }
 
-    /* ===== PREORDER CARDS (unchanged) ===== */
+    /* ===== PREORDER CARDS ===== */
     .hot-grid {
       display: grid;
       gap: 14px;
@@ -789,7 +789,7 @@
     .faq-icon { transition: transform 0.3s ease; display: inline-block; }
     .faq-icon.open { transform: rotate(45deg); }
 
-    /* ===== MODAL & LIGHTBOX (unchanged) ===== */
+    /* ===== MODAL & LIGHTBOX ===== */
     .modal {
       display: none;
       position: fixed;
@@ -1021,7 +1021,6 @@
   <img id="modalLightboxImg" class="modal-lightbox-img" alt="Zoomed view">
 </div>
 
-<!-- NEW RGB GAMING LAMP (replaces old theme-toggle) -->
 <input type="checkbox" id="lamp-switch">
 <div class="lamp-container" id="lampContainer">
   <div class="room">
@@ -1108,7 +1107,6 @@
   <button id="cta-whatsapp" class="btn-primary">Chat on WhatsApp</button>
 </div>
 
-<!-- SECTION: Preorder PC Builds -->
 <section id="hot" class="reveal">
   <h2 class="section-title">Preorder PC Builds</h2>
   <div class="section-subtitle">Custom Gaming PCs • Built On Demand</div>
@@ -1141,7 +1139,6 @@
   </div>
 </section>
 
-<!-- SECTION: Preorder Consoles -->
 <section id="preorder-console" class="reveal">
   <h2 class="section-title">Preorder Consoles</h2>
   <div class="section-subtitle">Used Units • Reserve Before Stock Arrival</div>
@@ -1214,7 +1211,6 @@
   </div>
 </section>
 
-<!-- SECTION: Gallery -->
 <section id="gallery" class="reveal">
   <h2 class="section-title">Gallery</h2>
   <div class="section-subtitle">Immersive 3D • Custom PC builds and gaming setups</div>
@@ -1237,14 +1233,12 @@
   </div>
 </section>
 
-<!-- SECTION: Trade In -->
 <section id="trade-section" class="trade-section reveal">
   <h2 class="trade-title">Game & Console Trade‑In</h2>
   <p class="trade-desc">Got old games or consoles? Trade them in!</p>
   <button class="trade-btn" id="tradeBtn">Inquire About Trade‑In</button>
 </section>
 
-<!-- SECTION: FAQ -->
 <section id="faq" class="reveal">
   <h2 class="section-title">Frequently Asked Questions</h2>
   <div class="faq-list">
@@ -1267,7 +1261,6 @@
   </div>
 </section>
 
-<!-- SECTION: Payment -->
 <section id="payment" class="reveal">
   <h2 class="section-title" style="text-align:center;">Payment Methods</h2>
   <div class="trust-badges">
@@ -1288,7 +1281,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-  // MUSIC AUTOPLAY (unchanged)
+  // MUSIC AUTOPLAY
   const bgMusic = document.getElementById('bg-music');
   const musicToggle = document.getElementById('musicToggle');
   const autoplayHint = document.getElementById('autoplayHint');
@@ -1350,7 +1343,7 @@
   }
   startCounters();
 
-  // MODAL LOGIC (unchanged)
+  // MODAL LOGIC
   const modalElem = document.getElementById('detailModal');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
   const modalImgElem = document.getElementById('modalProductImg');
@@ -1460,7 +1453,7 @@
     window.open("https://api.whatsapp.com/send?phone=60163691936&text=" + encodeURIComponent("Hi FAZGAME 👋 I would like to inquire about your products."), '_blank');
   });
 
-  // NEW LAMP THEME TOGGLE (replaces old .theme-toggle)
+  // NEW LAMP THEME TOGGLE
   const lampCheckbox = document.getElementById('lamp-switch');
   const lampContainer = document.getElementById('lampContainer');
   if (localStorage.getItem('theme') === 'light') {
