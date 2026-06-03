@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>FAZGAME | PC Component Inventory</title>
+  <meta name="description" content="FAZGAME – PC components inventory. CPUs, motherboards, GPUs, RAM, storage, PSUs, coolers, cases, monitors, software, thermal paste.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,700,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ===== IDENTICAL TO INDEX.HTML (light/dark, lamp, header, glass) ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.5;
+      transition: background-color 0.5s ease, color 0.3s ease;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== LIGHT/DARK MODE VARIABLES ===== */
+    :root {
+      --bg: #0b0b0f;
+      --bg-secondary: #111216;
+      --card-bg: rgba(20, 22, 27, 0.4);
+      --text: #fff;
+      --muted: #a0a0b0;
+      --accent: #ffd84d;
+      --accent-dark: #e6c43d;
+      --accent-glow: 0 0 20px rgba(255,216,77,0.5);
+      --border-color: rgba(255,255,255,0.08);
+      --card-hover: rgba(30, 32, 40, 0.6);
+      --product-icon-bg: rgba(20, 22, 27, 0.5);
+      --badge-new-bg: rgba(255,216,77,0.45);
+      --badge-new-text: #000;
+      --transition: 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+      --lamp-color: #ffd84d;
+      --lamp-off-color: #94a3b8;
+      --header-bg: rgba(11, 11, 15, 0.5);
+      --card-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      --glass-blur: blur(20px);
+      --glass-border: 1px solid rgba(255,255,255,0.06);
+      --glass-bg: rgba(20, 22, 27, 0.3);
+      --bullet-color: #3b82f6;
+    }
+
+    body.light-mode {
+      --bg: #f8fafc;
+      --bg-secondary: #ffffff;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #eab308;
+      --accent-dark: #ca8a04;
+      --accent-glow: 0 0 20px rgba(234,179,8,0.2);
+      --border-color: rgba(0,0,0,0.1);
+      --card-hover: rgba(255, 255, 255, 1);
+      --product-icon-bg: rgba(226, 232, 240, 0.9);
+      --badge-new-bg: #eab308;
+      --badge-new-text: #0f172a;
+      --lamp-color: #eab308;
+      --lamp-off-color: #64748b;
+      --header-bg: rgba(255, 255, 255, 0.85);
+      --card-shadow: 0 8px 32px rgba(0,0,0,0.05);
+      --glass-border: 1px solid rgba(0,0,0,0.08);
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --bullet-color: #2563eb;
+    }
+
+    /* ===== MUSIC TOGGLE ===== */
+    .autoplay-hint {
+      position: fixed;
+      bottom: 100px;
+      left: 20px;
+      z-index: 9999;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: var(--glass-border);
+      border-radius: 40px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.2s;
+    }
+    .autoplay-hint.show { opacity: 1; visibility: visible; pointer-events: auto; }
+    .music-toggle {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: var(--glass-border);
+      color: var(--text);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 998;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    /* ===== PREMIUM 3D SWING LAMP (identical to index) ===== */
+    .theme-toggle {
+      position: fixed;
+      top: 70px;
+      right: 15px;
+      z-index: 1001;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+      transform: scale(0.8);
+      transform-origin: top right;
+      cursor: pointer;
+    }
+    @media (min-width: 768px) {
+      .theme-toggle {
+        top: 80px;
+        right: 30px;
+        transform: scale(1);
+      }
+    }
+    .lamp-scene { perspective: 1000px; }
+    .lamp-wrap {
+      transform-origin: top center;
+      animation: swing 4s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .wire { width: 2px; height: 50px; background: linear-gradient(#9ca3af, #4b5563); margin-bottom: 2px; }
+    @media (min-width: 768px) { .wire { height: 60px; } }
+    .lamp-head {
+      width: 60px;
+      height: 40px;
+      background: linear-gradient(#6b7280, #1f2937);
+      border-radius: 30px 30px 8px 8px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin-bottom: 5px;
+    }
+    @media (min-width: 768px) { .lamp-head { width: 80px; height: 50px; } }
+    .bulb {
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 30% 30%, var(--lamp-color), color-mix(in srgb, var(--lamp-color) 50%, #333));
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--lamp-color);
+      margin-bottom: 6px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    @media (min-width: 768px) { .bulb { width: 24px; height: 24px; box-shadow: 0 0 25px var(--lamp-color); } }
+    body.light-mode .bulb {
+      background: radial-gradient(circle at 30% 30%, var(--lamp-off-color), color-mix(in srgb, var(--lamp-off-color) 40%, #444));
+      box-shadow: 0 0 15px var(--lamp-off-color);
+    }
+    .beam {
+      width: 120px;
+      height: 100px;
+      background: radial-gradient(ellipse at top, var(--lamp-color) 0%, transparent 70%);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      filter: blur(6px);
+      opacity: 0.5;
+      margin-top: -15px;
+    }
+    @media (min-width: 768px) { .beam { width: 180px; height: 140px; filter: blur(8px); margin-top: -20px; } }
+    body.light-mode .beam {
+      background: radial-gradient(ellipse at top, var(--lamp-off-color) 0%, transparent 70%);
+      opacity: 0.3;
+    }
+    .floor {
+      width: 150px;
+      height: 70px;
+      background: radial-gradient(circle, var(--lamp-color) 0%, transparent 70%);
+      filter: blur(15px);
+      opacity: 0.3;
+      margin-top: -40px;
+    }
+    @media (min-width: 768px) { .floor { width: 200px; height: 100px; filter: blur(20px); margin-top: -60px; } }
+    body.light-mode .floor {
+      background: radial-gradient(circle, var(--lamp-off-color) 0%, transparent 70%);
+      opacity: 0.15;
+    }
+    @keyframes swing {
+      0% { transform: rotate(4deg); }
+      50% { transform: rotate(-4deg); }
+      100% { transform: rotate(4deg); }
+    }
+
+    /* ===== HEADER (identical to index) ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--header-bg);
+      backdrop-filter: var(--glass-blur);
+      border-bottom: var(--glass-border);
+      padding: 12px 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    @media (min-width: 768px) { header { padding: 16px 24px; } }
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .header-left { display: flex; align-items: center; gap: 15px; }
+    .header-left .logo-img { height: 40px; width: auto; }
+    .header-left .logo-text {
+      font-family: 'Clash Display', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: -0.5px;
+    }
+    .header-left .logo-text span:last-child { color: var(--accent); }
+    .header-nav {
+      display: flex;
+      gap: 12px;
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(4px);
+      padding: 6px 16px;
+      border-radius: 60px;
+      border: var(--glass-border);
+    }
+    body.light-mode .header-nav { background: rgba(255,255,255,0.5); }
+    .nav-link {
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: 40px;
+      transition: 0.2s;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-link:hover {
+      background: var(--accent);
+      color: #000;
+      transform: translateY(-2px);
+    }
+    .header-logos {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    @media (min-width: 768px) { .header-logos { gap: 20px; } }
+    .header-logos img {
+      width: 20px;
+      transition: var(--transition);
+    }
+    body:not(.light-mode) .header-logos img {
+      filter: invert(1);
+      opacity: 0.7;
+    }
+    body.light-mode .header-logos img {
+      filter: none;
+      opacity: 0.8;
+    }
+    .header-logos img:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 680px) {
+      .header-inner { flex-direction: column; align-items: stretch; }
+      .header-nav { justify-content: center; order: 2; }
+      .header-logos { order: 3; justify-content: center; }
+    }
+
+    /* ===== INVENTORY SPECIFIC STYLES (compatible with glass) ===== */
+    .click-tracker {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: var(--card-bg);
+      backdrop-filter: var(--glass-blur);
+      border: var(--glass-border);
+      border-radius: 30px;
+      padding: 8px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      gap: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+      white-space: nowrap;
+    }
+    .click-tracker.show { opacity: 1; visibility: visible; }
+    .click-tracker .count {
+      background: var(--accent);
+      color: #000;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+    .click-tracker .top-item { color: var(--accent); font-weight: 700; }
+
+    #stock {
+      padding: 40px 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      font-family: 'Clash Display', sans-serif;
+    }
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .search-box, .sort-select {
+      padding: 14px 22px;
+      border-radius: 16px;
+      border: var(--glass-border);
+      background: var(--card-bg);
+      backdrop-filter: var(--glass-blur);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
+    .search-box { flex: 1; max-width: 350px; }
+    .sort-select { min-width: 180px; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23a0a0b0' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .filter-btn {
+      padding: 8px 16px;
+      border-radius: 30px;
+      border: var(--glass-border);
+      background: var(--card-bg);
+      backdrop-filter: var(--glass-blur);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .filter-btn.active { background: var(--accent); color: #000; border-color: transparent; }
+    .filter-count { margin-left: 6px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 999px; font-size: 10px; }
+
+    .product-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+    .product-card {
+      background: var(--card-bg);
+      backdrop-filter: var(--glass-blur);
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      border: var(--glass-border);
+      transition: var(--transition);
+      position: relative;
+      box-shadow: var(--card-shadow);
+    }
+    .product-card:hover {
+      background: var(--card-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .product-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .product-image-wrap {
+      width: 100px;
+      height: 100px;
+      background: var(--product-icon-bg);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .product-image-wrap:hover {
+      background: rgba(255,216,77,0.2);
+      color: var(--accent);
+    }
+    .product-image-wrap i {
+      font-size: 42px;
+      color: var(--muted);
+      transition: 0.2s;
+    }
+    .product-image-wrap:hover i { color: var(--accent); }
+    .category-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #000;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .product-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .product-info h4 {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .product-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 2px 0;
+    }
+    .detail-chip {
+      background: rgba(255,255,255,0.1);
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .detail-chip .bullet { color: var(--bullet-color); font-weight: bold; font-size: 10px; }
+    body.light-mode .detail-chip { background: rgba(0,0,0,0.08); }
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .product-price {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 18px;
+    }
+    .product-buy {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 5px 12px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+      color: var(--text);
+    }
+    .product-buy i { font-size: 12px; }
+    .product-buy:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+    .card-badge {
+      position: absolute;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .card-badge-cond {
+      top: 12px;
+      left: 12px;
+      background: var(--badge-new-bg);
+      color: var(--badge-new-text);
+    }
+    .no-data-message {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+      grid-column: 1 / -1;
+    }
+    .image-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(15px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .image-modal.active { display: flex; }
+    .modal-content {
+      position: relative;
+      background: var(--bg-secondary);
+      border-radius: 24px;
+      padding: 24px;
+      border: 1px solid var(--accent);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      text-align: center;
+      max-width: 340px;
+      width: 80%;
+      cursor: default;
+    }
+    .modal-close-corner {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      transition: 0.2s;
+      line-height: 1;
+      background: none;
+      border: none;
+      padding: 4px 8px;
+    }
+    .modal-close-corner:hover { color: var(--accent); }
+    .modal-icon { font-size: 64px; color: var(--accent); margin-bottom: 16px; }
+    .modal-product-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+    .modal-close-btn {
+      margin-top: 20px;
+      background: var(--accent);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #000;
+    }
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 999;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+
+    @media (max-width: 480px) {
+      .product-left { flex-shrink: 0; }
+      .product-image-wrap { width: 80px; height: 80px; }
+      .product-image-wrap i { font-size: 32px; }
+      .category-badge { font-size: 9px; padding: 2px 8px; }
+      .product-info h4 { white-space: normal; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<audio id="bg-music" src="music/background.mp3" loop></audio>
+<button class="music-toggle" id="musicToggle">🎵</button>
+<div id="autoplayHint" class="autoplay-hint"><span>🎵</span> Tap anywhere to enable music</div>
+
+<div class="theme-toggle" id="themeToggle">
+  <div class="lamp-scene">
+    <div class="lamp-wrap" id="lampWrap">
+      <div class="wire"></div>
+      <div class="lamp-head"><div class="bulb"></div></div>
+      <div class="beam"></div>
+      <div class="floor"></div>
+    </div>
+  </div>
+</div>
+<div class="back-to-top" id="backToTop">↑</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <img src="images/logo1.png" alt="FAZGAME Logo" class="logo-img" onerror="this.src='https://placehold.co/300x300/222/ffd84d?text=FAZGAME';">
+      <div class="logo-text"><span>FAZ</span><span>GAME</span></div>
+    </div>
+    <div class="header-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="pc-builder.html" class="nav-link">PC Builder</a>
+      <a href="shop.html" class="nav-link">Shop</a>
+    </div>
+    <div class="header-logos">
+      <img src="https://api.iconify.design/simple-icons/playstation.svg" alt="PlayStation">
+      <img src="https://api.iconify.design/simple-icons/xbox.svg" alt="Xbox">
+      <img src="https://api.iconify.design/simple-icons/nintendoswitch.svg" alt="Nintendo Switch">
+      <img src="https://api.iconify.design/mdi/desktop-classic.svg" alt="PC">
+    </div>
+  </div>
+</header>
+
+<div class="click-tracker" id="clickTracker">
+  <span class="count" id="totalClicks">0</span>
+  <span>checks · Top: <span class="top-item" id="topItem">—</span></span>
+</div>
+
+<section id="stock">
+  <h2 class="section-title">PC Components Inventory</h2>
+  <div class="controls">
+    <input id="search" class="search-box" placeholder="Search by name, spec...">
+    <select id="sortSelect" class="sort-select">
+      <option value="default">Default</option>
+      <option value="price-asc">Price Low → High</option>
+      <option value="price-desc">Price High → Low</option>
+    </select>
+  </div>
+  <div class="filter-tabs" id="filters"></div>
+  <div class="product-grid" id="grid"></div>
+</section>
+
+<div id="imageModal" class="image-modal">
+  <div class="modal-content">
+    <button class="modal-close-corner" id="modalCornerClose">&times;</button>
+    <div class="modal-icon"><i id="modalIcon" class="fas fa-microchip"></i></div>
+    <div class="modal-product-name" id="modalProductName"></div>
+    <button class="modal-close-btn" id="modalCloseBtn">Close</button>
+  </div>
+</div>
+
+<script>
+  // ======================== FULL PRODUCT DATA (from Excel, +RM50) ========================
+  const PRODUCTS = [
+    { n: "AMD Ryzen 5 5500", c: "cpu", p: 365+50, specs: ["6 Cores / 12 Threads", "3.6GHz base, 4.2GHz boost", "19MB Cache", "AM4", "65W", "PCIe 3.0"] },
+    { n: "AMD Ryzen 5 5600", c: "cpu", p: 490+50, specs: ["6C/12T", "3.5GHz base, 4.4GHz boost", "35MB Cache", "AM4", "65W", "DDR4-3200"] },
+    { n: "AMD Ryzen 5 5600X (Tray)", c: "cpu", p: 535+50, specs: ["6C/12T", "3.7GHz base, 4.6GHz boost", "32MB L3", "AM4", "65W", "Unlocked"] },
+    { n: "AMD Ryzen 7 5700X", c: "cpu", p: 630+50, specs: ["8C/16T", "3.4GHz base, 4.6GHz boost", "36MB Cache", "AM4", "65W", "PCIe 4.0"] },
+    { n: "AMD Ryzen 7 5800X", c: "cpu", p: 780+50, specs: ["8C/16T", "3.8GHz base, 4.7GHz boost", "36MB Cache", "AM4", "105W", "No cooler"] },
+    { n: "AMD Ryzen 7 7800X3D", c: "cpu", p: 1270+50, specs: ["8C/16T", "4.2GHz base, 5.0GHz boost", "96MB 3D V-Cache", "AM5", "120W", "Best gaming"] },
+    { n: "AMD Ryzen 5 7500F", c: "cpu", p: 515+50, specs: ["6C/12T", "3.7GHz base, 5.0GHz boost", "38MB Cache", "AM5", "65W", "No iGPU"] },
+    { n: "AMD Ryzen 9 7950X", c: "cpu", p: 2000+50, specs: ["16C/32T", "4.5GHz base, 5.7GHz boost", "80MB Cache", "AM5", "170W", "PCIe 5.0"] },
+    { n: "AMD Ryzen 5 8400F (Tray)", c: "cpu", p: 500+50, specs: ["6C/12T", "Zen4", "AM5", "65W", "Pre-order"] },
+    { n: "AMD Ryzen 5 7600 (Tray)", c: "cpu", p: 650+50, specs: ["6C/12T", "3.8GHz base", "38MB Cache", "AM5", "65W"] },
+    { n: "AMD Ryzen 5 7600X (Tray)", c: "cpu", p: 735+50, specs: ["6C/12T", "4.7GHz base", "105W", "AM5"] },
+    { n: "AMD Ryzen 7 7700 (Tray)", c: "cpu", p: 880+50, specs: ["8C/16T", "3.8GHz base", "40MB Cache", "AM5", "65W"] },
+    { n: "AMD Ryzen 7 7700X (Tray)", c: "cpu", p: 960+50, specs: ["8C/16T", "4.5GHz base", "105W", "AM5"] },
+    { n: "AMD Ryzen 7 9700X (Tray)", c: "cpu", p: 1020+50, specs: ["8C/16T", "Zen5", "AM5", "65W"] },
+    { n: "AMD Ryzen 9 9900X (Tray)", c: "cpu", p: 1670+50, specs: ["12C/24T", "5.6GHz boost", "AM5", "Pre-order"] },
+    { n: "AMD Ryzen 9 9950X (Tray)", c: "cpu", p: 2000+50, specs: ["16C/32T", "5.7GHz boost", "AM5", "Pre-order"] },
+    { n: "AMD Ryzen 9 9950X3D (Tray)", c: "cpu", p: 2750+50, specs: ["16C/32T", "3D V-Cache", "144MB cache", "AM5", "Pre-order"] },
+    { n: "MSI A520M-A PRO", c: "motherboard", p: 195+50, specs: ["AM4", "mATX", "PCIe 3.0", "DDR4"] },
+    { n: "GIGABYTE A520M-A PRO", c: "motherboard", p: 195+50, specs: ["AM4", "mATX", "NVMe support"] },
+    { n: "MSI B550M-A PRO", c: "motherboard", p: 295+50, specs: ["AM4", "mATX", "PCIe 4.0"] },
+    { n: "MSI B550M PRO-VDH WIFI", c: "motherboard", p: 415+50, specs: ["AM4", "mATX", "WiFi 6", "BT5.2", "2x M.2 Gen4"] },
+    { n: "ASROCK A520M/AC (WIFI)", c: "motherboard", p: 250+50, specs: ["AM4", "AC WiFi", "mATX"] },
+    { n: "ASUS PRIME B550M-A WIFI II", c: "motherboard", p: 430+50, specs: ["AM4", "WiFi 6", "2.5Gb LAN"] },
+    { n: "MSI A620AM EVO PRO", c: "motherboard", p: 300+50, specs: ["AM5", "DDR5", "mATX"] },
+    { n: "GIGABYTE B650M GAMING WIFI", c: "motherboard", p: 550+50, specs: ["AM5", "DDR5", "PCIe 5.0", "WiFi 6E"] },
+    { n: "ASROCK B650M-H/M.2 + WIFI", c: "motherboard", p: 450+50, specs: ["AM5", "2x M.2", "DDR5", "USB-C"] },
+    { n: "ASROCK B850M-X WIFI R2.0", c: "motherboard", p: 530+50, specs: ["AM5", "DDR5 7600+", "PCIe 5.0 M.2", "WiFi 6"] },
+    { n: "GIGABYTE B850M FORCE WIFI 6E", c: "motherboard", p: 565+50, specs: ["AM5", "WiFi 6E", "14+2+1 VRM"] },
+    { n: "Colorful CVN B850I Gaming Frozen ITX", c: "motherboard", p: 710+50, specs: ["ITX", "AM5", "DDR5", "White"] },
+    { n: "GIGABYTE A620M-H", c: "motherboard", p: 300+50, specs: ["AM5", "mATX", "DDR5"] },
+    { n: "MSI B850M GAMING PRO WIFI 6E", c: "motherboard", p: 685+50, specs: ["AM5", "WiFi 6E", "2.5Gb LAN"] },
+    { n: "GIGABYTE B850M EAGLE WIFI6E ICE", c: "motherboard", p: 745+50, specs: ["AM5", "White", "WiFi 6E"] },
+    { n: "GIGABYTE B650M GAMING PLUS WIFI", c: "motherboard", p: 580+50, specs: ["AM5", "WiFi", "DDR5"] },
+    { n: "GIGABYTE B850M GAMING X WIFI 6E", c: "motherboard", p: 780+50, specs: ["AM5", "WiFi 6E", "PCIe 5.0"] },
+    { n: "ASUS B850M AYW GAMING WIFI", c: "motherboard", p: 615+50, specs: ["AM5", "WiFi", "DDR5"] },
+    { n: "MSI TOMAHAWK B850 MAX WIFI", c: "motherboard", p: 1160+50, specs: ["ATX", "AM5", "14+2+1 VRM", "5Gb LAN", "WiFi 7"] },
+    { n: "MSI PRO B850M-P WIFI", c: "motherboard", p: 680+50, specs: ["AM5", "mATX", "WiFi"] },
+    { n: "MSI VENTUS 2X RTX3050 6GB", c: "gpu", p: 850+50, specs: ["6GB GDDR6", "128-bit", "2304 CUDA", "PCIe 4.0"] },
+    { n: "GIGABYTE WINDFORCE RTX5050 8GB", c: "gpu", p: 1235+50, specs: ["8GB GDDR6", "Ray Tracing", "3x DP", "HDMI 2.1a"] },
+    { n: "MSI SHADOW 2X RTX5060 8GB", c: "gpu", p: 1450+50, specs: ["8GB GDDR7", "192-bit", "3840 CUDA"] },
+    { n: "COLORFUL GAMING DUO RTX5060 8GB", c: "gpu", p: 1425+50, specs: ["8GB GDDR7", "3840 CUDA", "RGB"] },
+    { n: "ASUS PRIME RTX5060 8GB", c: "gpu", p: 1650+50, specs: ["8GB GDDR7", "Axial-tech fans", "0dB tech"] },
+    { n: "ZOTAC TWIN EDGE RTX5060 8GB", c: "gpu", p: 1475+50, specs: ["8GB GDDR7", "IceStorm 2.0", "3+2Y warranty"] },
+    { n: "IGAME ULTRA WHITE DUO RTX5060 8GB", c: "gpu", p: 1585+50, specs: ["8GB GDDR7", "White edition", "RGB"] },
+    { n: "ASROCK CHALLENGER RX9060XT 16GB", c: "gpu", p: 1699+50, specs: ["16GB GDDR6", "RDNA4", "256-bit", "Triple fan"] },
+    { n: "ASUS DUAL RX9060XT 16GB", c: "gpu", p: 1800+50, specs: ["16GB GDDR6", "Dual fan", "OC"] },
+    { n: "SAPPHIRE PULSE RX9060XT 16GB", c: "gpu", p: 1800+50, specs: ["16GB GDDR6", "Pulse cooling", "Dual BIOS"] },
+    { n: "XFX SWIFT RX9060XT OC 16GB", c: "gpu", p: 1850+50, specs: ["16GB GDDR6", "Triple fan", "OC"] },
+    { n: "ASUS PRIME RX9060XT 16GB", c: "gpu", p: 2000+50, specs: ["16GB GDDR6", "Prime series", "Axial fan"] },
+    { n: "COLORFUL GAMING DUO RTX5060TI 16GB", c: "gpu", p: 2150+50, specs: ["16GB GDDR7", "4608 CUDA", "RGB"] },
+    { n: "COLORFUL BATTLEAX RTX5070 12GB", c: "gpu", p: 2800+50, specs: ["12GB GDDR7", "192-bit", "4608 CUDA"] },
+    { n: "IGAME ULTRA WHITE RTX5070 12GB", c: "gpu", p: 2955+50, specs: ["12GB GDDR7", "White", "RGB"] },
+    { n: "IGAME ULTRA BLACK RTX5070 12GB", c: "gpu", p: 2930+50, specs: ["12GB GDDR7", "Black", "RGB"] },
+    { n: "ASUS PRIME RX9070XT 16GB", c: "gpu", p: 3300+50, specs: ["16GB GDDR6", "RDNA4", "High performance"] },
+    { n: "HIKSEMI HIKER 16GB 3200MHz DDR4", c: "ram", p: 460+50, specs: ["16GB", "3200MHz CL16", "Lifetime warranty"] },
+    { n: "FANXIANG UD02R 8GB 3200MHz DDR4", c: "ram", p: 230+50, specs: ["8GB", "3200MHz CL16", "Lifetime"] },
+    { n: "KINGBANK KJXB 8GB 3200MHz", c: "ram", p: 230+50, specs: ["8GB", "3200MHz CL16", "Lifetime"] },
+    { n: "KINGBANK KJXB 16GB 3200MHz", c: "ram", p: 460+50, specs: ["16GB", "3200MHz CL16", "XMP 2.0"] },
+    { n: "KINGBANK KJXS 32GB 3200MHz (16GBx2)", c: "ram", p: 920+50, specs: ["32GB Kit", "3200MHz CL16", "Dual channel"] },
+    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 Black", c: "ram", p: 850+50, specs: ["16GB", "6000MHz CL38", "EXPO"] },
+    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 White", c: "ram", p: 885+50, specs: ["16GB", "6000MHz CL38", "White heatsink"] },
+    { n: "KINGSTON FURY BEAST 16GB 6000MHz Black", c: "ram", p: 1085+50, specs: ["16GB", "6000MHz CL36", "XMP 3.0"] },
+    { n: "KINGSTON FURY BEAST 16GB 6000MHz Kit (8GBx2)", c: "ram", p: 1095+50, specs: ["16GB Kit", "6000MHz CL36", "Dual rank"] },
+    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz", c: "ram", p: 1150+50, specs: ["16GB", "6000MHz CL36", "RGB"] },
+    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz CL30", c: "ram", p: 1250+50, specs: ["16GB", "6000MHz CL30", "Low latency"] },
+    { n: "ACER HT200 32GB 6000MHz Silver", c: "ram", p: 1850+50, specs: ["32GB Kit", "6000MHz CL36", "Silver"] },
+    { n: "ACER PREDATOR VESTA II 32GB 6000MHz RGB", c: "ram", p: 1750+50, specs: ["32GB Kit", "6000MHz CL36", "RGB"] },
+    { n: "ACER PALLAS II 32GB 6000MHz Silver", c: "ram", p: 1700+50, specs: ["32GB Kit", "6000MHz CL36", "Silver"] },
+    { n: "GSKILL RIPJAWS M5 NEO RGB 32GB 6000MHz", c: "ram", p: 1750+50, specs: ["32GB Kit", "6000MHz CL36", "RGB"] },
+    { n: "Kingston FURY Beast 32GB 6000MHz CL30 EXPO Black RGB", c: "ram", p: 2000+50, specs: ["32GB Kit", "6000MHz CL30", "EXPO"] },
+    { n: "Kingston FURY Beast 32GB 6000MHz CL30 White", c: "ram", p: 2000+50, specs: ["32GB Kit", "6000MHz CL30", "White"] },
+    { n: "KINGBANK KRRB SOARBLADE 32GB 6000MHz CL36", c: "ram", p: 1750+50, specs: ["32GB Kit", "6000MHz CL36", "Ready stock"] },
+    { n: "HIKSEMI WAVE 512GB NVMe Gen3", c: "storage", p: 330+50, specs: ["512GB", "R/W 2500/2000", "3Y warranty"] },
+    { n: "ACER FA100 512GB NVMe Gen3", c: "storage", p: 330+50, specs: ["512GB", "R/W 3200/2200", "5Y"] },
+    { n: "ACER FA100 1TB NVMe Gen3", c: "storage", p: 635+50, specs: ["1TB", "R/W 3300/2700", "5Y"] },
+    { n: "ACER FA200 500GB NVMe Gen4", c: "storage", p: 435+50, specs: ["500GB", "R/W 6300/3100", "5Y"] },
+    { n: "ACER FA200 1TB NVMe Gen4", c: "storage", p: 675+50, specs: ["1TB", "R/W 7200/6200", "5Y"] },
+    { n: "PUSKILLS 1TB NVMe Gen3", c: "storage", p: 595+50, specs: ["1TB", "R/W 2100/1700", "3Y"] },
+    { n: "MSI SPATIUM M450 500GB Gen4", c: "storage", p: 365+50, specs: ["500GB", "R/W 3600/2300", "5Y"] },
+    { n: "MSI SPATIUM M450 1TB Gen4", c: "storage", p: 635+50, specs: ["1TB", "R/W 3600/3000", "5Y", "DRAM"] },
+    { n: "KINGBANK KP260 PLUS 1TB Gen4", c: "storage", p: 685+50, specs: ["1TB", "R/W 7000/6600", "3Y"] },
+    { n: "HUAWEI EKITSTOR XTREME 200E 1TB Gen4", c: "storage", p: 700+50, specs: ["1TB", "R/W 7500/6500", "5Y"] },
+    { n: "T-FORCE Z44A5 512GB Gen4", c: "storage", p: 380+50, specs: ["512GB", "R/W 5000/2500", "3Y"] },
+    { n: "T-FORCE Z44A5 1TB Gen4", c: "storage", p: 695+50, specs: ["1TB", "R/W 5500/4500", "5Y"] },
+    { n: "T-FORCE Z44A5 2TB Gen4", c: "storage", p: 1285+50, specs: ["2TB", "R/W 7000/6100", "5Y"] },
+    { n: "T-FORCE VULCAN 512GB SATA SSD", c: "storage", p: 270+50, specs: ["512GB", "SATA 2.5\"", "R/W 540/470", "5Y"] },
+    { n: "BRYT M.2 512GB NVMe", c: "storage", p: 290+50, specs: ["512GB", "Gen3x4", "R/W 3200/2200", "3Y"] },
+    { n: "GIGABYTE P650SS 650W 80+ Silver", c: "psu", p: 180+50, specs: ["650W", "80+ Silver", "Non-modular", "3Y"] },
+    { n: "AISURIX 550W 80+ Standard", c: "psu", p: 85+50, specs: ["550W", "80+", "Non-modular", "2Y"] },
+    { n: "AISURIX 600W 80+", c: "psu", p: 95+50, specs: ["600W", "80+", "Non-modular", "2Y"] },
+    { n: "AISURIX 650W 80+", c: "psu", p: 100+50, specs: ["650W", "80+", "Non-modular", "2Y"] },
+    { n: "AISURIX 700W 80+", c: "psu", p: 105+50, specs: ["700W", "80+", "Non-modular", "2Y"] },
+    { n: "SEGOTEP AN550W 80+", c: "psu", p: 135+50, specs: ["550W", "80+", "Non-modular", "2Y"] },
+    { n: "SEGOTEP AN650W 80+", c: "psu", p: 150+50, specs: ["650W", "80+", "Non-modular", "2Y"] },
+    { n: "SEGOTEP AN650W White", c: "psu", p: 165+50, specs: ["650W", "80+", "White", "Non-modular"] },
+    { n: "SEGOTEP AN750W 80+", c: "psu", p: 170+50, specs: ["750W", "80+", "Non-modular", "2Y"] },
+    { n: "1STPLAYER ACK 650W 80+", c: "psu", p: 160+50, specs: ["650W", "80+", "Non-modular", "5Y"] },
+    { n: "1STPLAYER ACK 750W 80+", c: "psu", p: 195+50, specs: ["750W", "80+", "Non-modular", "5Y"] },
+    { n: "1STPLAYER ACK 650W Bronze", c: "psu", p: 190+50, specs: ["650W", "80+ Bronze", "Non-modular", "5Y"] },
+    { n: "1STPLAYER ACK 750W Bronze", c: "psu", p: 235+50, specs: ["750W", "80+ Bronze", "Non-modular", "5Y"] },
+    { n: "1STPLAYER DK6.0 600W Bronze", c: "psu", p: 160+50, specs: ["600W", "80+ Bronze", "Non-modular", "3Y"] },
+    { n: "1STPLAYER DK7.0 700W Bronze", c: "psu", p: 195+50, specs: ["700W", "80+ Bronze", "Non-modular", "3Y"] },
+    { n: "1STPLAYER ACK 750W Gold", c: "psu", p: 315+50, specs: ["750W", "80+ Gold", "Full modular", "7Y", "Japanese caps"] },
+    { n: "1STPLAYER ACK 850W Gold", c: "psu", p: 340+50, specs: ["850W", "80+ Gold", "Full modular", "7Y"] },
+    { n: "THERMALRIGHT TB750 Bronze", c: "psu", p: 245+50, specs: ["750W", "80+ Bronze", "Full modular", "5Y"] },
+    { n: "THERMALRIGHT KG750 Gold", c: "psu", p: 295+50, specs: ["750W", "80+ Gold", "Full modular", "ATX 3.0"] },
+    { n: "COOLER MASTER MWE V3 750W Gold", c: "psu", p: 350+50, specs: ["750W", "80+ Gold", "Full modular", "5Y"] },
+    { n: "Thermalright Assassin X 120 SE Black", c: "cooler", p: 60+50, specs: ["Air cooler", "4 heatpipes", "120mm"] },
+    { n: "Thermalright Assassin X 120 SE White", c: "cooler", p: 65+50, specs: ["White", "4 heatpipes", "120mm"] },
+    { n: "Thermalright Assassin X 120 SE ARGB Black", c: "cooler", p: 75+50, specs: ["ARGB", "4 heatpipes", "120mm"] },
+    { n: "Thermalright Peerless Assassin 120 SE", c: "cooler", p: 120+50, specs: ["Dual tower", "6 heatpipes", "120mm PWM"] },
+    { n: "VALKYRIE AQ125 Black", c: "cooler", p: 60+50, specs: ["Single tower", "120mm", "Black"] },
+    { n: "VALKYRIE AQ125 ARGB Black", c: "cooler", p: 75+50, specs: ["ARGB", "Single tower", "120mm"] },
+    { n: "Snowman MT660-V4D Black", c: "cooler", p: 130+50, specs: ["Dual tower", "6 heatpipes", "Display"] },
+    { n: "Thermalright Frozen Infinity 240 Black", c: "cooler", p: 150+50, specs: ["240mm AIO", "Bulk pack", "ARGB"] },
+    { n: "Thermalright Frozen Infinity 360 White", c: "cooler", p: 230+50, specs: ["360mm AIO", "White", "ARGB"] },
+    { n: "VALKYRIE GLA-240 AIO Black", c: "cooler", p: 235+50, specs: ["240mm AIO", "LCD display", "ARGB"] },
+    { n: "ID-COOLING FX240 LCD ARGB", c: "cooler", p: 215+50, specs: ["240mm AIO", "2.1\" LCD", "ARGB"] },
+    { n: "VALKYRIE B240-GT Black", c: "cooler", p: 330+50, specs: ["240mm AIO", "LED digital display", "Black"] },
+    { n: "Segotep LUMI 3T Black (6 ARGB Fans)", c: "casing", p: 200+50, specs: ["mATX/ITX", "6x ARGB fans", "Type-C", "360mm AIO"] },
+    { n: "Segotep LUMI 3T White (6 ARGB Fans)", c: "casing", p: 210+50, specs: ["mATX/ITX", "6x ARGB fans", "Type-C", "White"] },
+    { n: "Segotep BRAVE W1 Black", c: "casing", p: 110+50, specs: ["mATX", "3 ARGB fans", "TG panel"] },
+    { n: "Segotep BRAVE W1 White", c: "casing", p: 115+50, specs: ["mATX", "3 ARGB fans", "White"] },
+    { n: "Segotep ENDURA 240S Black", c: "casing", p: 155+50, specs: ["mATX", "3 ARGB fans", "Type-C"] },
+    { n: "Segotep ENDURA 240S White", c: "casing", p: 165+50, specs: ["mATX", "3 ARGB fans", "White"] },
+    { n: "1STPLAYER BV5 Black", c: "casing", p: 110+50, specs: ["mATX", "3 ARGB fans", "120/240 AIO"] },
+    { n: "1STPLAYER BV6 Black", c: "casing", p: 150+50, specs: ["mATX", "3 ARGB fans", "360mm AIO"] },
+    { n: "TECWARE VXO M TG Black", c: "casing", p: 105+50, specs: ["mATX", "3 ARGB fans", "TG"] },
+    { n: "TECWARE TIMBER M TG Black", c: "casing", p: 150+50, specs: ["mATX", "4 fans", "TG"] },
+    { n: "Formula V Crystal Z6M V2 Black", c: "casing", p: 185+50, specs: ["mATX", "6 ARGB fans", "Panoramic"] },
+    { n: "GS24F14 23.8\" 144Hz IPS", c: "monitor", p: 275+50, specs: ["23.8\"", "1080p", "144Hz", "1ms", "FreeSync"] },
+    { n: "MF2408-A 23.8\" 120Hz IPS", c: "monitor", p: 285+50, specs: ["23.8\"", "1080p", "120Hz", "VGA+HDMI"] },
+    { n: "MF2708-A 27\" 120Hz IPS", c: "monitor", p: 360+50, specs: ["27\"", "1080p", "120Hz", "VESA 100x100"] },
+    { n: "MD2425-V 23.8\" 180Hz IPS", c: "monitor", p: 385+50, specs: ["23.8\"", "1080p", "180Hz", "USB hub"] },
+    { n: "24G50Z 24\" 260Hz IPS", c: "monitor", p: 460+50, specs: ["24\"", "1080p", "260Hz", "0.3ms", "G-Sync"] },
+    { n: "27G50Z 27\" 260Hz IPS", c: "monitor", p: 500+50, specs: ["27\"", "1080p", "260Hz", "0.3ms"] },
+    { n: "GS27QA 27\" 180Hz QHD IPS", c: "monitor", p: 580+50, specs: ["27\"", "1440p", "180Hz", "1ms", "FreeSync"] },
+    { n: "Microsoft Windows 11 Home (ESD)", c: "software", p: 180+50, specs: ["Digital license", "64-bit", "Secure boot", "Email delivery"] },
+    { n: "Microsoft Windows 11 Pro (ESD)", c: "software", p: 250+50, specs: ["Pro features", "Remote Desktop", "BitLocker"] },
+    { n: "Microsoft Office Home & Business 2024 (ESD)", c: "software", p: 800+50, specs: ["Word, Excel, Outlook", "1 PC", "Lifetime"] },
+    { n: "Cooler Master Ice Fusion V2", c: "thermalpaste", p: 22+50, specs: ["Thermal grease", "High performance"] },
+    { n: "Cooler Master HTK-002", c: "thermalpaste", p: 9+50, specs: ["Budget paste", "Good conductivity"] },
+    { n: "Cooler Master MasterGel Pro V2", c: "thermalpaste", p: 15+50, specs: ["Pro grade", "Low thermal resistance"] },
+    { n: "Thermalright TF7 4g", c: "thermalpaste", p: 23+50, specs: ["4g tube", "High viscosity"] },
+    { n: "Kryonaut 1g", c: "thermalpaste", p: 15+50, specs: ["Extreme OC", "12.5 W/mK", "Non-conductive"] },
+    { n: "Kryonaut 5.5g", c: "thermalpaste", p: 35+50, specs: ["Large syringe", "For multiple applications"] },
+    { n: "Arctic MX7 4g", c: "thermalpaste", p: 30+50, specs: ["Carbon based", "Easy spread"] },
+  ];
+
+  function getIconClass(cat) {
+    const icons = { cpu:"fas fa-microchip", motherboard:"fas fa-microchip", gpu:"fas fa-tv", ram:"fas fa-memory", storage:"fas fa-hdd", psu:"fas fa-plug", cooler:"fas fa-fan", casing:"fas fa-desktop", monitor:"fas fa-monitor", software:"fas fa-code", thermalpaste:"fas fa-thermometer-half" };
+    return icons[cat] || "fas fa-box";
+  }
+
+  const grid = document.getElementById('grid');
+  const filtersDiv = document.getElementById('filters');
+  const searchInput = document.getElementById('search');
+  const sortSelect = document.getElementById('sortSelect');
+  const themeToggle = document.getElementById('themeToggle');
+  const lampWrap = document.getElementById('lampWrap');
+  const clickTracker = document.getElementById('clickTracker');
+  const totalClicksSpan = document.getElementById('totalClicks');
+  const topItemSpan = document.getElementById('topItem');
+  const whatsappNumber = '60163691936';
+  let activeCat = 'all', totalClicks = 0, clickCounts = {};
+
+  const modal = document.getElementById('imageModal');
+  const modalIcon = document.getElementById('modalIcon');
+  const modalProductName = document.getElementById('modalProductName');
+  const modalCornerClose = document.getElementById('modalCornerClose');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+  function openModal(icon, name) { modalIcon.className = icon; modalProductName.textContent = name; modal.classList.add('active'); }
+  function closeModal() { modal.classList.remove('active'); }
+  modalCornerClose.addEventListener('click', closeModal);
+  modalCloseBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
+
+  function trackClick(name) {
+    totalClicks++;
+    clickCounts[name] = (clickCounts[name] || 0) + 1;
+    totalClicksSpan.innerText = totalClicks;
+    let top = Object.entries(clickCounts).sort((a,b)=>b[1]-a[1])[0];
+    topItemSpan.innerText = top ? top[0] : '—';
+    clickTracker.classList.add('show');
+  }
+
+  function getFiltered() {
+    let items = PRODUCTS.filter(p => (activeCat === 'all' || p.c === activeCat) && p.n.toLowerCase().includes(searchInput.value.toLowerCase()));
+    const sort = sortSelect.value;
+    if (sort === 'price-asc') items.sort((a,b)=>a.p-b.p);
+    if (sort === 'price-desc') items.sort((a,b)=>b.p-a.p);
+    return items;
+  }
+
+  function render() {
+    const items = getFiltered();
+    if (!items.length) { grid.innerHTML = `<div class="no-data-message">🔍 No components found</div>`; return; }
+    grid.innerHTML = items.map(p => {
+      const icon = getIconClass(p.c);
+      const specsHtml = p.specs.map(s => `<span class="detail-chip"><span class="bullet">•</span> ${escapeHtml(s)}</span>`).join('');
+      const waMsg = encodeURIComponent(`Hi FAZGAME, I'm interested in ${p.n} (RM${p.p}). Specs: ${p.specs.slice(0,3).join(', ')}. Stock?`);
+      const waLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${waMsg}`;
+      return `
+        <div class="product-card">
+          <span class="card-badge card-badge-cond">NEW</span>
+          <div class="product-left">
+            <div class="product-image-wrap" data-icon="${icon}" data-name="${escapeHtml(p.n)}">
+              <i class="${icon}"></i>
+            </div>
+            <div class="category-badge">${p.c.toUpperCase()}</div>
+          </div>
+          <div class="product-info">
+            <h4>${escapeHtml(p.n)}</h4>
+            <div class="product-details">${specsHtml}</div>
+            <div class="price-row">
+              <span class="product-price">RM${p.p}</span>
+              <button class="product-buy" data-name="${escapeHtml(p.n)}" data-wa="${escapeHtml(waLink)}">
+                <i class="fas fa-shopping-cart"></i> Check
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    document.querySelectorAll('.product-image-wrap').forEach(w => {
+      w.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const icon = w.getAttribute('data-icon');
+        const name = w.getAttribute('data-name');
+        if (icon && name) openModal(icon, name);
+      });
+    });
+    document.querySelectorAll('.product-buy').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const name = btn.getAttribute('data-name');
+        const url = btn.getAttribute('data-wa');
+        if(name) trackClick(name);
+        if(url) window.open(url, '_blank');
+      });
+    });
+  }
+
+  function escapeHtml(str) { return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+
+  const cats = ['all', ...new Set(PRODUCTS.map(p=>p.c))];
+  function buildFilters() {
+    filtersDiv.innerHTML = '';
+    cats.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = `filter-btn ${c === activeCat ? 'active' : ''}`;
+      const count = c === 'all' ? PRODUCTS.length : PRODUCTS.filter(p=>p.c===c).length;
+      btn.innerHTML = `${c.toUpperCase()} <span class="filter-count">${count}</span>`;
+      btn.onclick = () => { activeCat = c; render(); document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); };
+      filtersDiv.appendChild(btn);
+    });
+  }
+
+  searchInput.addEventListener('input', render);
+  sortSelect.addEventListener('change', render);
+  
+  // Theme toggle (same as index)
+  themeToggle.addEventListener('click', () => {
+    if (lampWrap) {
+      lampWrap.style.transition = 'transform 0.1s';
+      lampWrap.style.transform = 'rotate(0deg) scale(0.98)';
+      setTimeout(() => {
+        lampWrap.style.transform = '';
+        lampWrap.style.transition = '';
+      }, 150);
+    }
+    document.body.classList.toggle('light-mode');
+    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+  });
+  if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
+
+  // Music autoplay (same as index)
+  const bgMusic = document.getElementById('bg-music');
+  const musicToggle = document.getElementById('musicToggle');
+  const autoplayHint = document.getElementById('autoplayHint');
+  let musicStarted = false;
+  function updateMusicIcon() { musicToggle.innerHTML = bgMusic.muted ? '🔇' : '🎵'; }
+  function startMusic() {
+    if (musicStarted) return;
+    bgMusic.muted = false;
+    bgMusic.loop = true;
+    bgMusic.play().then(() => {
+      musicStarted = true;
+      updateMusicIcon();
+      if (autoplayHint) autoplayHint.classList.remove('show');
+    }).catch(err => console.warn("startMusic error:", err));
+  }
+  bgMusic.muted = false;
+  bgMusic.play().then(() => { musicStarted = true; updateMusicIcon(); }).catch(() => {
+    if (autoplayHint) autoplayHint.classList.add('show');
+    const startOnInteraction = () => { startMusic(); document.removeEventListener('click', startOnInteraction); document.removeEventListener('touchstart', startOnInteraction); };
+    document.addEventListener('click', startOnInteraction);
+    document.addEventListener('touchstart', startOnInteraction);
+  });
+  musicToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!musicStarted) { startMusic(); return; }
+    bgMusic.muted = !bgMusic.muted;
+    updateMusicIcon();
+  });
+
+  // Back to top
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 200));
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  buildFilters();
+  render();
+</script>
+</body>
+</html>
