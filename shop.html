@@ -11,13 +11,7 @@
   <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,700,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* ===== IDENTICAL TO INDEX.HTML (light/dark, lamp, header, glass) ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
@@ -25,8 +19,8 @@
       overflow-x: hidden;
       line-height: 1.5;
       transition: background-color 0.5s ease, color 0.3s ease;
+      position: relative;
     }
-
     a { text-decoration: none; color: inherit; }
 
     /* ===== LIGHT/DARK MODE VARIABLES ===== */
@@ -45,8 +39,6 @@
       --badge-new-bg: rgba(255,216,77,0.45);
       --badge-new-text: #000;
       --transition: 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
-      --lamp-color: #ffd84d;
-      --lamp-off-color: #94a3b8;
       --header-bg: rgba(11, 11, 15, 0.5);
       --card-shadow: 0 8px 32px rgba(0,0,0,0.15);
       --glass-blur: blur(20px);
@@ -54,7 +46,6 @@
       --glass-bg: rgba(20, 22, 27, 0.3);
       --bullet-color: #3b82f6;
     }
-
     body.light-mode {
       --bg: #f8fafc;
       --bg-secondary: #ffffff;
@@ -69,8 +60,6 @@
       --product-icon-bg: rgba(226, 232, 240, 0.9);
       --badge-new-bg: #eab308;
       --badge-new-text: #0f172a;
-      --lamp-color: #eab308;
-      --lamp-off-color: #64748b;
       --header-bg: rgba(255, 255, 255, 0.85);
       --card-shadow: 0 8px 32px rgba(0,0,0,0.05);
       --glass-border: 1px solid rgba(0,0,0,0.08);
@@ -78,7 +67,7 @@
       --bullet-color: #2563eb;
     }
 
-    /* ===== MUSIC TOGGLE ===== */
+    /* Music toggle & autoplay */
     .autoplay-hint {
       position: fixed;
       bottom: 100px;
@@ -123,91 +112,176 @@
       transition: transform 0.2s ease, background 0.2s ease;
     }
 
-    /* ===== PREMIUM 3D SWING LAMP (identical to index) ===== */
-    .theme-toggle {
+    /* ===== COMPACT RGB GAMING LAMP (same as index/pc-builder) ===== */
+    .lamp-container {
       position: fixed;
       top: 70px;
       right: 15px;
       z-index: 1001;
-      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
-      transform: scale(0.8);
-      transform-origin: top right;
       cursor: pointer;
+      transform: scale(0.55);
+      transform-origin: top right;
+      transition: filter 0.3s ease;
     }
     @media (min-width: 768px) {
-      .theme-toggle {
+      .lamp-container {
         top: 80px;
-        right: 30px;
-        transform: scale(1);
+        right: 25px;
+        transform: scale(0.65);
       }
     }
-    .lamp-scene { perspective: 1000px; }
-    .lamp-wrap {
-      transform-origin: top center;
-      animation: swing 4s ease-in-out infinite;
+    @media (max-width: 680px) {
+      .lamp-container {
+        top: 100px !important;
+        right: 15px !important;
+        transform: scale(0.5);
+      }
+    }
+    #lamp-switch {
+      display: none;
+    }
+    .room {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .wall-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(0, 240, 255, 0.15) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .lamp-assembly {
       display: flex;
       flex-direction: column;
       align-items: center;
+      transform-origin: top center;
+      animation: swing 5s ease-in-out infinite alternate;
+      filter: drop-shadow(0px 30px 20px rgba(0,0,0,0.6));
     }
-    .wire { width: 2px; height: 50px; background: linear-gradient(#9ca3af, #4b5563); margin-bottom: 2px; }
-    @media (min-width: 768px) { .wire { height: 60px; } }
-    .lamp-head {
-      width: 60px;
-      height: 40px;
-      background: linear-gradient(#6b7280, #1f2937);
-      border-radius: 30px 30px 8px 8px;
+    .base {
+      width: 40px;
+      height: 16px;
+      background: #121318;
+      clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
+      border-bottom: 1px solid #23252d;
+    }
+    .cord {
+      width: 8px;
+      height: 120px;
+      background: linear-gradient(90deg, #111 0%, #222 50%, #000 100%);
+      position: relative;
+    }
+    .cord::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 3px;
+      width: 3px; height: 100%;
+      background: #333;
+      transition: background 0.3s ease;
+    }
+    .shade-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      margin-top: -3px;
+    }
+    .shade-top {
+      width: 28px;
+      height: 20px;
+      background: #23252d;
+      clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+    }
+    .shade-body {
+      width: 130px;
+      height: 52px;
+      background: linear-gradient(135deg, #121318 0%, #0f111a 100%);
+      clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      margin-bottom: 5px;
+      border-bottom: 2px solid #111;
     }
-    @media (min-width: 768px) { .lamp-head { width: 80px; height: 50px; } }
-    .bulb {
-      width: 18px;
-      height: 18px;
-      background: radial-gradient(circle at 30% 30%, var(--lamp-color), color-mix(in srgb, var(--lamp-color) 50%, #333));
-      border-radius: 50%;
-      box-shadow: 0 0 20px var(--lamp-color);
-      margin-bottom: 6px;
-      transition: background 0.3s, box-shadow 0.3s;
+    .shade-body::before, .shade-body::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      width: 20px;
+      height: 80%;
+      background: #23252d;
+      z-index: -1;
     }
-    @media (min-width: 768px) { .bulb { width: 24px; height: 24px; box-shadow: 0 0 25px var(--lamp-color); } }
-    body.light-mode .bulb {
-      background: radial-gradient(circle at 30% 30%, var(--lamp-off-color), color-mix(in srgb, var(--lamp-off-color) 40%, #444));
-      box-shadow: 0 0 15px var(--lamp-off-color);
+    .shade-body::before { left: 10px; clip-path: polygon(100% 0, 0 100%, 100% 100%); }
+    .shade-body::after { right: 10px; clip-path: polygon(0 0, 100% 100%, 0 100%); }
+    .rgb-ring {
+      position: absolute;
+      bottom: -3px;
+      width: 85px;
+      height: 5px;
+      background: #222;
+      border-radius: 8px;
+      transition: all 0.3s ease;
     }
-    .beam {
-      width: 120px;
-      height: 100px;
-      background: radial-gradient(ellipse at top, var(--lamp-color) 0%, transparent 70%);
-      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-      filter: blur(6px);
-      opacity: 0.5;
-      margin-top: -15px;
+    .led-core {
+      width: 50px;
+      height: 10px;
+      background: #111;
+      clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
+      position: absolute;
+      bottom: -10px;
+      transition: all 0.3s ease;
     }
-    @media (min-width: 768px) { .beam { width: 180px; height: 140px; filter: blur(8px); margin-top: -20px; } }
-    body.light-mode .beam {
-      background: radial-gradient(ellipse at top, var(--lamp-off-color) 0%, transparent 70%);
-      opacity: 0.3;
+    .hologram-beam {
+      position: absolute;
+      top: 65px;
+      width: 350px;
+      height: 500px;
+      background: linear-gradient(to bottom, rgba(0, 240, 255, 0.3) 0%, rgba(0, 240, 255, 0) 100%);
+      clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+      opacity: 0;
+      pointer-events: none;
+      transform-origin: top center;
+      transition: opacity 0.3s ease;
+      mask-image: repeating-linear-gradient(transparent, transparent 2px, black 2px, black 4px);
+      -webkit-mask-image: repeating-linear-gradient(transparent, transparent 2px, black 2px, black 4px);
     }
-    .floor {
-      width: 150px;
-      height: 70px;
-      background: radial-gradient(circle, var(--lamp-color) 0%, transparent 70%);
-      filter: blur(15px);
-      opacity: 0.3;
-      margin-top: -40px;
-    }
-    @media (min-width: 768px) { .floor { width: 200px; height: 100px; filter: blur(20px); margin-top: -60px; } }
-    body.light-mode .floor {
-      background: radial-gradient(circle, var(--lamp-off-color) 0%, transparent 70%);
-      opacity: 0.15;
+    @keyframes rgb-cycle {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
     }
     @keyframes swing {
-      0% { transform: rotate(4deg); }
-      50% { transform: rotate(-4deg); }
-      100% { transform: rotate(4deg); }
+      0% { transform: rotate(3deg); }
+      100% { transform: rotate(-3deg); }
     }
+    /* Lamp ON (dark mode) */
+    body:not(.light-mode) .wall-glow { opacity: 1; }
+    body:not(.light-mode) .cord::after {
+      background: #00f0ff;
+      box-shadow: 0 0 6px #00f0ff;
+    }
+    body:not(.light-mode) .rgb-ring {
+      background: #00f0ff;
+      box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+    }
+    body:not(.light-mode) .led-core {
+      background: #ffffff;
+      box-shadow: 0 0 12px #00f0ff, 0 0 24px #00f0ff, 0 0 40px #00f0ff;
+    }
+    body:not(.light-mode) .hologram-beam { opacity: 1; }
+    body:not(.light-mode) .rgb-sync { animation: rgb-cycle 5s linear infinite; }
+    /* Lamp OFF (light mode) */
+    body.light-mode .wall-glow { opacity: 0; }
+    body.light-mode .cord::after { background: #333; box-shadow: none; }
+    body.light-mode .rgb-ring { background: #222; box-shadow: none; }
+    body.light-mode .led-core { background: #111; box-shadow: none; }
+    body.light-mode .hologram-beam { opacity: 0; }
+    body.light-mode .rgb-sync { animation: none; }
 
     /* ===== HEADER (identical to index) ===== */
     header {
@@ -273,25 +347,16 @@
       width: 20px;
       transition: var(--transition);
     }
-    body:not(.light-mode) .header-logos img {
-      filter: invert(1);
-      opacity: 0.7;
-    }
-    body.light-mode .header-logos img {
-      filter: none;
-      opacity: 0.8;
-    }
-    .header-logos img:hover {
-      opacity: 1;
-      transform: translateY(-2px);
-    }
+    body:not(.light-mode) .header-logos img { filter: invert(1); opacity: 0.7; }
+    body.light-mode .header-logos img { filter: none; opacity: 0.8; }
+    .header-logos img:hover { opacity: 1; transform: translateY(-2px); }
     @media (max-width: 680px) {
       .header-inner { flex-direction: column; align-items: stretch; }
       .header-nav { justify-content: center; order: 2; }
-      .header-logos { order: 3; justify-content: center; }
+      .header-logos { justify-content: center; order: 3; }
     }
 
-    /* ===== INVENTORY SPECIFIC STYLES (compatible with glass) ===== */
+    /* ===== INVENTORY SPECIFIC STYLES (unchanged) ===== */
     .click-tracker {
       position: fixed;
       top: 80px;
@@ -604,7 +669,6 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
     .back-to-top.visible { opacity: 1; visibility: visible; }
-
     @media (max-width: 480px) {
       .product-left { flex-shrink: 0; }
       .product-image-wrap { width: 80px; height: 80px; }
@@ -620,16 +684,28 @@
 <button class="music-toggle" id="musicToggle">🎵</button>
 <div id="autoplayHint" class="autoplay-hint"><span>🎵</span> Tap anywhere to enable music</div>
 
-<div class="theme-toggle" id="themeToggle">
-  <div class="lamp-scene">
-    <div class="lamp-wrap" id="lampWrap">
-      <div class="wire"></div>
-      <div class="lamp-head"><div class="bulb"></div></div>
-      <div class="beam"></div>
-      <div class="floor"></div>
+<!-- NEW RGB GAMING LAMP (replaces old .theme-toggle) -->
+<input type="checkbox" id="lamp-switch">
+<div class="lamp-container" id="lampContainer">
+  <div class="room">
+    <div class="rgb-sync" style="position: relative; width: 100%; height: 100%;">
+      <div class="wall-glow"></div>
+      <div class="lamp-assembly">
+        <div class="base"></div>
+        <div class="cord"></div>
+        <label for="lamp-switch" class="shade-container">
+          <div class="shade-top"></div>
+          <div class="shade-body">
+            <div class="rgb-ring"></div>
+          </div>
+          <div class="led-core"></div>
+          <div class="hologram-beam"></div>
+        </label>
+      </div>
     </div>
   </div>
 </div>
+
 <div class="back-to-top" id="backToTop">↑</div>
 
 <header>
@@ -841,8 +917,8 @@
   const filtersDiv = document.getElementById('filters');
   const searchInput = document.getElementById('search');
   const sortSelect = document.getElementById('sortSelect');
-  const themeToggle = document.getElementById('themeToggle');
-  const lampWrap = document.getElementById('lampWrap');
+  const lampContainer = document.getElementById('lampContainer');
+  const lampCheckbox = document.getElementById('lamp-switch');
   const clickTracker = document.getElementById('clickTracker');
   const totalClicksSpan = document.getElementById('totalClicks');
   const topItemSpan = document.getElementById('topItem');
@@ -945,23 +1021,25 @@
 
   searchInput.addEventListener('input', render);
   sortSelect.addEventListener('change', render);
-  
-  // Theme toggle (same as index)
-  themeToggle.addEventListener('click', () => {
-    if (lampWrap) {
-      lampWrap.style.transition = 'transform 0.1s';
-      lampWrap.style.transform = 'rotate(0deg) scale(0.98)';
-      setTimeout(() => {
-        lampWrap.style.transform = '';
-        lampWrap.style.transition = '';
-      }, 150);
-    }
-    document.body.classList.toggle('light-mode');
-    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-  });
-  if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
 
-  // Music autoplay (same as index)
+  // Lamp theme toggle (replaces old .theme-toggle)
+  if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light-mode');
+    lampCheckbox.checked = false;
+  } else {
+    document.body.classList.remove('light-mode');
+    lampCheckbox.checked = true;
+  }
+  lampContainer.addEventListener('click', (e) => {
+    if (e.target.closest('.shade-container')) {
+      document.body.classList.toggle('light-mode');
+      const isLight = document.body.classList.contains('light-mode');
+      lampCheckbox.checked = !isLight;
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    }
+  });
+
+  // Music autoplay
   const bgMusic = document.getElementById('bg-music');
   const musicToggle = document.getElementById('musicToggle');
   const autoplayHint = document.getElementById('autoplayHint');
