@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>FAZGAME | PC Component Inventory</title>
-  <meta name="description" content="FAZGAME – PC components inventory. CPUs, motherboards, GPUs, RAM, storage, PSUs, coolers, cases, monitors, software, thermal paste.">
+  <meta name="description" content="FAZGAME – PC components inventory. CPUs, motherboards, GPUs, RAM, storage, PSUs, coolers, cases, monitors, software.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -112,7 +112,7 @@
       transition: transform 0.2s ease, background 0.2s ease;
     }
 
-    /* ===== COMPACT RGB GAMING LAMP (same as index/pc-builder) ===== */
+    /* ===== COMPACT RGB GAMING LAMP ===== */
     .lamp-container {
       position: fixed;
       top: 70px;
@@ -283,7 +283,7 @@
     body.light-mode .hologram-beam { opacity: 0; }
     body.light-mode .rgb-sync { animation: none; }
 
-    /* ===== HEADER (identical to index) ===== */
+    /* ===== HEADER ===== */
     header {
       position: sticky;
       top: 0;
@@ -356,7 +356,7 @@
       .header-logos { justify-content: center; order: 3; }
     }
 
-    /* ===== INVENTORY SPECIFIC STYLES (unchanged) ===== */
+    /* ===== INVENTORY SPECIFIC STYLES ===== */
     .click-tracker {
       position: fixed;
       top: 80px;
@@ -684,7 +684,7 @@
 <button class="music-toggle" id="musicToggle">🎵</button>
 <div id="autoplayHint" class="autoplay-hint"><span>🎵</span> Tap anywhere to enable music</div>
 
-<!-- NEW RGB GAMING LAMP (replaces old .theme-toggle) -->
+<!-- RGB GAMING LAMP -->
 <input type="checkbox" id="lamp-switch">
 <div class="lamp-container" id="lampContainer">
   <div class="room">
@@ -757,7 +757,7 @@
 </div>
 
 <script>
-  // ======================== FULL PRODUCT DATA (from Excel, +RM50) ========================
+  // ======================== PRODUCT DATA (thermal paste items removed) ========================
   const PRODUCTS = [
     { n: "AMD Ryzen 5 5500", c: "cpu", p: 365+50, specs: ["6 Cores / 12 Threads", "3.6GHz base, 4.2GHz boost", "19MB Cache", "AM4", "65W", "PCIe 3.0"] },
     { n: "AMD Ryzen 5 5600", c: "cpu", p: 490+50, specs: ["6C/12T", "3.5GHz base, 4.4GHz boost", "35MB Cache", "AM4", "65W", "DDR4-3200"] },
@@ -899,17 +899,10 @@
     { n: "Microsoft Windows 11 Home (ESD)", c: "software", p: 180+50, specs: ["Digital license", "64-bit", "Secure boot", "Email delivery"] },
     { n: "Microsoft Windows 11 Pro (ESD)", c: "software", p: 250+50, specs: ["Pro features", "Remote Desktop", "BitLocker"] },
     { n: "Microsoft Office Home & Business 2024 (ESD)", c: "software", p: 800+50, specs: ["Word, Excel, Outlook", "1 PC", "Lifetime"] },
-    { n: "Cooler Master Ice Fusion V2", c: "thermalpaste", p: 22+50, specs: ["Thermal grease", "High performance"] },
-    { n: "Cooler Master HTK-002", c: "thermalpaste", p: 9+50, specs: ["Budget paste", "Good conductivity"] },
-    { n: "Cooler Master MasterGel Pro V2", c: "thermalpaste", p: 15+50, specs: ["Pro grade", "Low thermal resistance"] },
-    { n: "Thermalright TF7 4g", c: "thermalpaste", p: 23+50, specs: ["4g tube", "High viscosity"] },
-    { n: "Kryonaut 1g", c: "thermalpaste", p: 15+50, specs: ["Extreme OC", "12.5 W/mK", "Non-conductive"] },
-    { n: "Kryonaut 5.5g", c: "thermalpaste", p: 35+50, specs: ["Large syringe", "For multiple applications"] },
-    { n: "Arctic MX7 4g", c: "thermalpaste", p: 30+50, specs: ["Carbon based", "Easy spread"] },
   ];
 
   function getIconClass(cat) {
-    const icons = { cpu:"fas fa-microchip", motherboard:"fas fa-microchip", gpu:"fas fa-tv", ram:"fas fa-memory", storage:"fas fa-hdd", psu:"fas fa-plug", cooler:"fas fa-fan", casing:"fas fa-desktop", monitor:"fas fa-monitor", software:"fas fa-code", thermalpaste:"fas fa-thermometer-half" };
+    const icons = { cpu:"fas fa-microchip", motherboard:"fas fa-microchip", gpu:"fas fa-tv", ram:"fas fa-memory", storage:"fas fa-hdd", psu:"fas fa-plug", cooler:"fas fa-fan", casing:"fas fa-desktop", monitor:"fas fa-monitor", software:"fas fa-code" };
     return icons[cat] || "fas fa-box";
   }
 
@@ -1022,7 +1015,7 @@
   searchInput.addEventListener('input', render);
   sortSelect.addEventListener('change', render);
 
-  // Lamp theme toggle (replaces old .theme-toggle)
+  // Lamp theme toggle
   if (localStorage.getItem('theme') === 'light') {
     document.body.classList.add('light-mode');
     lampCheckbox.checked = false;
