@@ -279,7 +279,6 @@
       .total-amount .price { font-size: 32px; }
       .button-group { flex-direction: column; gap: 8px; }
       .quote-btn, .download-img-btn { width: 100%; justify-content: center; }
-      .whatsapp-selector { width: 100%; }
       .back-to-top, .music-toggle { width: 40px; height: 40px; font-size: 16px; }
       footer { font-size: 10px; padding: 24px 16px; }
     }
@@ -476,18 +475,6 @@
       margin-top: 8px;
       flex-wrap: wrap;
     }
-    .whatsapp-selector {
-      background: var(--glass-bg);
-      border: var(--glass-border);
-      border-radius: 16px;
-      padding: 12px;
-      color: var(--text);
-      font-size: 14px;
-      cursor: pointer;
-      outline: none;
-      flex: 1;
-      min-width: 120px;
-    }
     .quote-btn, .download-img-btn {
       background: linear-gradient(135deg, var(--accent), var(--accent-dark));
       color: #000;
@@ -597,13 +584,9 @@
         <div class="price" id="totalPrice">RM 0</div>
       </div>
       <div class="button-group">
-        <select id="whatsappType" class="whatsapp-selector">
-          <option value="normal">💬 WhatsApp Normal</option>
-          <option value="business">🏢 WhatsApp Business</option>
-        </select>
         <button class="quote-btn" id="quoteBtn"><i class="fab fa-whatsapp"></i> Request Quote</button>
+        <button class="download-img-btn" id="downloadImgBtn"><i class="fas fa-download"></i> 📸 Download Quote Image</button>
       </div>
-      <button class="download-img-btn" id="downloadImgBtn"><i class="fas fa-download"></i> 📸 Download Quote Image</button>
     </div>
   </aside>
 </div>
@@ -611,7 +594,7 @@
 <footer>© 2026 FAZGAME • Faz Service, Faz Gaming</footer>
 
 <script>
-  // ======================== SHOP PRODUCTS DATA (EXACT COPY FROM SHOP.HTML) ========================
+  // ======================== SHOP PRODUCTS DATA ========================
   const PRODUCTS = [
     { n: "AMD Ryzen 5 5500", c: "cpu", p: 415 },
     { n: "AMD Ryzen 5 5600", c: "cpu", p: 540 },
@@ -819,11 +802,9 @@
     for (const key in categories) {
       const select = document.getElementById(`select-${key}`);
       if (select) {
-        // If we have a saved component for this category
         if (selectedComponents[key]) {
           const savedName = selectedComponents[key].name;
           const savedPrice = selectedComponents[key].price;
-          // Find matching option
           for (let i = 0; i < select.options.length; i++) {
             const opt = select.options[i];
             if (opt.getAttribute('data-name') === savedName && parseInt(opt.getAttribute('data-price')) === savedPrice) {
@@ -831,7 +812,6 @@
               break;
             }
           }
-          // Update preview
           const previewDiv = document.getElementById(`preview-${key}`);
           if (previewDiv) previewDiv.innerHTML = `✅ Selected: <span>${savedName}</span> (RM${savedPrice})`;
         }
@@ -881,7 +861,7 @@
     saveToLocalStorage();
   }
 
-  // ---------- Quote Message ----------
+  // ---------- Quote Message (Text Only) ----------
   function getQuoteMessage() {
     const categoryMap = {
       cpu:     { emoji: "💻", label: "CPU / Processor" },
@@ -919,7 +899,15 @@
     return message;
   }
 
-  // ---------- Image Capture (HD) ----------
+  // ---------- Open WhatsApp (wa.me works for both normal and business) ----------
+  function openWhatsApp() {
+    const textMsg = getQuoteMessage();
+    const phone = '60163691936';
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(textMsg)}`;
+    window.open(url, '_blank');
+  }
+
+  // ---------- Manual Download Image ----------
   async function captureSummaryImage() {
     const summaryCard = document.querySelector('.summary-card');
     if (!summaryCard) return null;
@@ -939,64 +927,6 @@
     }
   }
 
-  function dataURLToBlob(dataURL) {
-    const parts = dataURL.split(';base64,');
-    const contentType = parts[0].split(':')[1];
-    const raw = window.atob(parts[1]);
-    const rawLength = raw.length;
-    const uInt8Array = new Uint8Array(rawLength);
-    for (let i = 0; i < rawLength; ++i) uInt8Array[i] = raw.charCodeAt(i);
-    return new Blob([uInt8Array], { type: contentType });
-  }
-
-  // ---------- WhatsApp with type selection ----------
-  function getWhatsAppUrl(textMessage, type) {
-    const phone = '60163691936';
-    const encoded = encodeURIComponent(textMessage);
-    if (type === 'business') {
-      return `https://wa.me/${phone}?text=${encoded}`;
-    } else {
-      return `https://api.whatsapp.com/send?phone=${phone}&text=${encoded}`;
-    }
-  }
-
-  async function shareWithImage(textMessage, type) {
-    const imageDataUrl = await captureSummaryImage();
-    if (!imageDataUrl) {
-      const url = getWhatsAppUrl(textMessage, type);
-      window.open(url, '_blank');
-      return;
-    }
-
-    const blob = dataURLToBlob(imageDataUrl);
-    const file = new File([blob], 'fazgame-build.png', { type: 'image/png' });
-
-    // For mobile: try native share with file
-    if (navigator.share && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      try {
-        await navigator.share({
-          title: 'FAZGAME PC Build',
-          text: textMessage,
-          files: [file]
-        });
-        return;
-      } catch (shareErr) {
-        if (shareErr.name !== 'AbortError') console.warn('Share failed', shareErr);
-      }
-    }
-
-    // Fallback: download image and open WhatsApp URL
-    const link = document.createElement('a');
-    link.download = 'fazgame-build.png';
-    link.href = imageDataUrl;
-    link.click();
-    setTimeout(() => {
-      const url = getWhatsAppUrl(textMessage, type);
-      window.open(url, '_blank');
-    }, 500);
-  }
-
-  // ---------- Manual Download Image ----------
   async function downloadQuoteImage() {
     const imageDataUrl = await captureSummaryImage();
     if (imageDataUrl) {
@@ -1010,15 +940,8 @@
   }
 
   // ---------- Event Listeners ----------
-  document.getElementById('quoteBtn').addEventListener('click', async () => {
-    const textMsg = getQuoteMessage();
-    const type = document.getElementById('whatsappType').value;
-    await shareWithImage(textMsg, type);
-  });
-
-  document.getElementById('downloadImgBtn').addEventListener('click', () => {
-    downloadQuoteImage();
-  });
+  document.getElementById('quoteBtn').addEventListener('click', openWhatsApp);
+  document.getElementById('downloadImgBtn').addEventListener('click', downloadQuoteImage);
 
   // ---------- Music & Lamp (unchanged) ----------
   const bgMusic = document.getElementById('bg-music');
