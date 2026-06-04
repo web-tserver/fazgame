@@ -24,7 +24,6 @@
     }
     a { text-decoration: none; color: inherit; }
 
-    /* ===== LIGHT/DARK MODE VARIABLES ===== */
     :root {
       --bg: #0b0b0f;
       --bg-secondary: #111216;
@@ -62,7 +61,6 @@
       --select-bg: rgba(255, 255, 255, 0.9);
     }
 
-    /* Music toggle button */
     .music-toggle {
       position: fixed;
       bottom: 30px;
@@ -85,7 +83,6 @@
     }
     .music-toggle:hover { transform: scale(1.1); }
 
-    /* ===== COMPACT RGB GAMING LAMP ===== */
     .lamp-container {
       position: fixed;
       top: 70px;
@@ -94,7 +91,6 @@
       cursor: pointer;
       transform: scale(0.55);
       transform-origin: top right;
-      transition: filter 0.3s ease;
     }
     @media (min-width: 768px) {
       .lamp-container { top: 80px; right: 25px; transform: scale(0.65); }
@@ -114,11 +110,7 @@
       animation: swing 5s ease-in-out infinite alternate;
       filter: drop-shadow(0px 30px 20px rgba(0,0,0,0.6));
     }
-    .base {
-      width: 40px; height: 16px; background: #121318;
-      clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
-      border-bottom: 1px solid #23252d;
-    }
+    .base { width: 40px; height: 16px; background: #121318; clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%); border-bottom: 1px solid #23252d; }
     .cord { width: 8px; height: 120px; background: linear-gradient(90deg, #111 0%, #222 50%, #000 100%); position: relative; }
     .cord::after { content: ''; position: absolute; top: 0; left: 3px; width: 3px; height: 100%; background: #333; transition: background 0.3s ease; }
     .shade-container { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; margin-top: -3px; }
@@ -143,14 +135,12 @@
     }
     @keyframes rgb-cycle { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
     @keyframes swing { 0% { transform: rotate(3deg); } 100% { transform: rotate(-3deg); } }
-    
     body:not(.light-mode) .wall-glow { opacity: 1; }
     body:not(.light-mode) .cord::after { background: #00f0ff; box-shadow: 0 0 6px #00f0ff; }
     body:not(.light-mode) .rgb-ring { background: #00f0ff; box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff; }
     body:not(.light-mode) .led-core { background: #ffffff; box-shadow: 0 0 12px #00f0ff, 0 0 24px #00f0ff, 0 0 40px #00f0ff; }
     body:not(.light-mode) .hologram-beam { opacity: 1; }
     body:not(.light-mode) .rgb-sync { animation: rgb-cycle 5s linear infinite; }
-    
     body.light-mode .wall-glow { opacity: 0; }
     body.light-mode .cord::after { background: #333; box-shadow: none; }
     body.light-mode .rgb-ring { background: #222; box-shadow: none; }
@@ -158,7 +148,6 @@
     body.light-mode .hologram-beam { opacity: 0; }
     body.light-mode .rgb-sync { animation: none; }
 
-    /* ===== HEADER ===== */
     header {
       position: sticky;
       top: 0;
@@ -167,7 +156,6 @@
       backdrop-filter: var(--glass-blur);
       border-bottom: var(--glass-border);
       padding: 12px 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
     @media (min-width: 768px) { header { padding: 16px 24px; } }
     .header-inner {
@@ -224,7 +212,6 @@
       .header-logos { justify-content: center; order: 3; }
     }
 
-    /* ===== REDESIGNED PC BUILDER LAYOUT ===== */
     .builder-layout {
       max-width: 1400px;
       margin: 0 auto;
@@ -238,7 +225,6 @@
     @media (max-width: 1024px) {
       .builder-layout { grid-template-columns: 1fr; }
     }
-
     .builder-header {
       margin-bottom: 40px;
       text-align: center;
@@ -260,128 +246,29 @@
       max-width: 600px;
       margin: 0 auto;
     }
-
-    /* Components Grid - Desktop default */
     .components-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 20px;
     }
-
-    /* Mobile: 2 columns side by side + ultra compact & neat */
     @media (max-width: 640px) {
-      .builder-layout {
-        padding: 20px 12px;
-        gap: 24px;
-      }
-      .builder-header {
-        margin-bottom: 20px;
-      }
-      .builder-header h1 {
-        font-size: 24px;
-        letter-spacing: -0.5px;
-      }
-      .builder-header p {
-        font-size: 12px;
-        line-height: 1.4;
-      }
-      .components-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-      .component-card {
-        padding: 12px;
-        border-radius: 16px;
-      }
-      .component-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-        margin-bottom: 6px;
-      }
-      .component-header {
-        flex-direction: column;
-        margin-bottom: 10px;
-        gap: 6px;
-      }
-      .component-header h3 {
-        font-size: 12px;
-        text-align: center;
-      }
-      .component-select {
-        padding: 10px 8px;
-        font-size: 11px;
-        border-radius: 10px;
-        background-position: right 8px center;
-        background-size: 12px;
-      }
-      .selected-preview {
-        font-size: 9px;
-        margin-top: 6px;
-        padding: 4px 6px;
-      }
-      .summary-card {
-        padding: 18px 16px;
-        border-radius: 20px;
-      }
-      .summary-header h2 {
-        font-size: 18px;
-      }
-      .summary-header i {
-        font-size: 20px;
-      }
-      .selected-list li {
-        padding: 8px;
-      }
-      .item-category {
-        font-size: 9px;
-      }
-      .item-name {
-        font-size: 11px;
-      }
-      .item-price {
-        font-size: 11px;
-      }
-      .total-amount .price {
-        font-size: 32px;
-      }
-      .quote-btn {
-        padding: 12px 16px;
-        font-size: 13px;
-      }
-      .quote-btn i {
-        font-size: 16px;
-      }
-      .empty-selection {
-        font-size: 11px;
-        padding: 20px 12px;
-      }
-      .back-to-top {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-        bottom: 20px;
-        right: 20px;
-      }
-      .music-toggle {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-        bottom: 20px;
-        left: 20px;
-      }
-      footer {
-        font-size: 10px;
-        padding: 24px 16px;
-      }
-      .component-select option {
-        font-size: 11px;
-        white-space: normal;
-        word-break: break-word;
-      }
+      .builder-layout { padding: 20px 12px; gap: 24px; }
+      .builder-header h1 { font-size: 24px; }
+      .builder-header p { font-size: 12px; }
+      .components-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .component-card { padding: 12px; }
+      .component-icon { width: 40px; height: 40px; font-size: 18px; margin-bottom: 6px; }
+      .component-header { flex-direction: column; margin-bottom: 10px; gap: 6px; }
+      .component-header h3 { font-size: 12px; text-align: center; }
+      .component-select { padding: 10px 8px; font-size: 11px; }
+      .selected-preview { font-size: 9px; margin-top: 6px; padding: 4px 6px; }
+      .summary-card { padding: 18px 16px; }
+      .summary-header h2 { font-size: 18px; }
+      .total-amount .price { font-size: 32px; }
+      .quote-btn { padding: 12px 16px; font-size: 13px; }
+      .back-to-top { width: 40px; height: 40px; font-size: 16px; }
+      .music-toggle { width: 40px; height: 40px; font-size: 16px; }
     }
-
-    /* Sleek Component Cards */
     .component-card {
       background: var(--card-bg);
       backdrop-filter: var(--glass-blur);
@@ -409,8 +296,6 @@
       border-color: rgba(255, 216, 77, 0.3);
     }
     .component-card:hover::before { opacity: 1; }
-
-    /* Icon above title */
     .component-header {
       display: flex;
       flex-direction: column;
@@ -436,8 +321,6 @@
       color: var(--text);
       text-align: center;
     }
-
-    /* Styled Select Dropdown */
     .component-select {
       width: 100%;
       padding: 14px;
@@ -456,9 +339,6 @@
       background-repeat: no-repeat;
       background-position: right 14px center;
     }
-    body.light-mode .component-select {
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-    }
     .component-select:hover, .component-select:focus {
       border-color: var(--accent);
       background-color: var(--bg-secondary);
@@ -469,8 +349,6 @@
       color: var(--text);
       padding: 10px;
     }
-
-    /* selected preview */
     .selected-preview {
       margin-top: 12px;
       font-size: 12px;
@@ -486,8 +364,6 @@
       color: var(--accent);
       font-weight: 600;
     }
-
-    /* ===== SIDEBAR & SUMMARY CARD ===== */
     .builder-sidebar {
       align-self: start;
       position: sticky;
@@ -515,9 +391,7 @@
       color: var(--text);
       font-family: 'Clash Display', sans-serif;
     }
-    .selected-items {
-      margin-bottom: 24px;
-    }
+    .selected-items { margin-bottom: 24px; }
     .selected-list {
       list-style: none;
       display: flex;
@@ -546,23 +420,13 @@
       align-items: flex-start;
       gap: 10px;
     }
-    .item-name { 
+    .item-name { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .item-price { color: var(--accent); font-weight: 700; font-size: 14px; white-space: nowrap; }
+    .empty-selection {
+      color: var(--muted);
       font-size: 14px;
-      font-weight: 600; 
-      color: var(--text); 
-      line-height: 1.3;
-    }
-    .item-price { 
-      color: var(--accent); 
-      font-weight: 700; 
-      font-size: 14px;
-      white-space: nowrap;
-    }
-    .empty-selection { 
-      color: var(--muted); 
-      font-size: 14px; 
-      text-align: center; 
-      padding: 30px 20px; 
+      text-align: center;
+      padding: 30px 20px;
       background: var(--glass-bg);
       border-radius: 12px;
       border: 1px dashed var(--border-color);
@@ -573,11 +437,11 @@
       text-align: center;
     }
     .total-amount .label { font-size: 14px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-    .total-amount .price { 
-      font-size: 48px; 
-      font-weight: 800; 
-      color: var(--text); 
-      font-family: 'Clash Display', sans-serif; 
+    .total-amount .price {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--text);
+      font-family: 'Clash Display', sans-serif;
       margin: 5px 0 15px;
     }
     .quote-btn {
@@ -597,12 +461,10 @@
       gap: 12px;
       box-shadow: 0 8px 20px rgba(255, 216, 77, 0.2);
     }
-    .quote-btn i { font-size: 20px; }
-    .quote-btn:hover { 
-      transform: translateY(-3px); 
+    .quote-btn:hover {
+      transform: translateY(-3px);
       box-shadow: 0 12px 25px rgba(255, 216, 77, 0.3);
     }
-
     .back-to-top {
       position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px;
       border-radius: 50%; background: var(--accent); color: #000; border: none;
@@ -612,7 +474,6 @@
     }
     .back-to-top.visible { opacity: 1; visibility: visible; }
     .back-to-top:hover { transform: translateY(-3px); }
-
     footer {
       text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px;
       border-top: 1px solid var(--border-color); position: relative; z-index: 1;
@@ -653,9 +514,9 @@
       <div class="logo-text"><span>FAZ</span><span>GAME</span></div>
     </div>
     <div class="header-nav">
-      <a href="#" class="nav-link">Home</a>
-      <a href="#" class="nav-link">PC Builder</a>
-      <a href="#" class="nav-link">Shop</a>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="pc-builder.html" class="nav-link">PC Builder</a>
+      <a href="shop.html" class="nav-link">Shop</a>
     </div>
     <div class="header-logos">
       <img src="https://api.iconify.design/simple-icons/playstation.svg" alt="PlayStation">
@@ -670,7 +531,7 @@
   <div class="builder-main">
     <div class="builder-header">
       <h1>Build Your Dream PC</h1>
-      <p>Select your components from the dropdowns below (including case, monitor & accessories). Estimated prices are shown dynamically to help you plan your ultimate setup.</p>
+      <p>Select your components from the dropdowns below (CPU, motherboard, GPU, RAM, storage, PSU, cooler, case, monitor, software). Estimated prices are shown dynamically.</p>
     </div>
     <div class="components-grid" id="componentsGrid"></div>
   </div>
@@ -695,74 +556,158 @@
 <footer>© 2026 FAZGAME • Faz Service, Faz Gaming</footer>
 
 <script>
-  // ======================== FULL PRODUCT DATA ========================
+  // ======================== PRODUCT DATA (from shop.html, excluding accessories) ========================
   const PRODUCTS = [
     // CPUs
-    { n: "AMD Ryzen 5 5500", c: "cpu", p: 365+50 },{ n: "AMD Ryzen 5 5600", c: "cpu", p: 490+50 },{ n: "AMD Ryzen 5 5600X (Tray)", c: "cpu", p: 535+50 },
-    { n: "AMD Ryzen 7 5700X", c: "cpu", p: 630+50 },{ n: "AMD Ryzen 7 5800X", c: "cpu", p: 780+50 },{ n: "AMD Ryzen 7 7800X3D", c: "cpu", p: 1270+50 },
-    { n: "AMD Ryzen 5 7500F", c: "cpu", p: 515+50 },{ n: "AMD Ryzen 9 7950X", c: "cpu", p: 2000+50 },{ n: "AMD Ryzen 5 8400F (Tray)", c: "cpu", p: 500+50 },
-    { n: "AMD Ryzen 5 7600 (Tray)", c: "cpu", p: 650+50 },{ n: "AMD Ryzen 5 7600X (Tray)", c: "cpu", p: 735+50 },{ n: "AMD Ryzen 7 7700 (Tray)", c: "cpu", p: 880+50 },
-    { n: "AMD Ryzen 7 7700X (Tray)", c: "cpu", p: 960+50 },{ n: "AMD Ryzen 7 9700X (Tray)", c: "cpu", p: 1020+50 },{ n: "AMD Ryzen 9 9900X (Tray)", c: "cpu", p: 1670+50 },
-    { n: "AMD Ryzen 9 9950X (Tray)", c: "cpu", p: 2000+50 },{ n: "AMD Ryzen 9 9950X3D (Tray)", c: "cpu", p: 2750+50 },
+    { n: "AMD Ryzen 5 5500", c: "cpu", p: 415, specs: [] },
+    { n: "AMD Ryzen 5 5600", c: "cpu", p: 540, specs: [] },
+    { n: "AMD Ryzen 5 5600X (Tray)", c: "cpu", p: 585, specs: [] },
+    { n: "AMD Ryzen 7 5700X", c: "cpu", p: 680, specs: [] },
+    { n: "AMD Ryzen 7 5800X", c: "cpu", p: 830, specs: [] },
+    { n: "AMD Ryzen 7 7800X3D", c: "cpu", p: 1320, specs: [] },
+    { n: "AMD Ryzen 5 7500F", c: "cpu", p: 565, specs: [] },
+    { n: "AMD Ryzen 9 7950X", c: "cpu", p: 2050, specs: [] },
+    { n: "AMD Ryzen 5 8400F (Tray)", c: "cpu", p: 550, specs: [] },
+    { n: "AMD Ryzen 5 7600 (Tray)", c: "cpu", p: 700, specs: [] },
+    { n: "AMD Ryzen 5 7600X (Tray)", c: "cpu", p: 785, specs: [] },
+    { n: "AMD Ryzen 7 7700 (Tray)", c: "cpu", p: 930, specs: [] },
+    { n: "AMD Ryzen 7 7700X (Tray)", c: "cpu", p: 1010, specs: [] },
+    { n: "AMD Ryzen 7 9700X (Tray)", c: "cpu", p: 1070, specs: [] },
+    { n: "AMD Ryzen 9 9900X (Tray)", c: "cpu", p: 1720, specs: [] },
+    { n: "AMD Ryzen 9 9950X (Tray)", c: "cpu", p: 2050, specs: [] },
+    { n: "AMD Ryzen 9 9950X3D (Tray)", c: "cpu", p: 2800, specs: [] },
     // Motherboards
-    { n: "MSI A520M-A PRO", c: "motherboard", p: 195+50 },{ n: "GIGABYTE A520M-A PRO", c: "motherboard", p: 195+50 },{ n: "MSI B550M-A PRO", c: "motherboard", p: 295+50 },
-    { n: "MSI B550M PRO-VDH WIFI", c: "motherboard", p: 415+50 },{ n: "ASROCK A520M/AC (WIFI)", c: "motherboard", p: 250+50 },{ n: "ASUS PRIME B550M-A WIFI II", c: "motherboard", p: 430+50 },
-    { n: "MSI A620AM EVO PRO", c: "motherboard", p: 300+50 },{ n: "GIGABYTE B650M GAMING WIFI", c: "motherboard", p: 550+50 },{ n: "ASROCK B650M-H/M.2 + WIFI", c: "motherboard", p: 450+50 },
-    { n: "ASROCK B850M-X WIFI R2.0", c: "motherboard", p: 530+50 },{ n: "GIGABYTE B850M FORCE WIFI 6E", c: "motherboard", p: 565+50 },{ n: "Colorful CVN B850I Gaming Frozen ITX", c: "motherboard", p: 710+50 },
-    { n: "GIGABYTE A620M-H", c: "motherboard", p: 300+50 },{ n: "MSI B850M GAMING PRO WIFI 6E", c: "motherboard", p: 685+50 },{ n: "GIGABYTE B850M EAGLE WIFI6E ICE", c: "motherboard", p: 745+50 },
-    { n: "GIGABYTE B650M GAMING PLUS WIFI", c: "motherboard", p: 580+50 },{ n: "GIGABYTE B850M GAMING X WIFI 6E", c: "motherboard", p: 780+50 },{ n: "ASUS B850M AYW GAMING WIFI", c: "motherboard", p: 615+50 },
-    { n: "MSI TOMAHAWK B850 MAX WIFI", c: "motherboard", p: 1160+50 },{ n: "MSI PRO B850M-P WIFI", c: "motherboard", p: 680+50 },
+    { n: "MSI A520M-A PRO", c: "motherboard", p: 245, specs: [] },
+    { n: "GIGABYTE A520M-A PRO", c: "motherboard", p: 245, specs: [] },
+    { n: "MSI B550M-A PRO", c: "motherboard", p: 345, specs: [] },
+    { n: "MSI B550M PRO-VDH WIFI", c: "motherboard", p: 465, specs: [] },
+    { n: "ASROCK A520M/AC (WIFI)", c: "motherboard", p: 300, specs: [] },
+    { n: "ASUS PRIME B550M-A WIFI II", c: "motherboard", p: 480, specs: [] },
+    { n: "MSI A620AM EVO PRO", c: "motherboard", p: 350, specs: [] },
+    { n: "GIGABYTE B650M GAMING WIFI", c: "motherboard", p: 600, specs: [] },
+    { n: "ASROCK B650M-H/M.2 + WIFI", c: "motherboard", p: 500, specs: [] },
+    { n: "ASROCK B850M-X WIFI R2.0", c: "motherboard", p: 580, specs: [] },
+    { n: "GIGABYTE B850M FORCE WIFI 6E", c: "motherboard", p: 615, specs: [] },
+    { n: "Colorful CVN B850I Gaming Frozen ITX", c: "motherboard", p: 760, specs: [] },
+    { n: "GIGABYTE A620M-H", c: "motherboard", p: 350, specs: [] },
+    { n: "MSI B850M GAMING PRO WIFI 6E", c: "motherboard", p: 735, specs: [] },
+    { n: "GIGABYTE B850M EAGLE WIFI6E ICE", c: "motherboard", p: 795, specs: [] },
+    { n: "GIGABYTE B650M GAMING PLUS WIFI", c: "motherboard", p: 630, specs: [] },
+    { n: "GIGABYTE B850M GAMING X WIFI 6E", c: "motherboard", p: 830, specs: [] },
+    { n: "ASUS B850M AYW GAMING WIFI", c: "motherboard", p: 665, specs: [] },
+    { n: "MSI TOMAHAWK B850 MAX WIFI", c: "motherboard", p: 1210, specs: [] },
+    { n: "MSI PRO B850M-P WIFI", c: "motherboard", p: 730, specs: [] },
     // GPUs
-    { n: "MSI VENTUS 2X RTX3050 6GB", c: "gpu", p: 850+50 },{ n: "GIGABYTE WINDFORCE RTX5050 8GB", c: "gpu", p: 1235+50 },{ n: "MSI SHADOW 2X RTX5060 8GB", c: "gpu", p: 1450+50 },
-    { n: "COLORFUL GAMING DUO RTX5060 8GB", c: "gpu", p: 1425+50 },{ n: "ASUS PRIME RTX5060 8GB", c: "gpu", p: 1650+50 },{ n: "ZOTAC TWIN EDGE RTX5060 8GB", c: "gpu", p: 1475+50 },
-    { n: "IGAME ULTRA WHITE DUO RTX5060 8GB", c: "gpu", p: 1585+50 },{ n: "ASROCK CHALLENGER RX9060XT 16GB", c: "gpu", p: 1699+50 },{ n: "ASUS DUAL RX9060XT 16GB", c: "gpu", p: 1800+50 },
-    { n: "SAPPHIRE PULSE RX9060XT 16GB", c: "gpu", p: 1800+50 },{ n: "XFX SWIFT RX9060XT OC 16GB", c: "gpu", p: 1850+50 },{ n: "ASUS PRIME RX9060XT 16GB", c: "gpu", p: 2000+50 },
-    { n: "COLORFUL GAMING DUO RTX5060TI 16GB", c: "gpu", p: 2150+50 },{ n: "COLORFUL BATTLEAX RTX5070 12GB", c: "gpu", p: 2800+50 },{ n: "IGAME ULTRA WHITE RTX5070 12GB", c: "gpu", p: 2955+50 },
-    { n: "IGAME ULTRA BLACK RTX5070 12GB", c: "gpu", p: 2930+50 },{ n: "ASUS PRIME RX9070XT 16GB", c: "gpu", p: 3300+50 },
+    { n: "MSI VENTUS 2X RTX3050 6GB", c: "gpu", p: 900, specs: [] },
+    { n: "GIGABYTE WINDFORCE RTX5050 8GB", c: "gpu", p: 1285, specs: [] },
+    { n: "MSI SHADOW 2X RTX5060 8GB", c: "gpu", p: 1500, specs: [] },
+    { n: "COLORFUL GAMING DUO RTX5060 8GB", c: "gpu", p: 1475, specs: [] },
+    { n: "ASUS PRIME RTX5060 8GB", c: "gpu", p: 1700, specs: [] },
+    { n: "ZOTAC TWIN EDGE RTX5060 8GB", c: "gpu", p: 1525, specs: [] },
+    { n: "IGAME ULTRA WHITE DUO RTX5060 8GB", c: "gpu", p: 1635, specs: [] },
+    { n: "ASROCK CHALLENGER RX9060XT 16GB", c: "gpu", p: 1749, specs: [] },
+    { n: "ASUS DUAL RX9060XT 16GB", c: "gpu", p: 1850, specs: [] },
+    { n: "SAPPHIRE PULSE RX9060XT 16GB", c: "gpu", p: 1850, specs: [] },
+    { n: "XFX SWIFT RX9060XT OC 16GB", c: "gpu", p: 1900, specs: [] },
+    { n: "ASUS PRIME RX9060XT 16GB", c: "gpu", p: 2050, specs: [] },
+    { n: "COLORFUL GAMING DUO RTX5060TI 16GB", c: "gpu", p: 2200, specs: [] },
+    { n: "COLORFUL BATTLEAX RTX5070 12GB", c: "gpu", p: 2850, specs: [] },
+    { n: "IGAME ULTRA WHITE RTX5070 12GB", c: "gpu", p: 3005, specs: [] },
+    { n: "IGAME ULTRA BLACK RTX5070 12GB", c: "gpu", p: 2980, specs: [] },
+    { n: "ASUS PRIME RX9070XT 16GB", c: "gpu", p: 3350, specs: [] },
     // RAM
-    { n: "HIKSEMI HIKER 16GB 3200MHz DDR4", c: "ram", p: 460+50 },{ n: "FANXIANG UD02R 8GB 3200MHz DDR4", c: "ram", p: 230+50 },{ n: "KINGBANK KJXB 8GB 3200MHz", c: "ram", p: 230+50 },
-    { n: "KINGBANK KJXB 16GB 3200MHz", c: "ram", p: 460+50 },{ n: "KINGBANK KJXS 32GB 3200MHz (16GBx2)", c: "ram", p: 920+50 },{ n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 Black", c: "ram", p: 850+50 },
-    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 White", c: "ram", p: 885+50 },{ n: "KINGSTON FURY BEAST 16GB 6000MHz Black", c: "ram", p: 1085+50 },{ n: "KINGSTON FURY BEAST 16GB 6000MHz Kit (8GBx2)", c: "ram", p: 1095+50 },
-    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz", c: "ram", p: 1150+50 },{ n: "KINGSTON FURY BEAST RGB 16GB 6000MHz CL30", c: "ram", p: 1250+50 },{ n: "ACER HT200 32GB 6000MHz Silver", c: "ram", p: 1850+50 },
-    { n: "ACER PREDATOR VESTA II 32GB 6000MHz RGB", c: "ram", p: 1750+50 },{ n: "ACER PALLAS II 32GB 6000MHz Silver", c: "ram", p: 1700+50 },{ n: "GSKILL RIPJAWS M5 NEO RGB 32GB 6000MHz", c: "ram", p: 1750+50 },
-    { n: "Kingston FURY Beast 32GB 6000MHz CL30 EXPO Black RGB", c: "ram", p: 2000+50 },{ n: "Kingston FURY Beast 32GB 6000MHz CL30 White", c: "ram", p: 2000+50 },{ n: "KINGBANK KRRB SOARBLADE 32GB 6000MHz CL36", c: "ram", p: 1750+50 },
+    { n: "HIKSEMI HIKER 16GB 3200MHz DDR4", c: "ram", p: 510, specs: [] },
+    { n: "FANXIANG UD02R 8GB 3200MHz DDR4", c: "ram", p: 280, specs: [] },
+    { n: "KINGBANK KJXB 8GB 3200MHz", c: "ram", p: 280, specs: [] },
+    { n: "KINGBANK KJXB 16GB 3200MHz", c: "ram", p: 510, specs: [] },
+    { n: "KINGBANK KJXS 32GB 3200MHz (16GBx2)", c: "ram", p: 970, specs: [] },
+    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 Black", c: "ram", p: 900, specs: [] },
+    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 White", c: "ram", p: 935, specs: [] },
+    { n: "KINGSTON FURY BEAST 16GB 6000MHz Black", c: "ram", p: 1135, specs: [] },
+    { n: "KINGSTON FURY BEAST 16GB 6000MHz Kit (8GBx2)", c: "ram", p: 1145, specs: [] },
+    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz", c: "ram", p: 1200, specs: [] },
+    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz CL30", c: "ram", p: 1300, specs: [] },
+    { n: "ACER HT200 32GB 6000MHz Silver", c: "ram", p: 1900, specs: [] },
+    { n: "ACER PREDATOR VESTA II 32GB 6000MHz RGB", c: "ram", p: 1800, specs: [] },
+    { n: "ACER PALLAS II 32GB 6000MHz Silver", c: "ram", p: 1750, specs: [] },
+    { n: "GSKILL RIPJAWS M5 NEO RGB 32GB 6000MHz", c: "ram", p: 1800, specs: [] },
+    { n: "Kingston FURY Beast 32GB 6000MHz CL30 EXPO Black RGB", c: "ram", p: 2050, specs: [] },
+    { n: "Kingston FURY Beast 32GB 6000MHz CL30 White", c: "ram", p: 2050, specs: [] },
+    { n: "KINGBANK KRRB SOARBLADE 32GB 6000MHz CL36", c: "ram", p: 1800, specs: [] },
     // Storage
-    { n: "HIKSEMI WAVE 512GB NVMe Gen3", c: "storage", p: 330+50 },{ n: "ACER FA100 512GB NVMe Gen3", c: "storage", p: 330+50 },{ n: "ACER FA100 1TB NVMe Gen3", c: "storage", p: 635+50 },
-    { n: "ACER FA200 500GB NVMe Gen4", c: "storage", p: 435+50 },{ n: "ACER FA200 1TB NVMe Gen4", c: "storage", p: 675+50 },{ n: "PUSKILLS 1TB NVMe Gen3", c: "storage", p: 595+50 },
-    { n: "MSI SPATIUM M450 500GB Gen4", c: "storage", p: 365+50 },{ n: "MSI SPATIUM M450 1TB Gen4", c: "storage", p: 635+50 },{ n: "KINGBANK KP260 PLUS 1TB Gen4", c: "storage", p: 685+50 },
-    { n: "HUAWEI EKITSTOR XTREME 200E 1TB Gen4", c: "storage", p: 700+50 },{ n: "T-FORCE Z44A5 512GB Gen4", c: "storage", p: 380+50 },{ n: "T-FORCE Z44A5 1TB Gen4", c: "storage", p: 695+50 },
-    { n: "T-FORCE Z44A5 2TB Gen4", c: "storage", p: 1285+50 },{ n: "T-FORCE VULCAN 512GB SATA SSD", c: "storage", p: 270+50 },{ n: "BRYT M.2 512GB NVMe", c: "storage", p: 290+50 },
+    { n: "HIKSEMI WAVE 512GB NVMe Gen3", c: "storage", p: 380, specs: [] },
+    { n: "ACER FA100 512GB NVMe Gen3", c: "storage", p: 380, specs: [] },
+    { n: "ACER FA100 1TB NVMe Gen3", c: "storage", p: 685, specs: [] },
+    { n: "ACER FA200 500GB NVMe Gen4", c: "storage", p: 485, specs: [] },
+    { n: "ACER FA200 1TB NVMe Gen4", c: "storage", p: 725, specs: [] },
+    { n: "PUSKILLS 1TB NVMe Gen3", c: "storage", p: 645, specs: [] },
+    { n: "MSI SPATIUM M450 500GB Gen4", c: "storage", p: 415, specs: [] },
+    { n: "MSI SPATIUM M450 1TB Gen4", c: "storage", p: 685, specs: [] },
+    { n: "KINGBANK KP260 PLUS 1TB Gen4", c: "storage", p: 735, specs: [] },
+    { n: "HUAWEI EKITSTOR XTREME 200E 1TB Gen4", c: "storage", p: 750, specs: [] },
+    { n: "T-FORCE Z44A5 512GB Gen4", c: "storage", p: 430, specs: [] },
+    { n: "T-FORCE Z44A5 1TB Gen4", c: "storage", p: 745, specs: [] },
+    { n: "T-FORCE Z44A5 2TB Gen4", c: "storage", p: 1335, specs: [] },
+    { n: "T-FORCE VULCAN 512GB SATA SSD", c: "storage", p: 320, specs: [] },
+    { n: "BRYT M.2 512GB NVMe", c: "storage", p: 340, specs: [] },
     // PSU
-    { n: "GIGABYTE P650SS 650W 80+ Silver", c: "psu", p: 180+50 },{ n: "AISURIX 550W 80+ Standard", c: "psu", p: 85+50 },{ n: "AISURIX 600W 80+", c: "psu", p: 95+50 },
-    { n: "AISURIX 650W 80+", c: "psu", p: 100+50 },{ n: "AISURIX 700W 80+", c: "psu", p: 105+50 },{ n: "SEGOTEP AN550W 80+", c: "psu", p: 135+50 },
-    { n: "SEGOTEP AN650W 80+", c: "psu", p: 150+50 },{ n: "SEGOTEP AN650W White", c: "psu", p: 165+50 },{ n: "SEGOTEP AN750W 80+", c: "psu", p: 170+50 },
-    { n: "1STPLAYER ACK 650W 80+", c: "psu", p: 160+50 },{ n: "1STPLAYER ACK 750W 80+", c: "psu", p: 195+50 },{ n: "1STPLAYER ACK 650W Bronze", c: "psu", p: 190+50 },
-    { n: "1STPLAYER ACK 750W Bronze", c: "psu", p: 235+50 },{ n: "1STPLAYER DK6.0 600W Bronze", c: "psu", p: 160+50 },{ n: "1STPLAYER DK7.0 700W Bronze", c: "psu", p: 195+50 },
-    { n: "1STPLAYER ACK 750W Gold", c: "psu", p: 315+50 },{ n: "1STPLAYER ACK 850W Gold", c: "psu", p: 340+50 },{ n: "THERMALRIGHT TB750 Bronze", c: "psu", p: 245+50 },
-    { n: "THERMALRIGHT KG750 Gold", c: "psu", p: 295+50 },{ n: "COOLER MASTER MWE V3 750W Gold", c: "psu", p: 350+50 },
+    { n: "GIGABYTE P650SS 650W 80+ Silver", c: "psu", p: 230, specs: [] },
+    { n: "AISURIX 550W 80+ Standard", c: "psu", p: 135, specs: [] },
+    { n: "AISURIX 600W 80+", c: "psu", p: 145, specs: [] },
+    { n: "AISURIX 650W 80+", c: "psu", p: 150, specs: [] },
+    { n: "AISURIX 700W 80+", c: "psu", p: 155, specs: [] },
+    { n: "SEGOTEP AN550W 80+", c: "psu", p: 185, specs: [] },
+    { n: "SEGOTEP AN650W 80+", c: "psu", p: 200, specs: [] },
+    { n: "SEGOTEP AN650W White", c: "psu", p: 215, specs: [] },
+    { n: "SEGOTEP AN750W 80+", c: "psu", p: 220, specs: [] },
+    { n: "1STPLAYER ACK 650W 80+", c: "psu", p: 210, specs: [] },
+    { n: "1STPLAYER ACK 750W 80+", c: "psu", p: 245, specs: [] },
+    { n: "1STPLAYER ACK 650W Bronze", c: "psu", p: 240, specs: [] },
+    { n: "1STPLAYER ACK 750W Bronze", c: "psu", p: 285, specs: [] },
+    { n: "1STPLAYER DK6.0 600W Bronze", c: "psu", p: 210, specs: [] },
+    { n: "1STPLAYER DK7.0 700W Bronze", c: "psu", p: 245, specs: [] },
+    { n: "1STPLAYER ACK 750W Gold", c: "psu", p: 365, specs: [] },
+    { n: "1STPLAYER ACK 850W Gold", c: "psu", p: 390, specs: [] },
+    { n: "THERMALRIGHT TB750 Bronze", c: "psu", p: 295, specs: [] },
+    { n: "THERMALRIGHT KG750 Gold", c: "psu", p: 345, specs: [] },
+    { n: "COOLER MASTER MWE V3 750W Gold", c: "psu", p: 400, specs: [] },
     // Coolers
-    { n: "Thermalright Assassin X 120 SE Black", c: "cooler", p: 60+50 },{ n: "Thermalright Assassin X 120 SE White", c: "cooler", p: 65+50 },{ n: "Thermalright Assassin X 120 SE ARGB Black", c: "cooler", p: 75+50 },
-    { n: "Thermalright Peerless Assassin 120 SE", c: "cooler", p: 120+50 },{ n: "VALKYRIE AQ125 Black", c: "cooler", p: 60+50 },{ n: "VALKYRIE AQ125 ARGB Black", c: "cooler", p: 75+50 },
-    { n: "Snowman MT660-V4D Black", c: "cooler", p: 130+50 },{ n: "Thermalright Frozen Infinity 240 Black", c: "cooler", p: 150+50 },{ n: "Thermalright Frozen Infinity 360 White", c: "cooler", p: 230+50 },
-    { n: "VALKYRIE GLA-240 AIO Black", c: "cooler", p: 235+50 },{ n: "ID-COOLING FX240 LCD ARGB", c: "cooler", p: 215+50 },{ n: "VALKYRIE B240-GT Black", c: "cooler", p: 330+50 },
-    // Cases
-    { n: "DEEPCOOL CH160 PLUS MATX CASE - BLACK", c: "case", p: 249+50 },
-    { n: "NZXT H510 Flow - Black", c: "case", p: 299+50 },
-    { n: "Lian Li O11 Dynamic EVO - White", c: "case", p: 450+50 },
-    { n: "Corsair 4000D Airflow", c: "case", p: 349+50 },
-    { n: "Cooler Master MasterBox Q300L", c: "case", p: 199+50 },
-    { n: "Fractal Design Pop Air RGB", c: "case", p: 379+50 },
+    { n: "Thermalright Assassin X 120 SE Black", c: "cooler", p: 110, specs: [] },
+    { n: "Thermalright Assassin X 120 SE White", c: "cooler", p: 115, specs: [] },
+    { n: "Thermalright Assassin X 120 SE ARGB Black", c: "cooler", p: 125, specs: [] },
+    { n: "Thermalright Peerless Assassin 120 SE", c: "cooler", p: 170, specs: [] },
+    { n: "VALKYRIE AQ125 Black", c: "cooler", p: 110, specs: [] },
+    { n: "VALKYRIE AQ125 ARGB Black", c: "cooler", p: 125, specs: [] },
+    { n: "Snowman MT660-V4D Black", c: "cooler", p: 180, specs: [] },
+    { n: "Thermalright Frozen Infinity 240 Black", c: "cooler", p: 200, specs: [] },
+    { n: "Thermalright Frozen Infinity 360 White", c: "cooler", p: 280, specs: [] },
+    { n: "VALKYRIE GLA-240 AIO Black", c: "cooler", p: 285, specs: [] },
+    { n: "ID-COOLING FX240 LCD ARGB", c: "cooler", p: 265, specs: [] },
+    { n: "VALKYRIE B240-GT Black", c: "cooler", p: 380, specs: [] },
+    // Cases (casing)
+    { n: "Segotep LUMI 3T Black (6 ARGB Fans)", c: "case", p: 250, specs: [] },
+    { n: "Segotep LUMI 3T White (6 ARGB Fans)", c: "case", p: 260, specs: [] },
+    { n: "Segotep BRAVE W1 Black", c: "case", p: 160, specs: [] },
+    { n: "Segotep BRAVE W1 White", c: "case", p: 165, specs: [] },
+    { n: "Segotep ENDURA 240S Black", c: "case", p: 205, specs: [] },
+    { n: "Segotep ENDURA 240S White", c: "case", p: 215, specs: [] },
+    { n: "1STPLAYER BV5 Black", c: "case", p: 160, specs: [] },
+    { n: "1STPLAYER BV6 Black", c: "case", p: 200, specs: [] },
+    { n: "TECWARE VXO M TG Black", c: "case", p: 155, specs: [] },
+    { n: "TECWARE TIMBER M TG Black", c: "case", p: 200, specs: [] },
+    { n: "Formula V Crystal Z6M V2 Black", c: "case", p: 235, specs: [] },
     // Monitors
-    { n: "ASUS TUF VG249Q1A 24\" 165Hz IPS", c: "monitor", p: 599+50 },
-    { n: "AOC 24G2E 24\" 144Hz IPS", c: "monitor", p: 499+50 },
-    { n: "Samsung Odyssey G5 27\" 144Hz VA", c: "monitor", p: 899+50 },
-    { n: "LG 27GN800-B 27\" 144Hz Nano IPS", c: "monitor", p: 1099+50 },
-    { n: "ViewSonic VX2476-SMHD 24\" 75Hz IPS", c: "monitor", p: 399+50 },
-    { n: "Acer Nitro VG270U 27\" 144Hz IPS", c: "monitor", p: 849+50 },
-    // Accessories (Mouse + Keyboard Combos)
-    { n: "Budget Combo (Keyboard + Mouse) - Below RM100", c: "accessory", p: 95+0 },
-    { n: "Standard Combo (Keyboard + Mouse) - Below RM150", c: "accessory", p: 145+0 },
-    { n: "Gaming Combo (RGB Keyboard + Gaming Mouse) - Below RM250", c: "accessory", p: 245+0 }
+    { n: "GS24F14 23.8\" 144Hz IPS", c: "monitor", p: 325, specs: [] },
+    { n: "MF2408-A 23.8\" 120Hz IPS", c: "monitor", p: 335, specs: [] },
+    { n: "MF2708-A 27\" 120Hz IPS", c: "monitor", p: 410, specs: [] },
+    { n: "MD2425-V 23.8\" 180Hz IPS", c: "monitor", p: 435, specs: [] },
+    { n: "24G50Z 24\" 260Hz IPS", c: "monitor", p: 510, specs: [] },
+    { n: "27G50Z 27\" 260Hz IPS", c: "monitor", p: 550, specs: [] },
+    { n: "GS27QA 27\" 180Hz QHD IPS", c: "monitor", p: 630, specs: [] },
+    // Software
+    { n: "Microsoft Windows 11 Home (ESD)", c: "software", p: 230, specs: [] },
+    { n: "Microsoft Windows 11 Pro (ESD)", c: "software", p: 300, specs: [] },
+    { n: "Microsoft Office Home & Business 2024 (ESD)", c: "software", p: 850, specs: [] }
   ];
 
   const categories = {
@@ -775,7 +720,7 @@
     cooler: { name: "Cooling", icon: "fas fa-fan", filter: (p) => p.c === "cooler" },
     case: { name: "PC Case", icon: "fas fa-desktop", filter: (p) => p.c === "case" },
     monitor: { name: "Monitor", icon: "fas fa-tachometer-alt", filter: (p) => p.c === "monitor" },
-    accessory: { name: "Accessories", icon: "fas fa-keyboard", filter: (p) => p.c === "accessory" }
+    software: { name: "Software", icon: "fas fa-code", filter: (p) => p.c === "software" }
   };
 
   let selectedComponents = {};
@@ -786,7 +731,6 @@
     for (const [key, cat] of Object.entries(categories)) {
       const options = PRODUCTS.filter(cat.filter).map(p => ({ name: p.n, price: p.p }));
       if (options.length === 0) continue;
-      // Changed "Choose {cat.name}..." to "Select"
       let optionsHtml = `<option value="" data-price="0" data-name="">Select</option>`;
       options.forEach((opt, idx) => {
         optionsHtml += `<option value="${idx}" data-price="${opt.price}" data-name="${opt.name.replace(/"/g, '&quot;')}">${opt.name} — RM${opt.price}</option>`;
@@ -851,7 +795,6 @@
     document.getElementById('totalPrice').innerText = `RM ${total.toLocaleString()}`;
   }
 
-  // WhatsApp message: only selected items with emojis
   function getQuoteMessage() {
     const categoryMap = {
       cpu:     { emoji: "💻", label: "CPU / Processor" },
@@ -863,12 +806,10 @@
       psu:     { emoji: "⚡", label: "Power Supply (PSU)" },
       case:    { emoji: "🖥️", label: "PC Case" },
       monitor: { emoji: "🖥️", label: "Monitor" },
-      accessory: { emoji: "🎧", label: "Accessories (Keyboard + Mouse)" }
+      software: { emoji: "💿", label: "Software" }
     };
-
     let message = "Hi FAZGAME 👋 I'd like to request a quote for a custom PC with these components:\n";
     let hasSelection = false;
-
     for (const [key, comp] of Object.entries(selectedComponents)) {
       const info = categoryMap[key];
       if (info && comp && comp.name && comp.price) {
@@ -876,19 +817,15 @@
         hasSelection = true;
       }
     }
-
     if (!hasSelection) {
       return "Hi FAZGAME 👋 I'm interested in building a custom PC. Please help me with a quote for the best configuration for my needs.";
     }
-
     let total = 0;
     for (const comp of Object.values(selectedComponents)) total += comp.price;
-    message += `\nEstimated Total: RM${total.toLocaleString()}\n\n`;
-    message += `Can you provide a final price and availability?`;
+    message += `\nEstimated Total: RM${total.toLocaleString()}\n\nCan you provide a final price and availability?`;
     return message;
   }
 
-  // HD image capture (scale 3)
   async function captureSummaryImage() {
     const summaryCard = document.querySelector('.summary-card');
     if (!summaryCard) return null;
@@ -924,24 +861,14 @@
       window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent(textMessage)}`, '_blank');
       return;
     }
-
     const blob = dataURLToBlob(imageDataUrl);
     const file = new File([blob], 'fazgame-build.png', { type: 'image/png' });
-
     if (navigator.share && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
       try {
-        await navigator.share({
-          title: 'FAZGAME PC Build',
-          text: textMessage,
-          files: [file]
-        });
+        await navigator.share({ title: 'FAZGAME PC Build', text: textMessage, files: [file] });
         return;
-      } catch (shareErr) {
-        if (shareErr.name !== 'AbortError') console.warn('Share failed', shareErr);
-      }
+      } catch (shareErr) { if (shareErr.name !== 'AbortError') console.warn(shareErr); }
     }
-
-    // Desktop fallback
     const link = document.createElement('a');
     link.download = 'fazgame-build.png';
     link.href = imageDataUrl;
@@ -957,7 +884,7 @@
     await shareWithImage(textMsg);
   });
 
-  // ===== MUSIC & LAMP TOGGLES =====
+  // Music & Lamp
   const bgMusic = document.getElementById('bg-music');
   const musicToggle = document.getElementById('musicToggle');
   let musicStarted = false;
@@ -968,22 +895,18 @@
     bgMusic.play().then(() => { musicStarted = true; updateMusicIcon(); }).catch(err => console.warn(err));
   }
   bgMusic.muted = false;
-  bgMusic.play().then(() => { musicStarted = true; updateMusicIcon(); }).catch(() => {
-    const enableMusic = () => { startMusic(); document.removeEventListener('click', enableMusic); document.removeEventListener('touchstart', enableMusic); };
-    document.addEventListener('click', enableMusic); document.addEventListener('touchstart', enableMusic);
-  });
+  bgMusic.play().then(() => { musicStarted = true; updateMusicIcon(); }).catch(() => {});
   musicToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     if (!musicStarted) { startMusic(); return; }
     bgMusic.muted = !bgMusic.muted; updateMusicIcon();
   });
 
-  // Theme toggle (lamp)
   const lampCheckbox = document.getElementById('lamp-switch');
-  const lampContainer = document.getElementById('lampContainer');
-  if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); lampCheckbox.checked = false; } 
+  const lampContainerDiv = document.getElementById('lampContainer');
+  if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); lampCheckbox.checked = false; }
   else { document.body.classList.remove('light-mode'); lampCheckbox.checked = true; }
-  lampContainer.addEventListener('click', (e) => {
+  lampContainerDiv.addEventListener('click', (e) => {
     if (e.target.closest('.shade-container')) {
       document.body.classList.toggle('light-mode');
       const isLight = document.body.classList.contains('light-mode');
@@ -992,7 +915,6 @@
     }
   });
 
-  // Back to top
   const backToTop = document.getElementById('backToTop');
   window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 200));
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
