@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <title>FAZGAME | Custom PC Builder</title>
-  <meta name="description" content="FAZGAME – Build your dream PC using real component inventory. Select parts and get an instant quote.">
+  <meta name="description" content="FAZGAME – Build your dream PC using real shop inventory. Select parts and get an instant quote.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -541,9 +541,9 @@
       <div class="logo-text"><span>FAZ</span><span>GAME</span></div>
     </div>
     <div class="header-nav">
-      <a href="#" class="nav-link">Home</a>
-      <a href="#" class="nav-link">PC Builder</a>
-      <a href="#" class="nav-link">Shop</a>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="javascript:void(0)" class="nav-link">PC Builder</a>
+      <a href="shop.html" class="nav-link">Shop</a>
     </div>
     <div class="header-logos">
       <img src="https://api.iconify.design/simple-icons/playstation.svg" alt="PlayStation">
@@ -558,7 +558,7 @@
   <div class="builder-main">
     <div class="builder-header">
       <h1>Build Your Dream PC</h1>
-      <p>Select your components from the dropdowns below (including case, monitor & accessories). Estimated prices are shown dynamically to help you plan your ultimate setup.</p>
+      <p>Select your components from the dropdowns below (including case, monitor & accessories). Prices are from our live shop inventory.</p>
     </div>
     <div class="components-grid" id="componentsGrid"></div>
   </div>
@@ -583,13 +583,16 @@
 <footer>© 2026 FAZGAME • Faz Service, Faz Gaming</footer>
 
 <script>
+  // ======================== SHOP PRODUCTS DATA ========================
   const PRODUCTS = [
+    // CPUs
     { n: "AMD Ryzen 5 5500", c: "cpu", p: 365+50 },{ n: "AMD Ryzen 5 5600", c: "cpu", p: 490+50 },{ n: "AMD Ryzen 5 5600X (Tray)", c: "cpu", p: 535+50 },
     { n: "AMD Ryzen 7 5700X", c: "cpu", p: 630+50 },{ n: "AMD Ryzen 7 5800X", c: "cpu", p: 780+50 },{ n: "AMD Ryzen 7 7800X3D", c: "cpu", p: 1270+50 },
     { n: "AMD Ryzen 5 7500F", c: "cpu", p: 515+50 },{ n: "AMD Ryzen 9 7950X", c: "cpu", p: 2000+50 },{ n: "AMD Ryzen 5 8400F (Tray)", c: "cpu", p: 500+50 },
     { n: "AMD Ryzen 5 7600 (Tray)", c: "cpu", p: 650+50 },{ n: "AMD Ryzen 5 7600X (Tray)", c: "cpu", p: 735+50 },{ n: "AMD Ryzen 7 7700 (Tray)", c: "cpu", p: 880+50 },
     { n: "AMD Ryzen 7 7700X (Tray)", c: "cpu", p: 960+50 },{ n: "AMD Ryzen 7 9700X (Tray)", c: "cpu", p: 1020+50 },{ n: "AMD Ryzen 9 9900X (Tray)", c: "cpu", p: 1670+50 },
     { n: "AMD Ryzen 9 9950X (Tray)", c: "cpu", p: 2000+50 },{ n: "AMD Ryzen 9 9950X3D (Tray)", c: "cpu", p: 2750+50 },
+    // Motherboards
     { n: "MSI A520M-A PRO", c: "motherboard", p: 195+50 },{ n: "GIGABYTE A520M-A PRO", c: "motherboard", p: 195+50 },{ n: "MSI B550M-A PRO", c: "motherboard", p: 295+50 },
     { n: "MSI B550M PRO-VDH WIFI", c: "motherboard", p: 415+50 },{ n: "ASROCK A520M/AC (WIFI)", c: "motherboard", p: 250+50 },{ n: "ASUS PRIME B550M-A WIFI II", c: "motherboard", p: 430+50 },
     { n: "MSI A620AM EVO PRO", c: "motherboard", p: 300+50 },{ n: "GIGABYTE B650M GAMING WIFI", c: "motherboard", p: 550+50 },{ n: "ASROCK B650M-H/M.2 + WIFI", c: "motherboard", p: 450+50 },
@@ -597,23 +600,27 @@
     { n: "GIGABYTE A620M-H", c: "motherboard", p: 300+50 },{ n: "MSI B850M GAMING PRO WIFI 6E", c: "motherboard", p: 685+50 },{ n: "GIGABYTE B850M EAGLE WIFI6E ICE", c: "motherboard", p: 745+50 },
     { n: "GIGABYTE B650M GAMING PLUS WIFI", c: "motherboard", p: 580+50 },{ n: "GIGABYTE B850M GAMING X WIFI 6E", c: "motherboard", p: 780+50 },{ n: "ASUS B850M AYW GAMING WIFI", c: "motherboard", p: 615+50 },
     { n: "MSI TOMAHAWK B850 MAX WIFI", c: "motherboard", p: 1160+50 },{ n: "MSI PRO B850M-P WIFI", c: "motherboard", p: 680+50 },
+    // GPUs
     { n: "MSI VENTUS 2X RTX3050 6GB", c: "gpu", p: 850+50 },{ n: "GIGABYTE WINDFORCE RTX5050 8GB", c: "gpu", p: 1235+50 },{ n: "MSI SHADOW 2X RTX5060 8GB", c: "gpu", p: 1450+50 },
     { n: "COLORFUL GAMING DUO RTX5060 8GB", c: "gpu", p: 1425+50 },{ n: "ASUS PRIME RTX5060 8GB", c: "gpu", p: 1650+50 },{ n: "ZOTAC TWIN EDGE RTX5060 8GB", c: "gpu", p: 1475+50 },
     { n: "IGAME ULTRA WHITE DUO RTX5060 8GB", c: "gpu", p: 1585+50 },{ n: "ASROCK CHALLENGER RX9060XT 16GB", c: "gpu", p: 1699+50 },{ n: "ASUS DUAL RX9060XT 16GB", c: "gpu", p: 1800+50 },
     { n: "SAPPHIRE PULSE RX9060XT 16GB", c: "gpu", p: 1800+50 },{ n: "XFX SWIFT RX9060XT OC 16GB", c: "gpu", p: 1850+50 },{ n: "ASUS PRIME RX9060XT 16GB", c: "gpu", p: 2000+50 },
     { n: "COLORFUL GAMING DUO RTX5060TI 16GB", c: "gpu", p: 2150+50 },{ n: "COLORFUL BATTLEAX RTX5070 12GB", c: "gpu", p: 2800+50 },{ n: "IGAME ULTRA WHITE RTX5070 12GB", c: "gpu", p: 2955+50 },
     { n: "IGAME ULTRA BLACK RTX5070 12GB", c: "gpu", p: 2930+50 },{ n: "ASUS PRIME RX9070XT 16GB", c: "gpu", p: 3300+50 },
+    // RAM
     { n: "HIKSEMI HIKER 16GB 3200MHz DDR4", c: "ram", p: 460+50 },{ n: "FANXIANG UD02R 8GB 3200MHz DDR4", c: "ram", p: 230+50 },{ n: "KINGBANK KJXB 8GB 3200MHz", c: "ram", p: 230+50 },
     { n: "KINGBANK KJXB 16GB 3200MHz", c: "ram", p: 460+50 },{ n: "KINGBANK KJXS 32GB 3200MHz (16GBx2)", c: "ram", p: 920+50 },{ n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 Black", c: "ram", p: 850+50 },
     { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 White", c: "ram", p: 885+50 },{ n: "KINGSTON FURY BEAST 16GB 6000MHz Black", c: "ram", p: 1085+50 },{ n: "KINGSTON FURY BEAST 16GB 6000MHz Kit (8GBx2)", c: "ram", p: 1095+50 },
     { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz", c: "ram", p: 1150+50 },{ n: "KINGSTON FURY BEAST RGB 16GB 6000MHz CL30", c: "ram", p: 1250+50 },{ n: "ACER HT200 32GB 6000MHz Silver", c: "ram", p: 1850+50 },
     { n: "ACER PREDATOR VESTA II 32GB 6000MHz RGB", c: "ram", p: 1750+50 },{ n: "ACER PALLAS II 32GB 6000MHz Silver", c: "ram", p: 1700+50 },{ n: "GSKILL RIPJAWS M5 NEO RGB 32GB 6000MHz", c: "ram", p: 1750+50 },
     { n: "Kingston FURY Beast 32GB 6000MHz CL30 EXPO Black RGB", c: "ram", p: 2000+50 },{ n: "Kingston FURY Beast 32GB 6000MHz CL30 White", c: "ram", p: 2000+50 },{ n: "KINGBANK KRRB SOARBLADE 32GB 6000MHz CL36", c: "ram", p: 1750+50 },
+    // Storage
     { n: "HIKSEMI WAVE 512GB NVMe Gen3", c: "storage", p: 330+50 },{ n: "ACER FA100 512GB NVMe Gen3", c: "storage", p: 330+50 },{ n: "ACER FA100 1TB NVMe Gen3", c: "storage", p: 635+50 },
     { n: "ACER FA200 500GB NVMe Gen4", c: "storage", p: 435+50 },{ n: "ACER FA200 1TB NVMe Gen4", c: "storage", p: 675+50 },{ n: "PUSKILLS 1TB NVMe Gen3", c: "storage", p: 595+50 },
     { n: "MSI SPATIUM M450 500GB Gen4", c: "storage", p: 365+50 },{ n: "MSI SPATIUM M450 1TB Gen4", c: "storage", p: 635+50 },{ n: "KINGBANK KP260 PLUS 1TB Gen4", c: "storage", p: 685+50 },
     { n: "HUAWEI EKITSTOR XTREME 200E 1TB Gen4", c: "storage", p: 700+50 },{ n: "T-FORCE Z44A5 512GB Gen4", c: "storage", p: 380+50 },{ n: "T-FORCE Z44A5 1TB Gen4", c: "storage", p: 695+50 },
     { n: "T-FORCE Z44A5 2TB Gen4", c: "storage", p: 1285+50 },{ n: "T-FORCE VULCAN 512GB SATA SSD", c: "storage", p: 270+50 },{ n: "BRYT M.2 512GB NVMe", c: "storage", p: 290+50 },
+    // PSU
     { n: "GIGABYTE P650SS 650W 80+ Silver", c: "psu", p: 180+50 },{ n: "AISURIX 550W 80+ Standard", c: "psu", p: 85+50 },{ n: "AISURIX 600W 80+", c: "psu", p: 95+50 },
     { n: "AISURIX 650W 80+", c: "psu", p: 100+50 },{ n: "AISURIX 700W 80+", c: "psu", p: 105+50 },{ n: "SEGOTEP AN550W 80+", c: "psu", p: 135+50 },
     { n: "SEGOTEP AN650W 80+", c: "psu", p: 150+50 },{ n: "SEGOTEP AN650W White", c: "psu", p: 165+50 },{ n: "SEGOTEP AN750W 80+", c: "psu", p: 170+50 },
@@ -621,14 +628,18 @@
     { n: "1STPLAYER ACK 750W Bronze", c: "psu", p: 235+50 },{ n: "1STPLAYER DK6.0 600W Bronze", c: "psu", p: 160+50 },{ n: "1STPLAYER DK7.0 700W Bronze", c: "psu", p: 195+50 },
     { n: "1STPLAYER ACK 750W Gold", c: "psu", p: 315+50 },{ n: "1STPLAYER ACK 850W Gold", c: "psu", p: 340+50 },{ n: "THERMALRIGHT TB750 Bronze", c: "psu", p: 245+50 },
     { n: "THERMALRIGHT KG750 Gold", c: "psu", p: 295+50 },{ n: "COOLER MASTER MWE V3 750W Gold", c: "psu", p: 350+50 },
+    // Coolers
     { n: "Thermalright Assassin X 120 SE Black", c: "cooler", p: 60+50 },{ n: "Thermalright Assassin X 120 SE White", c: "cooler", p: 65+50 },{ n: "Thermalright Assassin X 120 SE ARGB Black", c: "cooler", p: 75+50 },
     { n: "Thermalright Peerless Assassin 120 SE", c: "cooler", p: 120+50 },{ n: "VALKYRIE AQ125 Black", c: "cooler", p: 60+50 },{ n: "VALKYRIE AQ125 ARGB Black", c: "cooler", p: 75+50 },
     { n: "Snowman MT660-V4D Black", c: "cooler", p: 130+50 },{ n: "Thermalright Frozen Infinity 240 Black", c: "cooler", p: 150+50 },{ n: "Thermalright Frozen Infinity 360 White", c: "cooler", p: 230+50 },
     { n: "VALKYRIE GLA-240 AIO Black", c: "cooler", p: 235+50 },{ n: "ID-COOLING FX240 LCD ARGB", c: "cooler", p: 215+50 },{ n: "VALKYRIE B240-GT Black", c: "cooler", p: 330+50 },
+    // Cases
     { n: "DEEPCOOL CH160 PLUS MATX CASE - BLACK", c: "case", p: 249+50 }, { n: "NZXT H510 Flow - Black", c: "case", p: 299+50 }, { n: "Lian Li O11 Dynamic EVO - White", c: "case", p: 450+50 },
     { n: "Corsair 4000D Airflow", c: "case", p: 349+50 }, { n: "Cooler Master MasterBox Q300L", c: "case", p: 199+50 }, { n: "Fractal Design Pop Air RGB", c: "case", p: 379+50 },
+    // Monitors
     { n: "ASUS TUF VG249Q1A 24\" 165Hz IPS", c: "monitor", p: 599+50 }, { n: "AOC 24G2E 24\" 144Hz IPS", c: "monitor", p: 499+50 }, { n: "Samsung Odyssey G5 27\" 144Hz VA", c: "monitor", p: 899+50 },
     { n: "LG 27GN800-B 27\" 144Hz Nano IPS", c: "monitor", p: 1099+50 }, { n: "ViewSonic VX2476-SMHD 24\" 75Hz IPS", c: "monitor", p: 399+50 }, { n: "Acer Nitro VG270U 27\" 144Hz IPS", c: "monitor", p: 849+50 },
+    // Accessories
     { n: "Budget Combo (Keyboard + Mouse) - Below RM100", c: "accessory", p: 95+0 }, { n: "Standard Combo (Keyboard + Mouse) - Below RM150", c: "accessory", p: 145+0 }, { n: "Gaming Combo (RGB Keyboard + Gaming Mouse) - Below RM250", c: "accessory", p: 245+0 }
   ];
 
@@ -647,11 +658,11 @@
 
   let selectedComponents = {};
 
-  function buildComponents() {
+  function buildComponents(productsArray) {
     const grid = document.getElementById('componentsGrid');
     grid.innerHTML = '';
     for (const [key, cat] of Object.entries(categories)) {
-      const options = PRODUCTS.filter(cat.filter).map(p => ({ name: p.n, price: p.p }));
+      const options = productsArray.filter(cat.filter).map(p => ({ name: p.n, price: p.p }));
       if (options.length === 0) continue;
       let optionsHtml = `<option value="" data-price="0" data-name="">Select</option>`;
       options.forEach((opt, idx) => {
@@ -792,7 +803,6 @@
     const blob = dataURLToBlob(imageDataUrl);
     const file = new File([blob], 'fazgame-build.png', { type: 'image/png' });
 
-    // Mobile: use Web Share API
     if (navigator.share && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
       try {
         await navigator.share({
@@ -806,7 +816,6 @@
       }
     }
 
-    // Desktop: download image and open WhatsApp text (no alert)
     const link = document.createElement('a');
     link.download = 'fazgame-build.png';
     link.href = imageDataUrl;
@@ -859,7 +868,7 @@
   window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 200));
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  buildComponents();
+  buildComponents(PRODUCTS);
 </script>
 </body>
 </html>
