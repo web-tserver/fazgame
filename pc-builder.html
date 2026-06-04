@@ -558,7 +558,7 @@
   <div class="builder-main">
     <div class="builder-header">
       <h1>Build Your Dream PC</h1>
-      <p>Select your components from the dropdowns below (including case, monitor & accessories). Prices are from our live shop inventory.</p>
+      <p>Select your components from the dropdowns below (including case, monitor, software & accessories). Prices are from our live shop inventory.</p>
     </div>
     <div class="components-grid" id="componentsGrid"></div>
   </div>
@@ -583,66 +583,155 @@
 <footer>© 2026 FAZGAME • Faz Service, Faz Gaming</footer>
 
 <script>
-  // ======================== SHOP PRODUCTS DATA ========================
+  // ======================== SHOP PRODUCTS DATA (EXACT COPY FROM SHOP.HTML) ========================
   const PRODUCTS = [
-    // CPUs
-    { n: "AMD Ryzen 5 5500", c: "cpu", p: 365+50 },{ n: "AMD Ryzen 5 5600", c: "cpu", p: 490+50 },{ n: "AMD Ryzen 5 5600X (Tray)", c: "cpu", p: 535+50 },
-    { n: "AMD Ryzen 7 5700X", c: "cpu", p: 630+50 },{ n: "AMD Ryzen 7 5800X", c: "cpu", p: 780+50 },{ n: "AMD Ryzen 7 7800X3D", c: "cpu", p: 1270+50 },
-    { n: "AMD Ryzen 5 7500F", c: "cpu", p: 515+50 },{ n: "AMD Ryzen 9 7950X", c: "cpu", p: 2000+50 },{ n: "AMD Ryzen 5 8400F (Tray)", c: "cpu", p: 500+50 },
-    { n: "AMD Ryzen 5 7600 (Tray)", c: "cpu", p: 650+50 },{ n: "AMD Ryzen 5 7600X (Tray)", c: "cpu", p: 735+50 },{ n: "AMD Ryzen 7 7700 (Tray)", c: "cpu", p: 880+50 },
-    { n: "AMD Ryzen 7 7700X (Tray)", c: "cpu", p: 960+50 },{ n: "AMD Ryzen 7 9700X (Tray)", c: "cpu", p: 1020+50 },{ n: "AMD Ryzen 9 9900X (Tray)", c: "cpu", p: 1670+50 },
-    { n: "AMD Ryzen 9 9950X (Tray)", c: "cpu", p: 2000+50 },{ n: "AMD Ryzen 9 9950X3D (Tray)", c: "cpu", p: 2750+50 },
-    // Motherboards
-    { n: "MSI A520M-A PRO", c: "motherboard", p: 195+50 },{ n: "GIGABYTE A520M-A PRO", c: "motherboard", p: 195+50 },{ n: "MSI B550M-A PRO", c: "motherboard", p: 295+50 },
-    { n: "MSI B550M PRO-VDH WIFI", c: "motherboard", p: 415+50 },{ n: "ASROCK A520M/AC (WIFI)", c: "motherboard", p: 250+50 },{ n: "ASUS PRIME B550M-A WIFI II", c: "motherboard", p: 430+50 },
-    { n: "MSI A620AM EVO PRO", c: "motherboard", p: 300+50 },{ n: "GIGABYTE B650M GAMING WIFI", c: "motherboard", p: 550+50 },{ n: "ASROCK B650M-H/M.2 + WIFI", c: "motherboard", p: 450+50 },
-    { n: "ASROCK B850M-X WIFI R2.0", c: "motherboard", p: 530+50 },{ n: "GIGABYTE B850M FORCE WIFI 6E", c: "motherboard", p: 565+50 },{ n: "Colorful CVN B850I Gaming Frozen ITX", c: "motherboard", p: 710+50 },
-    { n: "GIGABYTE A620M-H", c: "motherboard", p: 300+50 },{ n: "MSI B850M GAMING PRO WIFI 6E", c: "motherboard", p: 685+50 },{ n: "GIGABYTE B850M EAGLE WIFI6E ICE", c: "motherboard", p: 745+50 },
-    { n: "GIGABYTE B650M GAMING PLUS WIFI", c: "motherboard", p: 580+50 },{ n: "GIGABYTE B850M GAMING X WIFI 6E", c: "motherboard", p: 780+50 },{ n: "ASUS B850M AYW GAMING WIFI", c: "motherboard", p: 615+50 },
-    { n: "MSI TOMAHAWK B850 MAX WIFI", c: "motherboard", p: 1160+50 },{ n: "MSI PRO B850M-P WIFI", c: "motherboard", p: 680+50 },
-    // GPUs
-    { n: "MSI VENTUS 2X RTX3050 6GB", c: "gpu", p: 850+50 },{ n: "GIGABYTE WINDFORCE RTX5050 8GB", c: "gpu", p: 1235+50 },{ n: "MSI SHADOW 2X RTX5060 8GB", c: "gpu", p: 1450+50 },
-    { n: "COLORFUL GAMING DUO RTX5060 8GB", c: "gpu", p: 1425+50 },{ n: "ASUS PRIME RTX5060 8GB", c: "gpu", p: 1650+50 },{ n: "ZOTAC TWIN EDGE RTX5060 8GB", c: "gpu", p: 1475+50 },
-    { n: "IGAME ULTRA WHITE DUO RTX5060 8GB", c: "gpu", p: 1585+50 },{ n: "ASROCK CHALLENGER RX9060XT 16GB", c: "gpu", p: 1699+50 },{ n: "ASUS DUAL RX9060XT 16GB", c: "gpu", p: 1800+50 },
-    { n: "SAPPHIRE PULSE RX9060XT 16GB", c: "gpu", p: 1800+50 },{ n: "XFX SWIFT RX9060XT OC 16GB", c: "gpu", p: 1850+50 },{ n: "ASUS PRIME RX9060XT 16GB", c: "gpu", p: 2000+50 },
-    { n: "COLORFUL GAMING DUO RTX5060TI 16GB", c: "gpu", p: 2150+50 },{ n: "COLORFUL BATTLEAX RTX5070 12GB", c: "gpu", p: 2800+50 },{ n: "IGAME ULTRA WHITE RTX5070 12GB", c: "gpu", p: 2955+50 },
-    { n: "IGAME ULTRA BLACK RTX5070 12GB", c: "gpu", p: 2930+50 },{ n: "ASUS PRIME RX9070XT 16GB", c: "gpu", p: 3300+50 },
-    // RAM
-    { n: "HIKSEMI HIKER 16GB 3200MHz DDR4", c: "ram", p: 460+50 },{ n: "FANXIANG UD02R 8GB 3200MHz DDR4", c: "ram", p: 230+50 },{ n: "KINGBANK KJXB 8GB 3200MHz", c: "ram", p: 230+50 },
-    { n: "KINGBANK KJXB 16GB 3200MHz", c: "ram", p: 460+50 },{ n: "KINGBANK KJXS 32GB 3200MHz (16GBx2)", c: "ram", p: 920+50 },{ n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 Black", c: "ram", p: 850+50 },
-    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 White", c: "ram", p: 885+50 },{ n: "KINGSTON FURY BEAST 16GB 6000MHz Black", c: "ram", p: 1085+50 },{ n: "KINGSTON FURY BEAST 16GB 6000MHz Kit (8GBx2)", c: "ram", p: 1095+50 },
-    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz", c: "ram", p: 1150+50 },{ n: "KINGSTON FURY BEAST RGB 16GB 6000MHz CL30", c: "ram", p: 1250+50 },{ n: "ACER HT200 32GB 6000MHz Silver", c: "ram", p: 1850+50 },
-    { n: "ACER PREDATOR VESTA II 32GB 6000MHz RGB", c: "ram", p: 1750+50 },{ n: "ACER PALLAS II 32GB 6000MHz Silver", c: "ram", p: 1700+50 },{ n: "GSKILL RIPJAWS M5 NEO RGB 32GB 6000MHz", c: "ram", p: 1750+50 },
-    { n: "Kingston FURY Beast 32GB 6000MHz CL30 EXPO Black RGB", c: "ram", p: 2000+50 },{ n: "Kingston FURY Beast 32GB 6000MHz CL30 White", c: "ram", p: 2000+50 },{ n: "KINGBANK KRRB SOARBLADE 32GB 6000MHz CL36", c: "ram", p: 1750+50 },
-    // Storage
-    { n: "HIKSEMI WAVE 512GB NVMe Gen3", c: "storage", p: 330+50 },{ n: "ACER FA100 512GB NVMe Gen3", c: "storage", p: 330+50 },{ n: "ACER FA100 1TB NVMe Gen3", c: "storage", p: 635+50 },
-    { n: "ACER FA200 500GB NVMe Gen4", c: "storage", p: 435+50 },{ n: "ACER FA200 1TB NVMe Gen4", c: "storage", p: 675+50 },{ n: "PUSKILLS 1TB NVMe Gen3", c: "storage", p: 595+50 },
-    { n: "MSI SPATIUM M450 500GB Gen4", c: "storage", p: 365+50 },{ n: "MSI SPATIUM M450 1TB Gen4", c: "storage", p: 635+50 },{ n: "KINGBANK KP260 PLUS 1TB Gen4", c: "storage", p: 685+50 },
-    { n: "HUAWEI EKITSTOR XTREME 200E 1TB Gen4", c: "storage", p: 700+50 },{ n: "T-FORCE Z44A5 512GB Gen4", c: "storage", p: 380+50 },{ n: "T-FORCE Z44A5 1TB Gen4", c: "storage", p: 695+50 },
-    { n: "T-FORCE Z44A5 2TB Gen4", c: "storage", p: 1285+50 },{ n: "T-FORCE VULCAN 512GB SATA SSD", c: "storage", p: 270+50 },{ n: "BRYT M.2 512GB NVMe", c: "storage", p: 290+50 },
-    // PSU
-    { n: "GIGABYTE P650SS 650W 80+ Silver", c: "psu", p: 180+50 },{ n: "AISURIX 550W 80+ Standard", c: "psu", p: 85+50 },{ n: "AISURIX 600W 80+", c: "psu", p: 95+50 },
-    { n: "AISURIX 650W 80+", c: "psu", p: 100+50 },{ n: "AISURIX 700W 80+", c: "psu", p: 105+50 },{ n: "SEGOTEP AN550W 80+", c: "psu", p: 135+50 },
-    { n: "SEGOTEP AN650W 80+", c: "psu", p: 150+50 },{ n: "SEGOTEP AN650W White", c: "psu", p: 165+50 },{ n: "SEGOTEP AN750W 80+", c: "psu", p: 170+50 },
-    { n: "1STPLAYER ACK 650W 80+", c: "psu", p: 160+50 },{ n: "1STPLAYER ACK 750W 80+", c: "psu", p: 195+50 },{ n: "1STPLAYER ACK 650W Bronze", c: "psu", p: 190+50 },
-    { n: "1STPLAYER ACK 750W Bronze", c: "psu", p: 235+50 },{ n: "1STPLAYER DK6.0 600W Bronze", c: "psu", p: 160+50 },{ n: "1STPLAYER DK7.0 700W Bronze", c: "psu", p: 195+50 },
-    { n: "1STPLAYER ACK 750W Gold", c: "psu", p: 315+50 },{ n: "1STPLAYER ACK 850W Gold", c: "psu", p: 340+50 },{ n: "THERMALRIGHT TB750 Bronze", c: "psu", p: 245+50 },
-    { n: "THERMALRIGHT KG750 Gold", c: "psu", p: 295+50 },{ n: "COOLER MASTER MWE V3 750W Gold", c: "psu", p: 350+50 },
-    // Coolers
-    { n: "Thermalright Assassin X 120 SE Black", c: "cooler", p: 60+50 },{ n: "Thermalright Assassin X 120 SE White", c: "cooler", p: 65+50 },{ n: "Thermalright Assassin X 120 SE ARGB Black", c: "cooler", p: 75+50 },
-    { n: "Thermalright Peerless Assassin 120 SE", c: "cooler", p: 120+50 },{ n: "VALKYRIE AQ125 Black", c: "cooler", p: 60+50 },{ n: "VALKYRIE AQ125 ARGB Black", c: "cooler", p: 75+50 },
-    { n: "Snowman MT660-V4D Black", c: "cooler", p: 130+50 },{ n: "Thermalright Frozen Infinity 240 Black", c: "cooler", p: 150+50 },{ n: "Thermalright Frozen Infinity 360 White", c: "cooler", p: 230+50 },
-    { n: "VALKYRIE GLA-240 AIO Black", c: "cooler", p: 235+50 },{ n: "ID-COOLING FX240 LCD ARGB", c: "cooler", p: 215+50 },{ n: "VALKYRIE B240-GT Black", c: "cooler", p: 330+50 },
-    // Cases
-    { n: "DEEPCOOL CH160 PLUS MATX CASE - BLACK", c: "case", p: 249+50 }, { n: "NZXT H510 Flow - Black", c: "case", p: 299+50 }, { n: "Lian Li O11 Dynamic EVO - White", c: "case", p: 450+50 },
-    { n: "Corsair 4000D Airflow", c: "case", p: 349+50 }, { n: "Cooler Master MasterBox Q300L", c: "case", p: 199+50 }, { n: "Fractal Design Pop Air RGB", c: "case", p: 379+50 },
-    // Monitors
-    { n: "ASUS TUF VG249Q1A 24\" 165Hz IPS", c: "monitor", p: 599+50 }, { n: "AOC 24G2E 24\" 144Hz IPS", c: "monitor", p: 499+50 }, { n: "Samsung Odyssey G5 27\" 144Hz VA", c: "monitor", p: 899+50 },
-    { n: "LG 27GN800-B 27\" 144Hz Nano IPS", c: "monitor", p: 1099+50 }, { n: "ViewSonic VX2476-SMHD 24\" 75Hz IPS", c: "monitor", p: 399+50 }, { n: "Acer Nitro VG270U 27\" 144Hz IPS", c: "monitor", p: 849+50 },
-    // Accessories
-    { n: "Budget Combo (Keyboard + Mouse) - Below RM100", c: "accessory", p: 95+0 }, { n: "Standard Combo (Keyboard + Mouse) - Below RM150", c: "accessory", p: 145+0 }, { n: "Gaming Combo (RGB Keyboard + Gaming Mouse) - Below RM250", c: "accessory", p: 245+0 }
+    { n: "AMD Ryzen 5 5500", c: "cpu", p: 415 },
+    { n: "AMD Ryzen 5 5600", c: "cpu", p: 540 },
+    { n: "AMD Ryzen 5 5600X (Tray)", c: "cpu", p: 585 },
+    { n: "AMD Ryzen 7 5700X", c: "cpu", p: 680 },
+    { n: "AMD Ryzen 7 5800X", c: "cpu", p: 830 },
+    { n: "AMD Ryzen 7 7800X3D", c: "cpu", p: 1320 },
+    { n: "AMD Ryzen 5 7500F", c: "cpu", p: 565 },
+    { n: "AMD Ryzen 9 7950X", c: "cpu", p: 2050 },
+    { n: "AMD Ryzen 5 8400F (Tray)", c: "cpu", p: 550 },
+    { n: "AMD Ryzen 5 7600 (Tray)", c: "cpu", p: 700 },
+    { n: "AMD Ryzen 5 7600X (Tray)", c: "cpu", p: 785 },
+    { n: "AMD Ryzen 7 7700 (Tray)", c: "cpu", p: 930 },
+    { n: "AMD Ryzen 7 7700X (Tray)", c: "cpu", p: 1010 },
+    { n: "AMD Ryzen 7 9700X (Tray)", c: "cpu", p: 1070 },
+    { n: "AMD Ryzen 9 9900X (Tray)", c: "cpu", p: 1720 },
+    { n: "AMD Ryzen 9 9950X (Tray)", c: "cpu", p: 2050 },
+    { n: "AMD Ryzen 9 9950X3D (Tray)", c: "cpu", p: 2800 },
+    { n: "MSI A520M-A PRO", c: "motherboard", p: 245 },
+    { n: "GIGABYTE A520M-A PRO", c: "motherboard", p: 245 },
+    { n: "MSI B550M-A PRO", c: "motherboard", p: 345 },
+    { n: "MSI B550M PRO-VDH WIFI", c: "motherboard", p: 465 },
+    { n: "ASROCK A520M/AC (WIFI)", c: "motherboard", p: 300 },
+    { n: "ASUS PRIME B550M-A WIFI II", c: "motherboard", p: 480 },
+    { n: "MSI A620AM EVO PRO", c: "motherboard", p: 350 },
+    { n: "GIGABYTE B650M GAMING WIFI", c: "motherboard", p: 600 },
+    { n: "ASROCK B650M-H/M.2 + WIFI", c: "motherboard", p: 500 },
+    { n: "ASROCK B850M-X WIFI R2.0", c: "motherboard", p: 580 },
+    { n: "GIGABYTE B850M FORCE WIFI 6E", c: "motherboard", p: 615 },
+    { n: "Colorful CVN B850I Gaming Frozen ITX", c: "motherboard", p: 760 },
+    { n: "GIGABYTE A620M-H", c: "motherboard", p: 350 },
+    { n: "MSI B850M GAMING PRO WIFI 6E", c: "motherboard", p: 735 },
+    { n: "GIGABYTE B850M EAGLE WIFI6E ICE", c: "motherboard", p: 795 },
+    { n: "GIGABYTE B650M GAMING PLUS WIFI", c: "motherboard", p: 630 },
+    { n: "GIGABYTE B850M GAMING X WIFI 6E", c: "motherboard", p: 830 },
+    { n: "ASUS B850M AYW GAMING WIFI", c: "motherboard", p: 665 },
+    { n: "MSI TOMAHAWK B850 MAX WIFI", c: "motherboard", p: 1210 },
+    { n: "MSI PRO B850M-P WIFI", c: "motherboard", p: 730 },
+    { n: "MSI VENTUS 2X RTX3050 6GB", c: "gpu", p: 900 },
+    { n: "GIGABYTE WINDFORCE RTX5050 8GB", c: "gpu", p: 1285 },
+    { n: "MSI SHADOW 2X RTX5060 8GB", c: "gpu", p: 1500 },
+    { n: "COLORFUL GAMING DUO RTX5060 8GB", c: "gpu", p: 1475 },
+    { n: "ASUS PRIME RTX5060 8GB", c: "gpu", p: 1700 },
+    { n: "ZOTAC TWIN EDGE RTX5060 8GB", c: "gpu", p: 1525 },
+    { n: "IGAME ULTRA WHITE DUO RTX5060 8GB", c: "gpu", p: 1635 },
+    { n: "ASROCK CHALLENGER RX9060XT 16GB", c: "gpu", p: 1749 },
+    { n: "ASUS DUAL RX9060XT 16GB", c: "gpu", p: 1850 },
+    { n: "SAPPHIRE PULSE RX9060XT 16GB", c: "gpu", p: 1850 },
+    { n: "XFX SWIFT RX9060XT OC 16GB", c: "gpu", p: 1900 },
+    { n: "ASUS PRIME RX9060XT 16GB", c: "gpu", p: 2050 },
+    { n: "COLORFUL GAMING DUO RTX5060TI 16GB", c: "gpu", p: 2200 },
+    { n: "COLORFUL BATTLEAX RTX5070 12GB", c: "gpu", p: 2850 },
+    { n: "IGAME ULTRA WHITE RTX5070 12GB", c: "gpu", p: 3005 },
+    { n: "IGAME ULTRA BLACK RTX5070 12GB", c: "gpu", p: 2980 },
+    { n: "ASUS PRIME RX9070XT 16GB", c: "gpu", p: 3350 },
+    { n: "HIKSEMI HIKER 16GB 3200MHz DDR4", c: "ram", p: 510 },
+    { n: "FANXIANG UD02R 8GB 3200MHz DDR4", c: "ram", p: 280 },
+    { n: "KINGBANK KJXB 8GB 3200MHz", c: "ram", p: 280 },
+    { n: "KINGBANK KJXB 16GB 3200MHz", c: "ram", p: 510 },
+    { n: "KINGBANK KJXS 32GB 3200MHz (16GBx2)", c: "ram", p: 970 },
+    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 Black", c: "ram", p: 900 },
+    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 White", c: "ram", p: 935 },
+    { n: "KINGSTON FURY BEAST 16GB 6000MHz Black", c: "ram", p: 1135 },
+    { n: "KINGSTON FURY BEAST 16GB 6000MHz Kit (8GBx2)", c: "ram", p: 1145 },
+    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz", c: "ram", p: 1200 },
+    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz CL30", c: "ram", p: 1300 },
+    { n: "ACER HT200 32GB 6000MHz Silver", c: "ram", p: 1900 },
+    { n: "ACER PREDATOR VESTA II 32GB 6000MHz RGB", c: "ram", p: 1800 },
+    { n: "ACER PALLAS II 32GB 6000MHz Silver", c: "ram", p: 1750 },
+    { n: "GSKILL RIPJAWS M5 NEO RGB 32GB 6000MHz", c: "ram", p: 1800 },
+    { n: "Kingston FURY Beast 32GB 6000MHz CL30 EXPO Black RGB", c: "ram", p: 2050 },
+    { n: "Kingston FURY Beast 32GB 6000MHz CL30 White", c: "ram", p: 2050 },
+    { n: "KINGBANK KRRB SOARBLADE 32GB 6000MHz CL36", c: "ram", p: 1800 },
+    { n: "HIKSEMI WAVE 512GB NVMe Gen3", c: "storage", p: 380 },
+    { n: "ACER FA100 512GB NVMe Gen3", c: "storage", p: 380 },
+    { n: "ACER FA100 1TB NVMe Gen3", c: "storage", p: 685 },
+    { n: "ACER FA200 500GB NVMe Gen4", c: "storage", p: 485 },
+    { n: "ACER FA200 1TB NVMe Gen4", c: "storage", p: 725 },
+    { n: "PUSKILLS 1TB NVMe Gen3", c: "storage", p: 645 },
+    { n: "MSI SPATIUM M450 500GB Gen4", c: "storage", p: 415 },
+    { n: "MSI SPATIUM M450 1TB Gen4", c: "storage", p: 685 },
+    { n: "KINGBANK KP260 PLUS 1TB Gen4", c: "storage", p: 735 },
+    { n: "HUAWEI EKITSTOR XTREME 200E 1TB Gen4", c: "storage", p: 750 },
+    { n: "T-FORCE Z44A5 512GB Gen4", c: "storage", p: 430 },
+    { n: "T-FORCE Z44A5 1TB Gen4", c: "storage", p: 745 },
+    { n: "T-FORCE Z44A5 2TB Gen4", c: "storage", p: 1335 },
+    { n: "T-FORCE VULCAN 512GB SATA SSD", c: "storage", p: 320 },
+    { n: "BRYT M.2 512GB NVMe", c: "storage", p: 340 },
+    { n: "GIGABYTE P650SS 650W 80+ Silver", c: "psu", p: 230 },
+    { n: "AISURIX 550W 80+ Standard", c: "psu", p: 135 },
+    { n: "AISURIX 600W 80+", c: "psu", p: 145 },
+    { n: "AISURIX 650W 80+", c: "psu", p: 150 },
+    { n: "AISURIX 700W 80+", c: "psu", p: 155 },
+    { n: "SEGOTEP AN550W 80+", c: "psu", p: 185 },
+    { n: "SEGOTEP AN650W 80+", c: "psu", p: 200 },
+    { n: "SEGOTEP AN650W White", c: "psu", p: 215 },
+    { n: "SEGOTEP AN750W 80+", c: "psu", p: 220 },
+    { n: "1STPLAYER ACK 650W 80+", c: "psu", p: 210 },
+    { n: "1STPLAYER ACK 750W 80+", c: "psu", p: 245 },
+    { n: "1STPLAYER ACK 650W Bronze", c: "psu", p: 240 },
+    { n: "1STPLAYER ACK 750W Bronze", c: "psu", p: 285 },
+    { n: "1STPLAYER DK6.0 600W Bronze", c: "psu", p: 210 },
+    { n: "1STPLAYER DK7.0 700W Bronze", c: "psu", p: 245 },
+    { n: "1STPLAYER ACK 750W Gold", c: "psu", p: 365 },
+    { n: "1STPLAYER ACK 850W Gold", c: "psu", p: 390 },
+    { n: "THERMALRIGHT TB750 Bronze", c: "psu", p: 295 },
+    { n: "THERMALRIGHT KG750 Gold", c: "psu", p: 345 },
+    { n: "COOLER MASTER MWE V3 750W Gold", c: "psu", p: 400 },
+    { n: "Thermalright Assassin X 120 SE Black", c: "cooler", p: 110 },
+    { n: "Thermalright Assassin X 120 SE White", c: "cooler", p: 115 },
+    { n: "Thermalright Assassin X 120 SE ARGB Black", c: "cooler", p: 125 },
+    { n: "Thermalright Peerless Assassin 120 SE", c: "cooler", p: 170 },
+    { n: "VALKYRIE AQ125 Black", c: "cooler", p: 110 },
+    { n: "VALKYRIE AQ125 ARGB Black", c: "cooler", p: 125 },
+    { n: "Snowman MT660-V4D Black", c: "cooler", p: 180 },
+    { n: "Thermalright Frozen Infinity 240 Black", c: "cooler", p: 200 },
+    { n: "Thermalright Frozen Infinity 360 White", c: "cooler", p: 280 },
+    { n: "VALKYRIE GLA-240 AIO Black", c: "cooler", p: 285 },
+    { n: "ID-COOLING FX240 LCD ARGB", c: "cooler", p: 265 },
+    { n: "VALKYRIE B240-GT Black", c: "cooler", p: 380 },
+    { n: "Segotep LUMI 3T Black (6 ARGB Fans)", c: "case", p: 250 },
+    { n: "Segotep LUMI 3T White (6 ARGB Fans)", c: "case", p: 260 },
+    { n: "Segotep BRAVE W1 Black", c: "case", p: 160 },
+    { n: "Segotep BRAVE W1 White", c: "case", p: 165 },
+    { n: "Segotep ENDURA 240S Black", c: "case", p: 205 },
+    { n: "Segotep ENDURA 240S White", c: "case", p: 215 },
+    { n: "1STPLAYER BV5 Black", c: "case", p: 160 },
+    { n: "1STPLAYER BV6 Black", c: "case", p: 200 },
+    { n: "TECWARE VXO M TG Black", c: "case", p: 155 },
+    { n: "TECWARE TIMBER M TG Black", c: "case", p: 200 },
+    { n: "Formula V Crystal Z6M V2 Black", c: "case", p: 235 },
+    { n: "GS24F14 23.8\" 144Hz IPS", c: "monitor", p: 325 },
+    { n: "MF2408-A 23.8\" 120Hz IPS", c: "monitor", p: 335 },
+    { n: "MF2708-A 27\" 120Hz IPS", c: "monitor", p: 410 },
+    { n: "MD2425-V 23.8\" 180Hz IPS", c: "monitor", p: 435 },
+    { n: "24G50Z 24\" 260Hz IPS", c: "monitor", p: 510 },
+    { n: "27G50Z 27\" 260Hz IPS", c: "monitor", p: 550 },
+    { n: "GS27QA 27\" 180Hz QHD IPS", c: "monitor", p: 630 },
+    { n: "Microsoft Windows 11 Home (ESD)", c: "software", p: 230 },
+    { n: "Microsoft Windows 11 Pro (ESD)", c: "software", p: 300 },
+    { n: "Microsoft Office Home & Business 2024 (ESD)", c: "software", p: 850 },
+    // Accessories (Mouse + Keyboard Combos) – kept separate
+    { n: "Budget Combo (Keyboard + Mouse) - Below RM100", c: "accessory", p: 95 },
+    { n: "Standard Combo (Keyboard + Mouse) - Below RM150", c: "accessory", p: 145 },
+    { n: "Gaming Combo (RGB Keyboard + Gaming Mouse) - Below RM250", c: "accessory", p: 245 }
   ];
 
+  // Categories mapping (including software)
   const categories = {
     cpu: { name: "CPU", icon: "fas fa-microchip", filter: (p) => p.c === "cpu" },
     motherboard: { name: "Motherboard", icon: "fas fa-chess-board", filter: (p) => p.c === "motherboard" },
@@ -653,16 +742,17 @@
     cooler: { name: "Cooling", icon: "fas fa-fan", filter: (p) => p.c === "cooler" },
     case: { name: "PC Case", icon: "fas fa-desktop", filter: (p) => p.c === "case" },
     monitor: { name: "Monitor", icon: "fas fa-tachometer-alt", filter: (p) => p.c === "monitor" },
+    software: { name: "Software", icon: "fas fa-code", filter: (p) => p.c === "software" },
     accessory: { name: "Accessories", icon: "fas fa-keyboard", filter: (p) => p.c === "accessory" }
   };
 
   let selectedComponents = {};
 
-  function buildComponents(productsArray) {
+  function buildComponents() {
     const grid = document.getElementById('componentsGrid');
     grid.innerHTML = '';
     for (const [key, cat] of Object.entries(categories)) {
-      const options = productsArray.filter(cat.filter).map(p => ({ name: p.n, price: p.p }));
+      const options = PRODUCTS.filter(cat.filter).map(p => ({ name: p.n, price: p.p }));
       if (options.length === 0) continue;
       let optionsHtml = `<option value="" data-price="0" data-name="">Select</option>`;
       options.forEach((opt, idx) => {
@@ -739,6 +829,7 @@
       psu:     { emoji: "⚡", label: "Power Supply (PSU)" },
       case:    { emoji: "🖥️", label: "PC Case" },
       monitor: { emoji: "🖥️", label: "Monitor" },
+      software: { emoji: "💿", label: "Software" },
       accessory: { emoji: "🎧", label: "Accessories (Keyboard + Mouse)" }
     };
 
@@ -816,6 +907,7 @@
       }
     }
 
+    // Desktop fallback
     const link = document.createElement('a');
     link.download = 'fazgame-build.png';
     link.href = imageDataUrl;
@@ -830,7 +922,7 @@
     await shareWithImage(textMsg);
   });
 
-  // Music & Lamp
+  // Music & Lamp (same as before)
   const bgMusic = document.getElementById('bg-music');
   const musicToggle = document.getElementById('musicToggle');
   let musicStarted = false;
@@ -868,7 +960,7 @@
   window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 200));
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  buildComponents(PRODUCTS);
+  buildComponents();
 </script>
 </body>
 </html>
