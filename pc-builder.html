@@ -55,9 +55,9 @@
       --border-color: rgba(0,0,0,0.1);
       --card-hover: rgba(255, 255, 255, 1);
       --header-bg: rgba(255, 255, 255, 0.85);
-      --card-shadow: 0 12px 40px rgba(0,0,0,0.06);
+      --card-shadow: 0 8px 32px rgba(0,0,0,0.05);
       --glass-border: 1px solid rgba(0,0,0,0.08);
-      --glass-bg: rgba(255, 255, 255, 0.6);
+      --glass-bg: rgba(255, 255, 255, 0.7);
       --select-bg: rgba(255, 255, 255, 0.9);
     }
 
@@ -493,7 +493,13 @@
     }
     .download-img-btn {
       background: linear-gradient(135deg, #2c3e50, #1a2632);
-      color: var(--text);
+      color: white;
+    }
+    /* Light mode override for download button (better visibility) */
+    body.light-mode .download-img-btn {
+      background: linear-gradient(135deg, #4a627a, #2c3e50);
+      color: white;
+      border: 1px solid rgba(0,0,0,0.1);
     }
     .quote-btn:hover, .download-img-btn:hover {
       transform: translateY(-2px);
@@ -798,7 +804,6 @@
       grid.appendChild(card);
     }
 
-    // Restore saved selections after building DOM
     for (const key in categories) {
       const select = document.getElementById(`select-${key}`);
       if (select) {
@@ -861,7 +866,7 @@
     saveToLocalStorage();
   }
 
-  // ---------- Quote Message (Text Only) ----------
+  // ---------- Quote Message ----------
   function getQuoteMessage() {
     const categoryMap = {
       cpu:     { emoji: "💻", label: "CPU / Processor" },
@@ -899,7 +904,7 @@
     return message;
   }
 
-  // ---------- Open WhatsApp (wa.me works for both normal and business) ----------
+  // ---------- WhatsApp (wa.me works for both) ----------
   function openWhatsApp() {
     const textMsg = getQuoteMessage();
     const phone = '60163691936';
@@ -907,7 +912,7 @@
     window.open(url, '_blank');
   }
 
-  // ---------- Manual Download Image ----------
+  // ---------- Manual Download Image (HD) ----------
   async function captureSummaryImage() {
     const summaryCard = document.querySelector('.summary-card');
     if (!summaryCard) return null;
@@ -943,7 +948,7 @@
   document.getElementById('quoteBtn').addEventListener('click', openWhatsApp);
   document.getElementById('downloadImgBtn').addEventListener('click', downloadQuoteImage);
 
-  // ---------- Music & Lamp (unchanged) ----------
+  // ---------- Music & Lamp ----------
   const bgMusic = document.getElementById('bg-music');
   const musicToggle = document.getElementById('musicToggle');
   let musicStarted = false;
@@ -981,7 +986,6 @@
   window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 200));
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  // Initialize: load saved, then build
   loadFromLocalStorage();
   buildComponents();
 </script>
