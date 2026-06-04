@@ -495,7 +495,6 @@
       background: linear-gradient(135deg, #2c3e50, #1a2632);
       color: white;
     }
-    /* Light mode override for download button (better visibility) */
     body.light-mode .download-img-btn {
       background: linear-gradient(135deg, #4a627a, #2c3e50);
       color: white;
@@ -772,9 +771,10 @@
     const saved = localStorage.getItem('fazgame_selected');
     if (saved) {
       try {
-        const parsed = JSON.parse(saved);
-        selectedComponents = parsed;
-      } catch(e) { console.warn(e); }
+        selectedComponents = JSON.parse(saved);
+      } catch(e) { 
+        console.warn('Failed to parse local storage', e); 
+      }
     }
   }
 
@@ -782,13 +782,16 @@
   function buildComponents() {
     const grid = document.getElementById('componentsGrid');
     grid.innerHTML = '';
+    
     for (const [key, cat] of Object.entries(categories)) {
       const options = PRODUCTS.filter(cat.filter).map(p => ({ name: p.n, price: p.p }));
       if (options.length === 0) continue;
+      
       let optionsHtml = `<option value="" data-price="0" data-name="">Select</option>`;
       options.forEach((opt, idx) => {
         optionsHtml += `<option value="${idx}" data-price="${opt.price}" data-name="${opt.name.replace(/"/g, '&quot;')}">${opt.name} — RM${opt.price}</option>`;
       });
+      
       const card = document.createElement('div');
       card.className = 'component-card';
       card.innerHTML = `
@@ -796,7 +799,7 @@
           <div class="component-icon"><i class="${cat.icon}"></i></div>
           <h3>${cat.name}</h3>
         </div>
-        <select class="component-select" id="select-${key}" data-category="${key}">
+        <select class="component-select" id="select-${key}" data-category="${key}" aria-label="Select ${cat.name}">
           ${optionsHtml}
         </select>
         <div class="selected-preview" id="preview-${key}">⚡ No component selected</div>
@@ -804,12 +807,13 @@
       grid.appendChild(card);
     }
 
+    // Attach listeners and set initial state
     for (const key in categories) {
       const select = document.getElementById(`select-${key}`);
       if (select) {
         if (selectedComponents[key]) {
-          const savedName = selectedComponents[key].name;
-          const savedPrice = selectedComponents[key].price;
+          const { name: savedName, price: savedPrice } = selectedComponents[key];
+          
           for (let i = 0; i < select.options.length; i++) {
             const opt = select.options[i];
             if (opt.getAttribute('data-name') === savedName && parseInt(opt.getAttribute('data-price')) === savedPrice) {
@@ -823,9 +827,10 @@
 
         select.addEventListener('change', () => {
           const selectedOption = select.options[select.selectedIndex];
-          const price = parseInt(selectedOption.getAttribute('data-price'));
+          const price = parseInt(selectedOption.getAttribute('data-price'), 10);
           const name = selectedOption.getAttribute('data-name');
           const previewDiv = document.getElementById(`preview-${key}`);
+          
           if (select.selectedIndex > 0 && name) {
             selectedComponents[key] = { name, price };
             if (previewDiv) previewDiv.innerHTML = `✅ Selected: <span>${name}</span> (RM${price})`;
@@ -833,6 +838,7 @@
             delete selectedComponents[key];
             if (previewDiv) previewDiv.innerHTML = `⚡ No component selected`;
           }
+          
           updateSummary();
           saveToLocalStorage();
         });
@@ -843,8 +849,8 @@
 
   function updateSummary() {
     const listDiv = document.getElementById('selectedItemsList');
-    let total = 0;
     let itemsHtml = '';
+    
     for (const [key, comp] of Object.entries(selectedComponents)) {
       itemsHtml += `
         <li>
@@ -855,15 +861,17 @@
           </div>
         </li>
       `;
-      total += comp.price;
     }
+    
     if (itemsHtml === '') {
       listDiv.innerHTML = '<div class="empty-selection">No components selected yet.<br>Start building on the left!</div>';
     } else {
       listDiv.innerHTML = `<ul class="selected-list">${itemsHtml}</ul>`;
     }
+    
+    // Optimized reduction for totaling price
+    const total = Object.values(selectedComponents).reduce((sum, comp) => sum + comp.price, 0);
     document.getElementById('totalPrice').innerText = `RM ${total.toLocaleString()}`;
-    saveToLocalStorage();
   }
 
   // ---------- Quote Message ----------
@@ -879,16 +887,18 @@
       case:    { emoji: "🖥️", label: "PC Case" },
       monitor: { emoji: "🖥️", label: "Monitor" },
       software: { emoji: "💿", label: "Software" },
-      accessory: { emoji: "🎧", label: "Accessories (Keyboard + Mouse)" }
+      accessory: { emoji: "🎧", label: "Accessories" }
     };
 
     let message = "Hi FAZGAME 👋 I'd like to request a quote for a custom PC with these components:\n";
     let hasSelection = false;
+    let total = 0;
 
     for (const [key, comp] of Object.entries(selectedComponents)) {
       const info = categoryMap[key];
       if (info && comp && comp.name && comp.price) {
         message += `- ${info.emoji} ${info.label}: ${comp.name} - RM${comp.price}\n`;
+        total += comp.price;
         hasSelection = true;
       }
     }
@@ -897,14 +907,11 @@
       return "Hi FAZGAME 👋 I'm interested in building a custom PC. Please help me with a quote for the best configuration for my needs.";
     }
 
-    let total = 0;
-    for (const comp of Object.values(selectedComponents)) total += comp.price;
     message += `\nEstimated Total: RM${total.toLocaleString()}\n\n`;
     message += `Can you provide a final price and availability?`;
     return message;
   }
 
-  // ---------- WhatsApp (wa.me works for both) ----------
   function openWhatsApp() {
     const textMsg = getQuoteMessage();
     const phone = '60163691936';
@@ -912,14 +919,20 @@
     window.open(url, '_blank');
   }
 
-  // ---------- Manual Download Image (HD) ----------
+  // ---------- Optimized Download Image (HD) ----------
   async function captureSummaryImage() {
     const summaryCard = document.querySelector('.summary-card');
     if (!summaryCard) return null;
+    
+    // Bug Fix: Check current theme to inject a solid background.
+    // Glassmorphism creates transparent PNGs which are unreadable when shared.
+    const isLight = document.body.classList.contains('light-mode');
+    const solidBg = isLight ? '#f8fafc' : '#0b0b0f';
+    
     try {
       const canvas = await html2canvas(summaryCard, {
-        scale: 3,
-        backgroundColor: null,
+        scale: 2, // 2 is perfect for HD without causing memory bloating on low-end phones
+        backgroundColor: solidBg, // Replaces transparent null with actual solid color
         useCORS: true,
         logging: false,
         windowWidth: summaryCard.scrollWidth,
@@ -933,7 +946,14 @@
   }
 
   async function downloadQuoteImage() {
+    // Add brief visual feedback
+    const btn = document.getElementById('downloadImgBtn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+    btn.disabled = true;
+
     const imageDataUrl = await captureSummaryImage();
+    
     if (imageDataUrl) {
       const link = document.createElement('a');
       link.download = `fazgame-build-${Date.now()}.png`;
@@ -942,37 +962,76 @@
     } else {
       alert('Failed to generate image. Please try again.');
     }
+
+    // Reset button state
+    btn.innerHTML = originalText;
+    btn.disabled = false;
   }
 
   // ---------- Event Listeners ----------
   document.getElementById('quoteBtn').addEventListener('click', openWhatsApp);
   document.getElementById('downloadImgBtn').addEventListener('click', downloadQuoteImage);
 
-  // ---------- Music & Lamp ----------
+  // ---------- Music & Lamp Optimizations ----------
   const bgMusic = document.getElementById('bg-music');
   const musicToggle = document.getElementById('musicToggle');
   let musicStarted = false;
-  function updateMusicIcon() { musicToggle.innerHTML = bgMusic.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-music"></i>'; }
+  
+  function updateMusicIcon() { 
+    musicToggle.innerHTML = bgMusic.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-music"></i>'; 
+  }
+  
   function startMusic() {
     if (musicStarted) return;
-    bgMusic.muted = false; bgMusic.loop = true;
-    bgMusic.play().then(() => { musicStarted = true; updateMusicIcon(); }).catch(err => console.warn(err));
+    bgMusic.muted = false; 
+    bgMusic.loop = true;
+    bgMusic.play()
+      .then(() => { 
+        musicStarted = true; 
+        updateMusicIcon(); 
+      })
+      .catch(err => console.warn('Autoplay blocked by browser until user interaction.'));
   }
+  
+  // Audio Autoplay logic safely scoped
   bgMusic.muted = false;
-  bgMusic.play().then(() => { musicStarted = true; updateMusicIcon(); }).catch(() => {
-    const enableMusic = () => { startMusic(); document.removeEventListener('click', enableMusic); document.removeEventListener('touchstart', enableMusic); };
-    document.addEventListener('click', enableMusic); document.addEventListener('touchstart', enableMusic);
-  });
+  bgMusic.play()
+    .then(() => { 
+      musicStarted = true; 
+      updateMusicIcon(); 
+    })
+    .catch(() => {
+      // Create a named function so we can remove it cleanly and avoid memory leaks
+      const enableMusic = () => { 
+        startMusic(); 
+        document.removeEventListener('click', enableMusic); 
+        document.removeEventListener('touchstart', enableMusic); 
+      };
+      document.addEventListener('click', enableMusic); 
+      document.addEventListener('touchstart', enableMusic, { passive: true });
+    });
+    
   musicToggle.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (!musicStarted) { startMusic(); return; }
-    bgMusic.muted = !bgMusic.muted; updateMusicIcon();
+    if (!musicStarted) { 
+      startMusic(); 
+      return; 
+    }
+    bgMusic.muted = !bgMusic.muted; 
+    updateMusicIcon();
   });
 
   const lampCheckbox = document.getElementById('lamp-switch');
   const lampContainer = document.getElementById('lampContainer');
-  if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); lampCheckbox.checked = false; } 
-  else { document.body.classList.remove('light-mode'); lampCheckbox.checked = true; }
+  
+  if (localStorage.getItem('theme') === 'light') { 
+    document.body.classList.add('light-mode'); 
+    lampCheckbox.checked = false; 
+  } else { 
+    document.body.classList.remove('light-mode'); 
+    lampCheckbox.checked = true; 
+  }
+  
   lampContainer.addEventListener('click', (e) => {
     if (e.target.closest('.shade-container')) {
       document.body.classList.toggle('light-mode');
@@ -983,9 +1042,13 @@
   });
 
   const backToTop = document.getElementById('backToTop');
-  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 200));
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 200);
+  }, { passive: true }); // passive listener optimization for scroll
+  
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+  // Initialize App
   loadFromLocalStorage();
   buildComponents();
 </script>
