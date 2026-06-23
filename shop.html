@@ -79,28 +79,6 @@
       --pill-count-bg: rgba(15, 23, 42, 0.08);
     }
 
-    /* Music toggle button */
-    .music-toggle {
-      position: fixed;
-      bottom: 30px;
-      left: 30px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur);
-      border: var(--glass-border);
-      color: var(--text);
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 998;
-      box-shadow: var(--card-shadow);
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
     /* ===== COMPACT RGB GAMING LAMP ===== */
     .lamp-container {
       position: fixed;
@@ -706,9 +684,6 @@
 </head>
 <body>
 
-<audio id="bg-music" src="music/background.mp3" loop></audio>
-<button class="music-toggle" id="musicToggle">🎵</button>
-
 <!-- RGB GAMING LAMP -->
 <input type="checkbox" id="lamp-switch">
 <div class="lamp-container" id="lampContainer">
@@ -1084,29 +1059,6 @@
       const isLight = document.body.classList.contains('light-mode');
       lampCheckbox.checked = !isLight;
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    }
-  });
-
-  // Music toggle (no autoplay, only starts on click)
-  const bgMusic = document.getElementById('bg-music');
-  const musicToggle = document.getElementById('musicToggle');
-  bgMusic.loop = true;
-
-  function updateMusicIcon() {
-    musicToggle.innerHTML = bgMusic.paused ? '🔇' : '🎵';
-  }
-  // Initial icon – paused state
-  updateMusicIcon();
-
-  musicToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (bgMusic.paused) {
-      bgMusic.play().then(() => {
-        updateMusicIcon();
-      }).catch(err => console.warn("Music play error:", err));
-    } else {
-      bgMusic.pause();
-      updateMusicIcon();
     }
   });
 
