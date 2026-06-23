@@ -65,18 +65,6 @@
       --warning-text: #b45309;
     }
 
-    .music-toggle {
-      position: fixed; bottom: 30px; left: 30px; width: 48px; height: 48px;
-      border-radius: 50%; background: var(--glass-bg); backdrop-filter: var(--glass-blur);
-      border: var(--glass-border); color: var(--text); font-size: 20px;
-      display: flex; align-items: center; justify-content: center; cursor: pointer;
-      z-index: 1001; box-shadow: var(--card-shadow); transition: transform 0.2s ease;
-    }
-    @media (max-width: 1024px) {
-      .music-toggle { bottom: 80px; }
-    }
-    .music-toggle:hover { transform: scale(1.1); }
-
     .lamp-container {
       position: fixed; top: 70px; right: 15px; z-index: 1001; cursor: pointer;
       transform: scale(0.55); transform-origin: top right; transition: filter 0.3s ease;
@@ -221,7 +209,7 @@
       .total-amount .price { font-size: 32px; }
       .button-group { flex-direction: column; gap: 8px; }
       .quote-btn, .download-img-btn, .copy-link-btn { width: 100%; justify-content: center; }
-      .back-to-top, .music-toggle { width: 40px; height: 40px; font-size: 16px; }
+      .back-to-top { width: 40px; height: 40px; font-size: 16px; }
       footer { font-size: 10px; padding: 24px 16px; }
     }
 
@@ -379,8 +367,6 @@
 </head>
 <body>
 
-<audio id="bg-music" src="music/background.mp3" loop></audio>
-<button class="music-toggle" id="musicToggle">🎵</button>
 <button class="back-to-top" id="backToTop"><i class="fas fa-chevron-up"></i></button>
 <div class="toast" id="toast"></div>
 
@@ -654,7 +640,6 @@
     return s;
   }
 
-  // ---------- LocalStorage & URL ----------
   function saveToLocalStorage() { localStorage.setItem('fazgame_selected', JSON.stringify(selectedComponents)); }
   function loadFromLocalStorage() {
     const saved = localStorage.getItem('fazgame_selected');
@@ -689,7 +674,6 @@
     } catch(e) { return false; }
   }
 
-  // ---------- Skeleton ----------
   function showSkeleton() {
     const grid = document.getElementById('componentsGrid');
     grid.innerHTML = '';
@@ -700,7 +684,6 @@
     }
   }
 
-  // ---------- Build UI ----------
   function buildComponents() {
     const grid = document.getElementById('componentsGrid');
     grid.innerHTML = '';
@@ -893,7 +876,6 @@
     }
   }
 
-  // ---------- Prebuilt configs ----------
   const presets = {
     budget: {
       cpu: { name: "AMD Ryzen 5 5500", price: 465 },
@@ -956,7 +938,6 @@
     updateDisabledOptions();
   }
 
-  // ---------- WhatsApp ----------
   function getQuoteMessage() {
     const catMap = { cpu:"💻", cooler:"❄️", motherboard:"🔧", ram:"🧠", gpu:"🎮", storage:"💾", psu:"⚡", case:"🖥️", monitor:"🖥️", software:"💿", accessory:"🎧" };
     let msg = "Hi FAZGAME 👋 I'd like a quote for this PC:\n";
@@ -975,7 +956,6 @@
     window.open(url, '_blank');
   }
 
-  // ---------- Download Image with watermark ----------
   async function captureSummaryImage() {
     const card = document.querySelector('.summary-card');
     if (!card) return null;
@@ -1007,20 +987,17 @@
     btn.disabled = false;
   }
 
-  // ---------- Copy link ----------
   function copyShareLink() {
     const url = window.location.href.split('#')[0] + '#' + encodeBuild();
     navigator.clipboard.writeText(url).then(() => alert('Build link copied! Share it with anyone.'));
   }
 
-  // ---------- Reset ----------
   function resetBuild() {
     selectedComponents = {};
     window.location.hash = '';
     refreshSelections();
   }
 
-  // ---------- Toast ----------
   function showToast(msg) {
     const toast = document.getElementById('toast');
     toast.textContent = msg;
@@ -1028,7 +1005,7 @@
     setTimeout(() => toast.classList.remove('show'), 3000);
   }
 
-  // ---------- Lamp fix ----------
+  // ========== Lamp fix ==========
   const lampCheckbox = document.getElementById('lamp-switch');
   function syncTheme() {
     if (!lampCheckbox.checked) {
@@ -1052,32 +1029,12 @@
     lampCheckbox.dispatchEvent(new Event('change'));
   });
 
-  // ---------- Music ----------
-  const bgMusic = document.getElementById('bg-music');
-  const musicToggle = document.getElementById('musicToggle');
-  let musicStarted = false;
-  function updateMusicIcon() { musicToggle.innerHTML = bgMusic.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-music"></i>'; }
-  function startMusic() {
-    if (musicStarted) return;
-    bgMusic.muted = false; bgMusic.loop = true;
-    bgMusic.play().then(() => { musicStarted = true; updateMusicIcon(); }).catch(() => {});
-  }
-  bgMusic.play().then(() => { musicStarted = true; updateMusicIcon(); }).catch(() => {
-    const enableMusic = () => { startMusic(); document.removeEventListener('click', enableMusic); document.removeEventListener('touchstart', enableMusic); };
-    document.addEventListener('click', enableMusic); document.addEventListener('touchstart', enableMusic, {passive:true});
-  });
-  musicToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (!musicStarted) { startMusic(); return; }
-    bgMusic.muted = !bgMusic.muted; updateMusicIcon();
-  });
-
-  // ---------- Back to top ----------
+  // ========== Back to top ==========
   const backToTop = document.getElementById('backToTop');
   window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 200), {passive:true});
   backToTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
-  // ---------- Quote smooth scroll if empty ----------
+  // ========== Quote buttons ==========
   document.getElementById('quoteBtn').addEventListener('click', () => {
     if (Object.keys(selectedComponents).length === 0) {
       document.querySelector('.component-card')?.scrollIntoView({ behavior: 'smooth' });
@@ -1091,7 +1048,7 @@
     openWhatsApp();
   });
 
-  // ---------- Init ----------
+  // ========== Init ==========
   document.getElementById('downloadImgBtn').addEventListener('click', downloadQuoteImage);
   document.getElementById('copyLinkBtn').addEventListener('click', copyShareLink);
   document.getElementById('resetBuildBtn').addEventListener('click', resetBuild);
