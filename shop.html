@@ -1087,27 +1087,27 @@
     }
   });
 
-  // Music volume controls
+  // Music toggle (no autoplay, only starts on click)
   const bgMusic = document.getElementById('bg-music');
   const musicToggle = document.getElementById('musicToggle');
-  let musicStarted = false;
-  function updateMusicIcon() { musicToggle.innerHTML = bgMusic.muted ? '🔇' : '🎵'; }
-  function startMusic() {
-    if (musicStarted) return;
-    bgMusic.muted = false;
-    bgMusic.loop = true;
-    bgMusic.play().then(() => {
-      musicStarted = true;
-      updateMusicIcon();
-    }).catch(err => console.warn("startMusic error:", err));
+  bgMusic.loop = true;
+
+  function updateMusicIcon() {
+    musicToggle.innerHTML = bgMusic.paused ? '🔇' : '🎵';
   }
-  bgMusic.muted = false;
-  bgMusic.play().then(() => { musicStarted = true; updateMusicIcon(); }).catch(() => {});
+  // Initial icon – paused state
+  updateMusicIcon();
+
   musicToggle.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (!musicStarted) { startMusic(); return; }
-    bgMusic.muted = !bgMusic.muted;
-    updateMusicIcon();
+    if (bgMusic.paused) {
+      bgMusic.play().then(() => {
+        updateMusicIcon();
+      }).catch(err => console.warn("Music play error:", err));
+    } else {
+      bgMusic.pause();
+      updateMusicIcon();
+    }
   });
 
   // Back to top
