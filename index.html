@@ -569,6 +569,91 @@
     .badge-right { right: 10px; background: var(--accent); color: #000; }
     @media (min-width: 600px) { .badge-right { right: 15px; } }
 
+    /* ===== PROMO BANNER (MINIMALIST & COMPACT) ===== */
+    .promo-banner {
+      padding: 12px 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .promo-container {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: var(--glass-border);
+      border-radius: 20px;
+      padding: 16px 24px;
+      box-shadow: var(--card-shadow);
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      transition: background 0.3s ease;
+    }
+    .promo-container h3 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 2px;
+      text-transform: uppercase;
+    }
+    .promo-container .offer-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+    }
+    .promo-container .offer-desc strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .promo-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px 20px;
+    }
+    .promo-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      border-bottom: none;
+    }
+    .promo-list .price {
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      padding: 1px 12px;
+      border-radius: 30px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    @media (max-width: 500px) {
+      .promo-container {
+        padding: 14px 16px;
+      }
+      .promo-list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 2px;
+      }
+      .promo-list li {
+        justify-content: space-between;
+        font-size: 13px;
+        padding: 6px 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .promo-list li:last-child {
+        border-bottom: none;
+      }
+    }
+
     /* ===== TRADE SECTION ===== */
     .trade-section {
       position: relative; background-image: url('images/trade.webp');
@@ -887,8 +972,8 @@
       <div class="hot-card-content"><div class="hot-title">BLACK SETUP Custom LCD</div><div class="hot-desc">RM2,600</div></div>
     </div>
 
-    <!-- ===== CARD 3: NEW PC GAMING White Setup RTX 5060 (RM3,400) ===== -->
-    <div class="hot-card" data-product='{"name":"PC GAMING White Setup RTX 5060","price":"RM3,400","image":"images/pc-gaming-white-rtx5060.webp","specs":["Processor: AMD Ryzen 5 5600 (3 Years Warranty)","Graphics: MSI RTX 5060 8GB (3 Years Warranty)","Motherboard: MSI A520M (3 Years Warranty)","RAM: 16GB DDR4 3200Mhz (1 Year Warranty)","Storage: Kingston 500GB NVMe SSD (1 Year Warranty)","PSU: 600W 80+ (3 Years Warranty)","Tower Cooler: Custom LCD Screen (1 Year Warranty)","Casing: Aquaron Wibo (1 Year Warranty)","Warranty: up to 4 Years"]}'>
+    <!-- ===== CARD 3: PC GAMING White Setup RTX 5060 (UPDATED) ===== -->
+    <div class="hot-card" data-product='{"name":"PC GAMING White Setup RTX 5060","price":"RM3,400","image":"images/pc-gaming-white-rtx5060.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: MSI A520M","Graphics: MSI RTX 5060 8GB","RAM: 16GB DDR4 3200Mhz","Storage: Kingston 500GB NVMe SSD","PSU: 600W 80+","Tower Cooler: Custom LCD Screen","Casing: Aquaron Wibo","Warranty: up to 4 Years"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc-gaming-white-rtx5060.webp" alt="PC GAMING White RTX 5060" loading="lazy" onerror="this.src='https://placehold.co/400x500/222/ffd84d?text=White+Gaming+RTX+5060';">
       <div class="hot-card-content"><div class="hot-title">PC GAMING White RTX 5060</div><div class="hot-desc">RM3,400</div></div>
@@ -908,21 +993,21 @@
       <div class="hot-card-content"><div class="hot-title">RTX 3070 Ti-WHITE SETUP</div><div class="hot-desc">RM3,600</div></div>
     </div>
 
-    <!-- ===== CARD 6: NEW BLACK SETUP Custom LCD (RTX 5060) - RM3,700 ===== -->
+    <!-- ===== CARD 6: BLACK SETUP Custom LCD (RTX 5060) ===== -->
     <div class="hot-card" data-product='{"name":"BLACK SETUP Custom LCD (RTX 5060)","price":"RM3,700","image":"images/pc-black-rtx5060.webp","specs":["Processor: AMD Ryzen 5 5600","Graphics: RTX 5060 8GB","RAM: 16GB DDR4","Storage: 512GB NVMe SSD","PSU: 600W 80+","Case: Black Custom LCD","Warranty: up to 4 Years"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc-black-rtx5060.webp" alt="BLACK SETUP RTX 5060" loading="lazy" onerror="this.src='https://placehold.co/400x500/222/ffd84d?text=Black+RTX+5060';">
       <div class="hot-card-content"><div class="hot-title">BLACK SETUP Custom LCD</div><div class="hot-desc">RM3,700</div></div>
     </div>
 
-    <!-- ===== CARD 7: WHITE SETUP Custom LCD (RTX 5060) - UPDATED to RM3,750 ===== -->
+    <!-- ===== CARD 7: WHITE SETUP Custom LCD (RTX 5060) ===== -->
     <div class="hot-card" data-product='{"name":"WHITE SETUP Custom LCD (RTX 5060)","price":"RM3,750","image":"images/pc2000.webp","specs":["Processor: AMD Ryzen 5 5600","Graphics: RTX 5060 8GB","RAM: 16GB DDR4","Storage: 512GB NVMe SSD","PSU: 600W 80+","Case: White Custom LCD","Warranty: up to 4 Years"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc2000.webp" alt="WHITE SETUP RTX 5060" loading="lazy" onerror="this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM3750';">
       <div class="hot-card-content"><div class="hot-title">WHITE SETUP Custom LCD</div><div class="hot-desc">RM3,750</div></div>
     </div>
 
-    <!-- ===== CARD 8: BLACK SETUP Custom LCD (RTX 5060 Ti) - UPDATED to RM4,100 ===== -->
+    <!-- ===== CARD 8: BLACK SETUP Custom LCD (RTX 5060 Ti) ===== -->
     <div class="hot-card" data-product='{"name":"BLACK SETUP Custom LCD (RTX 5060 Ti)","price":"RM4,100","image":"images/pc3000.webp","specs":["Processor: AMD Ryzen 5 5600","Graphics: RTX 5060 Ti 8GB","RAM: 16GB DDR4","Storage: 512GB NVMe SSD","PSU: 650W Bronze 80+","Case: Black Custom LCD","Warranty: up to 4 Years"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc3000.webp" alt="BLACK SETUP RTX 5060 Ti" loading="lazy" onerror="this.src='https://placehold.co/400x500/222/ffd84d?text=PC+RM4100';">
@@ -950,13 +1035,29 @@
       <div class="hot-card-content"><div class="hot-title">HIGH END SETUP AM5</div><div class="hot-desc">RM7,500</div></div>
     </div>
 
-    <!-- ===== CARD 12: Custom PC (always last) ===== -->
+    <!-- ===== CARD 12: Custom PC ===== -->
     <div class="hot-card" data-product='{"name":"Custom PC","price":"Custom Price","image":"images/custompc.webp","specs":["Build your dream rig","Choose CPU, GPU, RAM, Storage","Free assembly & testing","RGB lighting optional","Warranty: up to 4 Years","Personalized cable management"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/custompc.webp" alt="Custom PC" loading="lazy" onerror="this.src='https://placehold.co/400x500/222/ffd84d?text=Custom+PC';">
       <div class="hot-card-content"><div class="hot-title">Custom PC</div><div class="hot-desc">Free Setup</div></div>
     </div>
 
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ===== MINIMALIST & COMPACT PROMO BANNER ===== -->
+<!-- ============================================================ -->
+<section id="promo-banner" class="reveal promo-banner">
+  <div class="promo-container">
+    <h3>SPECIAL OFFER</h3>
+    <p class="offer-desc">Full Set Package (<strong>Monitor</strong> + Free Keyboard &amp; Mouse)</p>
+    <ul class="promo-list">
+      <li><span>Gigabyte 24” FHD 144Hz</span> <span class="price">+RM300</span></li>
+      <li><span>MSI 27” FHD 144Hz</span> <span class="price">+RM400</span></li>
+      <li><span>Gigabyte 27” QHD 180Hz</span> <span class="price">+RM650</span></li>
+      <li><span>Gigabyte 34” WQHD 200Hz</span> <span class="price">+RM1250</span></li>
+    </ul>
   </div>
 </section>
 
