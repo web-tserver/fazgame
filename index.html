@@ -13,12 +13,14 @@
   <style>
     /* ===== LIGHTNING BOLT CURSOR ===== */
     .btn-primary, .chip, .hot-card, .floating-image, .social-link,
-    .back-to-top, .trade-btn, .reserve-btn, .swiper-slide, .faq-question, .modal-close, .music-toggle {
+    .back-to-top, .trade-btn, .reserve-btn, .swiper-slide, .faq-question, .modal-close, .music-toggle,
+    .btn-claim, .notif-close {
       cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffd84d' d='M13 2L3 14h7l-1 8 10-12h-7l1-8z'/%3E%3C/svg%3E") 12 0, pointer;
     }
     @media (pointer: coarse) {
       .btn-primary, .chip, .hot-card, .floating-image, .social-link,
-      .back-to-top, .trade-btn, .reserve-btn, .swiper-slide, .faq-question, .modal-close, .music-toggle {
+      .back-to-top, .trade-btn, .reserve-btn, .swiper-slide, .faq-question, .modal-close, .music-toggle,
+      .btn-claim, .notif-close {
         cursor: pointer;
       }
     }
@@ -569,9 +571,11 @@
     .badge-right { right: 10px; background: var(--accent); color: #000; }
     @media (min-width: 600px) { .badge-right { right: 15px; } }
 
-    /* ===== PROMO BANNER (MINIMALIST & COMPACT) ===== */
+    /* ============================================================ */
+    /* ===== SIMPLIFIED PROMO BANNER (UPDATED) ===== */
+    /* ============================================================ */
     .promo-banner {
-      padding: 12px 16px;
+      padding: 16px;
       max-width: 900px;
       margin: 0 auto;
     }
@@ -580,77 +584,234 @@
       backdrop-filter: var(--glass-blur);
       border: var(--glass-border);
       border-radius: 20px;
-      padding: 16px 24px;
+      padding: 20px 24px;
       box-shadow: var(--card-shadow);
-      max-width: 700px;
-      margin: 0 auto;
       text-align: center;
-      transition: background 0.3s ease;
+      position: relative;
+    }
+    .promo-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 2px;
     }
     .promo-container h3 {
       font-family: 'Clash Display', sans-serif;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--accent);
-      margin-bottom: 2px;
-      text-transform: uppercase;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      margin: 0;
     }
-    .promo-container .offer-desc {
+    .promo-container h3 span {
+      color: var(--accent);
+    }
+    .limited-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: #ff3b30;
+      color: #fff;
+      padding: 2px 12px;
+      border-radius: 30px;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      animation: pulse-tag 1.8s ease-in-out infinite;
+      white-space: nowrap;
+    }
+    @keyframes pulse-tag {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.96); }
+    }
+    .promo-desc {
       font-size: 13px;
       color: var(--muted);
-      margin-bottom: 12px;
-      letter-spacing: 0.3px;
+      margin-bottom: 16px;
+      margin-top: 4px;
     }
-    .promo-container .offer-desc strong {
+    .promo-desc strong {
       color: var(--text);
       font-weight: 600;
     }
-    .promo-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 4px 20px;
+    .promo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
-    .promo-list li {
+    @media (max-width: 600px) {
+      .promo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .promo-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+    .promo-item:hover {
+      border-color: var(--accent);
+      background: rgba(255,216,77,0.05);
+    }
+    .promo-item .item-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+    }
+    .promo-item .item-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .promo-item .item-spec {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .promo-item .item-right {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 4px 0;
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 500;
-      border-bottom: none;
     }
-    .promo-list .price {
-      background: var(--accent);
-      color: #000;
+    .promo-item .item-price {
+      font-size: 14px;
       font-weight: 700;
-      padding: 1px 12px;
-      border-radius: 30px;
-      font-size: 12px;
+      color: var(--accent);
       white-space: nowrap;
     }
-    @media (max-width: 500px) {
+    .btn-claim {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 11px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-claim:hover {
+      background: var(--accent-dark);
+      transform: scale(1.05);
+    }
+    @media (max-width: 480px) {
       .promo-container {
-        padding: 14px 16px;
+        padding: 14px 12px;
       }
-      .promo-list {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 2px;
+      .promo-container h3 {
+        font-size: 18px;
       }
-      .promo-list li {
+      .promo-item {
+        flex-wrap: wrap;
         justify-content: space-between;
-        font-size: 13px;
-        padding: 6px 0;
-        border-bottom: 1px solid var(--border-color);
       }
-      .promo-list li:last-child {
-        border-bottom: none;
+      .promo-item .item-right {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      .limited-tag {
+        font-size: 10px;
+        padding: 1px 10px;
+      }
+    }
+
+    /* ============================================================ */
+    /* ===== FAKE LIVE NOTIFICATION POPUP ===== */
+    /* ============================================================ */
+    #live-notification {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      z-index: 9997;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 12px 16px;
+      max-width: 320px;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transform: translateX(120%);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+      pointer-events: auto;
+    }
+    #live-notification.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    #live-notification .notif-icon {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      background: rgba(255,216,77,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    #live-notification .notif-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    #live-notification .notif-content .notif-name {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text);
+    }
+    #live-notification .notif-content .notif-action {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    #live-notification .notif-content .notif-item {
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--accent);
+    }
+    #live-notification .notif-content .notif-time {
+      font-size: 10px;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-top: 2px;
+    }
+    #live-notification .notif-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1;
+      padding: 0 4px;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+      margin-top: -2px;
+    }
+    #live-notification .notif-close:hover {
+      opacity: 1;
+    }
+    @media (max-width: 480px) {
+      #live-notification {
+        max-width: 280px;
+        right: 10px;
+        bottom: 80px;
+        padding: 10px 12px;
       }
     }
 
@@ -972,7 +1133,7 @@
       <div class="hot-card-content"><div class="hot-title">BLACK SETUP Custom LCD</div><div class="hot-desc">RM2,600</div></div>
     </div>
 
-    <!-- ===== CARD 3: PC GAMING White Setup RTX 5060 (UPDATED) ===== -->
+    <!-- ===== CARD 3: PC GAMING White Setup RTX 5060 ===== -->
     <div class="hot-card" data-product='{"name":"PC GAMING White Setup RTX 5060","price":"RM3,400","image":"images/pc-gaming-white-rtx5060.webp","specs":["Processor: AMD Ryzen 5 5600","Motherboard: MSI A520M","Graphics: MSI RTX 5060 8GB","RAM: 16GB DDR4 3200Mhz","Storage: Kingston 500GB NVMe SSD","PSU: 600W 80+","Tower Cooler: Custom LCD Screen","Casing: Aquaron Wibo","Warranty: up to 4 Years"]}'>
       <span class="badge badge-right">PRE-ORDER</span>
       <img src="images/pc-gaming-white-rtx5060.webp" alt="PC GAMING White RTX 5060" loading="lazy" onerror="this.src='https://placehold.co/400x500/222/ffd84d?text=White+Gaming+RTX+5060';">
@@ -1046,20 +1207,73 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- ===== MINIMALIST & COMPACT PROMO BANNER ===== -->
+<!-- ===== UPDATED PROMO BANNER ===== -->
 <!-- ============================================================ -->
 <section id="promo-banner" class="reveal promo-banner">
   <div class="promo-container">
-    <h3>SPECIAL OFFER</h3>
-    <p class="offer-desc">Full Set Package (<strong>Monitor</strong> + Free Keyboard &amp; Mouse)</p>
-    <ul class="promo-list">
-      <li><span>Gigabyte 24” FHD 144Hz</span> <span class="price">+RM300</span></li>
-      <li><span>MSI 27” FHD 144Hz</span> <span class="price">+RM400</span></li>
-      <li><span>Gigabyte 27” QHD 180Hz</span> <span class="price">+RM650</span></li>
-      <li><span>Gigabyte 34” WQHD 200Hz</span> <span class="price">+RM1250</span></li>
-    </ul>
+    <div class="promo-header">
+      <h3>SPECIAL <span>UPGRADE</span> OFFERS</h3>
+      <span class="limited-tag">⏳ Limited Time</span>
+    </div>
+    <p class="promo-desc">Full Set Package (<strong>Monitor</strong> + Free Keyboard &amp; Mouse)</p>
+    <div class="promo-grid">
+      <div class="promo-item">
+        <div class="item-info">
+          <span class="item-name">Gigabyte 24” FHD</span>
+          <span class="item-spec">144Hz</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">+RM300</span>
+          <button class="btn-claim" data-monitor="Gigabyte 24” FHD 144Hz">Claim</button>
+        </div>
+      </div>
+      <div class="promo-item">
+        <div class="item-info">
+          <span class="item-name">MSI 27” FHD</span>
+          <span class="item-spec">144Hz</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">+RM400</span>
+          <button class="btn-claim" data-monitor="MSI 27” FHD 144Hz">Claim</button>
+        </div>
+      </div>
+      <div class="promo-item">
+        <div class="item-info">
+          <span class="item-name">Gigabyte 27” QHD</span>
+          <span class="item-spec">180Hz</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">+RM650</span>
+          <button class="btn-claim" data-monitor="Gigabyte 27” QHD 180Hz">Claim</button>
+        </div>
+      </div>
+      <div class="promo-item">
+        <div class="item-info">
+          <span class="item-name">Gigabyte 34” WQHD</span>
+          <span class="item-spec">200Hz</span>
+        </div>
+        <div class="item-right">
+          <span class="item-price">+RM1250</span>
+          <button class="btn-claim" data-monitor="Gigabyte 34” WQHD 200Hz">Claim</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
+<!-- ============================================================ -->
+<!-- ===== FAKE LIVE NOTIFICATION POPUP ===== -->
+<!-- ============================================================ -->
+<div id="live-notification">
+  <div class="notif-icon">🛒</div>
+  <div class="notif-content">
+    <span class="notif-name">John D.</span>
+    <span class="notif-action">just bought</span>
+    <span class="notif-item">White Setup RTX 3050</span>
+    <span class="notif-time">Just now</span>
+  </div>
+  <button class="notif-close" id="notifClose">✕</button>
+</div>
 
 <section id="preorder-console" class="reveal">
   <h2 class="section-title">Preorder Consoles</h2>
@@ -1534,6 +1748,103 @@
 
     cards.forEach(card => consoleGrid.appendChild(card));
   })();
+
+  // ============================================================
+  // ===== FAKE LIVE NOTIFICATION — ONLY PC & CONSOLES =====
+  // ============================================================
+  (function liveNotification() {
+    const notif = document.getElementById('live-notification');
+    const notifName = notif.querySelector('.notif-name');
+    const notifItem = notif.querySelector('.notif-item');
+    const notifTime = notif.querySelector('.notif-time');
+    const notifClose = document.getElementById('notifClose');
+
+    // All preorder PC builds + consoles (for social proof)
+    const items = [
+      // PC Builds
+      'White Setup RTX 3050', 'BLACK SETUP RTX 3050', 'PC GAMING White RTX 5060',
+      'Mini PC White Setup', 'RTX 3070 Ti-WHITE SETUP', 'BLACK SETUP RTX 5060',
+      'WHITE SETUP RTX 5060', 'BLACK SETUP RTX 5060 Ti', 'Coolman Spectra LCD',
+      'AM5 Panorama LCD', 'HIGH END SETUP AM5',
+      // Consoles
+      'PS5 Pro Digital', 'PS5 Fat Disc', 'PS5 Slim Disc',
+      'PS4 Slim 500GB', 'PS4 Pro 1TB',
+      'Switch Lite', 'Switch OLED White', 'Switch OLED Neon',
+      'Switch OLED Zelda', 'Switch OLED Splatoon', 'Switch OLED Mario',
+      'Switch OLED Pokemon', 'Switch 2 Edition'
+    ];
+
+    const buyers = [
+      'Ahmad R.', 'Siti N.', 'Kevin T.', 'Amanda L.', 'Daniel C.',
+      'Farah H.', 'Iqbal M.', 'Zara Y.', 'Hakim Z.', 'Aina S.',
+      'Rizwan K.', 'Maya P.', 'Joel W.', 'Sara E.', 'Adam F.',
+      'Nadia A.', 'Rafiq J.', 'Wong K.L.', 'Priya S.', 'Omar H.'
+    ];
+
+    const timePhrases = ['Just now', '1 min ago', '2 mins ago', '3 mins ago', '5 mins ago', '8 mins ago', '12 mins ago'];
+
+    let isVisible = false;
+    let timeoutId = null;
+    let dismissed = false;
+
+    function showNextNotification() {
+      if (dismissed) return;
+
+      const randomBuyer = buyers[Math.floor(Math.random() * buyers.length)];
+      const randomItem = items[Math.floor(Math.random() * items.length)];
+      const randomTime = timePhrases[Math.floor(Math.random() * timePhrases.length)];
+
+      notifName.textContent = randomBuyer;
+      notifItem.textContent = randomItem;
+      notifTime.textContent = randomTime;
+
+      notif.classList.add('show');
+      isVisible = true;
+
+      // Auto-hide after 4-6 seconds
+      const displayDuration = 4000 + Math.random() * 3000;
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        notif.classList.remove('show');
+        isVisible = false;
+        // Schedule next after random gap (1–30 seconds)
+        const gap = (1000 + Math.random() * 29000);
+        setTimeout(() => {
+          if (!dismissed) {
+            showNextNotification();
+          }
+        }, gap);
+      }, displayDuration);
+    }
+
+    // Dismiss permanently
+    notifClose.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dismissed = true;
+      notif.classList.remove('show');
+      isVisible = false;
+      clearTimeout(timeoutId);
+    });
+
+    // Start after 3–8 seconds
+    const initialDelay = 3000 + Math.random() * 5000;
+    setTimeout(() => {
+      if (!dismissed) {
+        showNextNotification();
+      }
+    }, initialDelay);
+  })();
+
+  // ============================================================
+  // ===== PROMO "CLAIM" BUTTONS → WHATSAPP =====
+  // ============================================================
+  document.querySelectorAll('.btn-claim').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const monitor = this.dataset.monitor || 'Monitor Package';
+      const msg = `Hi FAZGAME 👋 I want to claim the FULLSET offer: ${monitor} + Free Keyboard & Mouse.`;
+      window.open(`https://api.whatsapp.com/send?phone=60163691936&text=${encodeURIComponent(msg)}`, '_blank');
+    });
+  });
 </script>
 </body>
 </html>
