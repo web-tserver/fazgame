@@ -13,13 +13,13 @@
   <style>
     /* ===== LIGHTNING BOLT CURSOR ===== */
     .btn-primary, .chip, .hot-card, .floating-image, .social-link,
-    .back-to-top, .trade-btn, .reserve-btn, .swiper-slide, .faq-question, .modal-close, .music-toggle,
+    .back-to-top, .trade-btn, .reserve-btn, .swiper-slide, .faq-question, .music-toggle,
     .btn-claim, .notif-close {
       cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffd84d' d='M13 2L3 14h7l-1 8 10-12h-7l1-8z'/%3E%3C/svg%3E") 12 0, pointer;
     }
     @media (pointer: coarse) {
       .btn-primary, .chip, .hot-card, .floating-image, .social-link,
-      .back-to-top, .trade-btn, .reserve-btn, .swiper-slide, .faq-question, .modal-close, .music-toggle,
+      .back-to-top, .trade-btn, .reserve-btn, .swiper-slide, .faq-question, .music-toggle,
       .btn-claim, .notif-close {
         cursor: pointer;
       }
@@ -572,7 +572,7 @@
     @media (min-width: 600px) { .badge-right { right: 15px; } }
 
     /* ============================================================ */
-    /* ===== SIMPLIFIED PROMO BANNER (UPDATED) ===== */
+    /* ===== SIMPLIFIED PROMO BANNER ===== */
     /* ============================================================ */
     .promo-banner {
       padding: 16px;
@@ -909,14 +909,6 @@
       position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
       max-height: calc(100vh - 32px); overflow-y: auto;
     }
-    .modal-close {
-      position: absolute; top: 12px; right: 12px;
-      width: 44px; height: 44px; font-size: 28px; line-height: 1;
-      background: rgba(0,0,0,0.3); backdrop-filter: blur(8px);
-      border: var(--glass-border); border-radius: 50%; color: var(--text);
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-    }
-    .modal-close:hover { background: #ff3b30; }
     .modal-img {
       width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
       border-radius: 20px; margin-bottom: 16px; cursor: pointer; max-height: 35vh;
@@ -954,14 +946,6 @@
     }
     .modal-lightbox.active { visibility: visible; opacity: 1; }
     .modal-lightbox-img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 24px; box-shadow: 0 30px 45px rgba(0,0,0,0.4); border: 3px solid rgba(255,255,255,0.1); }
-    .modal-lightbox-close {
-      position: absolute; top: 24px; right: 32px;
-      background: rgba(0,0,0,0.4); backdrop-filter: blur(12px);
-      border: none; color: white; font-size: 2rem;
-      width: 48px; height: 48px; border-radius: 50%;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-    }
-    .modal-lightbox-close:hover { background: #ff3b30; }
     #imageModal {
       position: fixed; inset: 0; background: rgba(0,0,0,0.7);
       backdrop-filter: blur(12px); z-index: 10001;
@@ -1015,7 +999,6 @@
 <div id="imageModal"><img id="modalImg" src="" alt="Preview"></div>
 <div id="detailModal" class="modal">
   <div class="modal-content">
-    <button class="modal-close" id="modalCloseBtn">&times;</button>
     <img id="modalProductImg" class="modal-img" src="" alt="Product">
     <div class="modal-details">
       <h2 id="modalProductTitle" class="modal-title"></h2>
@@ -1027,7 +1010,6 @@
   </div>
 </div>
 <div id="modalLightbox" class="modal-lightbox">
-  <button class="modal-lightbox-close" id="modalLightboxClose">&times;</button>
   <img id="modalLightboxImg" class="modal-lightbox-img" alt="Zoomed view">
 </div>
 
@@ -1207,7 +1189,7 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- ===== UPDATED PROMO BANNER ===== -->
+<!-- ===== PROMO BANNER ===== -->
 <!-- ============================================================ -->
 <section id="promo-banner" class="reveal promo-banner">
   <div class="promo-container">
@@ -1494,7 +1476,6 @@
 
   // MODAL LOGIC
   const modalElem = document.getElementById('detailModal');
-  const modalCloseBtn = document.getElementById('modalCloseBtn');
   const modalImgElem = document.getElementById('modalProductImg');
   const modalTitleElem = document.getElementById('modalProductTitle');
   const modalPriceElem = document.getElementById('modalProductPrice');
@@ -1504,7 +1485,6 @@
   const modalReserveBtnElem = document.getElementById('modalReserveBtn');
   const modalLightbox = document.getElementById('modalLightbox');
   const modalLightboxImg = document.getElementById('modalLightboxImg');
-  const modalLightboxClose = document.getElementById('modalLightboxClose');
   const globalLightbox = document.getElementById('imageModal');
 
   function closeAllOverlays() {
@@ -1553,7 +1533,6 @@
     if (!e.state) { closeAllOverlays(); }
   });
 
-  modalCloseBtn.addEventListener('click', closeModal);
   modalElem.addEventListener('click', (e) => { if (e.target === modalElem) closeModal(); });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -1568,7 +1547,6 @@
     modalLightbox.classList.add('active');
     history.pushState({ modalLightboxOpen: true }, '', location.href);
   });
-  modalLightboxClose.addEventListener('click', () => { modalLightbox.classList.remove('active'); });
   modalLightbox.addEventListener('click', (e) => { if (e.target === modalLightbox) { modalLightbox.classList.remove('active'); } });
 
   modalReserveBtnElem.addEventListener('click', () => {
