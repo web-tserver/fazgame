@@ -520,9 +520,10 @@
       font-size: 15px;
       font-weight: 700;
       line-height: 1.3;
-      white-space: nowrap;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
     .product-details {
       display: flex;
@@ -606,7 +607,7 @@
       height: 100%;
       background: rgba(0,0,0,0.85);
       backdrop-filter: blur(15px);
-      z-index: 1000;
+      z-index: 9999;
       justify-content: center;
       align-items: center;
       cursor: pointer;
@@ -678,7 +679,7 @@
       .product-image-wrap { width: 80px; height: 80px; }
       .product-image-wrap i { font-size: 32px; }
       .category-badge { font-size: 9px; padding: 2px 8px; }
-      .product-info h4 { white-space: normal; font-size: 13px; }
+      .product-info h4 { font-size: 13px; }
     }
   </style>
 </head>
@@ -706,12 +707,12 @@
   </div>
 </div>
 
-<div class="back-to-top" id="backToTop">↑</div>
+<button class="back-to-top" id="backToTop" type="button" aria-label="Scroll to top">↑</button>
 
 <header>
   <div class="header-inner">
     <div class="header-left">
-      <img src="images/logo1.png" alt="FAZGAME Logo" class="logo-img" onerror="this.src='https://placehold.co/300x300/222/ffd84d?text=FAZGAME';">
+      <img src="images/logo1.png" alt="FAZGAME Logo" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/300x300/222/ffd84d?text=FAZGAME';">
       <div class="logo-text"><span>FAZ</span><span>GAME</span></div>
     </div>
     <div class="header-nav">
@@ -749,155 +750,422 @@
 
 <div id="imageModal" class="image-modal">
   <div class="modal-content">
-    <button class="modal-close-corner" id="modalCornerClose">&times;</button>
+    <button type="button" class="modal-close-corner" id="modalCornerClose">&times;</button>
     <div class="modal-icon"><i id="modalIcon" class="fas fa-microchip"></i></div>
     <div class="modal-product-name" id="modalProductName"></div>
-    <button class="modal-close-btn" id="modalCloseBtn">Close</button>
+    <button type="button" class="modal-close-btn" id="modalCloseBtn">Close</button>
   </div>
 </div>
 
 <script>
   // ======================== PRODUCT DATA ========================
   const PRODUCTS = [
-    { n: "AMD Ryzen 5 5500", c: "cpu", p: 465, specs: ["6 Cores / 12 Threads", "3.6GHz base, 4.2GHz boost", "19MB Cache", "AM4", "65W", "PCIe 3.0"] },
-    { n: "AMD Ryzen 5 5600", c: "cpu", p: 590, specs: ["6C/12T", "3.5GHz base, 4.4GHz boost", "35MB Cache", "AM4", "65W", "DDR4-3200"] },
-    { n: "AMD Ryzen 5 5600X (Tray)", c: "cpu", p: 635, specs: ["6C/12T", "3.7GHz base, 4.6GHz boost", "32MB L3", "AM4", "65W", "Unlocked"] },
-    { n: "AMD Ryzen 7 5700X", c: "cpu", p: 730, specs: ["8C/16T", "3.4GHz base, 4.6GHz boost", "36MB Cache", "AM4", "65W", "PCIe 4.0"] },
-    { n: "AMD Ryzen 7 5800X", c: "cpu", p: 880, specs: ["8C/16T", "3.8GHz base, 4.7GHz boost", "36MB Cache", "AM4", "105W", "No cooler"] },
-    { n: "AMD Ryzen 7 7800X3D", c: "cpu", p: 1370, specs: ["8C/16T", "4.2GHz base, 5.0GHz boost", "96MB 3D V-Cache", "AM5", "120W", "Best gaming"] },
-    { n: "AMD Ryzen 5 7500F", c: "cpu", p: 615, specs: ["6C/12T", "3.7GHz base, 5.0GHz boost", "38MB Cache", "AM5", "65W", "No iGPU"] },
-    { n: "AMD Ryzen 9 7950X", c: "cpu", p: 2100, specs: ["16C/32T", "4.5GHz base, 5.7GHz boost", "80MB Cache", "AM5", "170W", "PCIe 5.0"] },
-    { n: "AMD Ryzen 5 8400F (Tray)", c: "cpu", p: 600, specs: ["6C/12T", "Zen4", "AM5", "65W", "Pre-order"] },
-    { n: "AMD Ryzen 5 7600 (Tray)", c: "cpu", p: 750, specs: ["6C/12T", "3.8GHz base", "38MB Cache", "AM5", "65W"] },
-    { n: "AMD Ryzen 5 7600X (Tray)", c: "cpu", p: 835, specs: ["6C/12T", "4.7GHz base", "105W", "AM5"] },
-    { n: "AMD Ryzen 7 7700 (Tray)", c: "cpu", p: 980, specs: ["8C/16T", "3.8GHz base", "40MB Cache", "AM5", "65W"] },
-    { n: "AMD Ryzen 7 7700X (Tray)", c: "cpu", p: 1060, specs: ["8C/16T", "4.5GHz base", "105W", "AM5"] },
-    { n: "AMD Ryzen 7 9700X (Tray)", c: "cpu", p: 1120, specs: ["8C/16T", "Zen5", "AM5", "65W"] },
-    { n: "AMD Ryzen 9 9900X (Tray)", c: "cpu", p: 1770, specs: ["12C/24T", "5.6GHz boost", "AM5", "Pre-order"] },
-    { n: "AMD Ryzen 9 9950X (Tray)", c: "cpu", p: 2100, specs: ["16C/32T", "5.7GHz boost", "AM5", "Pre-order"] },
-    { n: "AMD Ryzen 9 9950X3D (Tray)", c: "cpu", p: 2850, specs: ["16C/32T", "3D V-Cache", "144MB cache", "AM5", "Pre-order"] },
-    { n: "MSI A520M-A PRO", c: "motherboard", p: 245, specs: ["AM4", "mATX", "PCIe 3.0", "DDR4"] },
-    { n: "GIGABYTE A520M-A PRO", c: "motherboard", p: 245, specs: ["AM4", "mATX", "NVMe support"] },
+    // ===== AMD CPUs (Sheet 1) =====
+    { n: "AMD Ryzen 5 5500 (with AMD Stock Cooler)", c: "cpu", p: 390, specs: ["6C/12T", "3.6GHz base, 4.2GHz boost", "19MB Cache", "AM4", "65W", "With cooler"] },
+    { n: "AMD Ryzen 5 5500 (Tray)", c: "cpu", p: 385, specs: ["6C/12T", "3.6GHz base, 4.2GHz boost", "19MB Cache", "AM4", "65W", "Tray"] },
+    { n: "AMD Ryzen 5 5600", c: "cpu", p: 540, specs: ["6C/12T", "3.5GHz base, 4.4GHz boost", "35MB Cache", "AM4", "65W"] },
+    { n: "AMD Ryzen 5 5600 (Tray)", c: "cpu", p: 515, specs: ["6C/12T", "3.5GHz base, 4.4GHz boost", "35MB Cache", "AM4", "65W", "Tray"] },
+    { n: "AMD Ryzen 5 5600X (Tray)", c: "cpu", p: 595, specs: ["6C/12T", "3.7GHz base, 4.6GHz boost", "32MB L3", "AM4", "65W", "Unlocked"] },
+    { n: "AMD Ryzen 7 5700X (Tray)", c: "cpu", p: 660, specs: ["8C/16T", "3.4GHz base, 4.6GHz boost", "36MB Cache", "AM4", "65W", "PCIe 4.0"] },
+    { n: "AMD Ryzen 7 5800X (Tray)", c: "cpu", p: 780, specs: ["8C/16T", "3.8GHz base, 4.7GHz boost", "36MB Cache", "AM4", "105W", "1Y warranty"] },
+    { n: "AMD Ryzen 3 3200G", c: "cpu", p: 265, specs: ["4C/4T", "3.6GHz base, 4.0GHz boost", "6MB Cache", "AM4", "65W", "iGPU"] },
+    { n: "AMD Ryzen 5 5600GT (MPK)", c: "cpu", p: 665, specs: ["6C/12T", "3.6GHz base, 4.6GHz boost", "19MB Cache", "AM4", "65W", "With cooler"] },
+    { n: "AMD Ryzen 5 5500X3D (Tray)", c: "cpu", p: 785, specs: ["6C/12T", "3D V-Cache", "AM4", "Tray"] },
+    { n: "AMD Ryzen 7 5700X3D (Tray)", c: "cpu", p: 1310, specs: ["8C/16T", "3D V-Cache", "96MB", "AM4", "1Y warranty"] },
+    { n: "AMD Ryzen 7 5800X3D", c: "cpu", p: 1550, specs: ["8C/16T", "3D V-Cache", "96MB", "AM4", "3Y warranty"] },
+    { n: "AMD Ryzen 5 8400F (Tray)", c: "cpu", p: 550, specs: ["6C/12T", "Zen4", "AM5", "65W", "Pre-order 10 days"] },
+    { n: "AMD Ryzen 5 7500F (Tray)", c: "cpu", p: 515, specs: ["6C/12T", "3.7GHz base, 5.0GHz boost", "38MB Cache", "AM5", "65W", "No iGPU"] },
+    { n: "AMD Ryzen 5 7600 (Tray)", c: "cpu", p: 680, specs: ["6C/12T", "3.8GHz base", "38MB Cache", "AM5", "65W"] },
+    { n: "AMD Ryzen 5 7600X (Tray)", c: "cpu", p: 745, specs: ["6C/12T", "4.7GHz base", "105W", "AM5"] },
+    { n: "AMD Ryzen 5 9600X (Tray)", c: "cpu", p: 810, specs: ["6C/12T", "Zen5", "AM5", "65W"] },
+    { n: "AMD Ryzen 7 8700F (Tray)", c: "cpu", p: 730, specs: ["8C/16T", "Zen4", "AM5", "65W"] },
+    { n: "AMD Ryzen 7 7700 (Tray)", c: "cpu", p: 930, specs: ["8C/16T", "3.8GHz base", "40MB Cache", "AM5", "65W"] },
+    { n: "AMD Ryzen 7 7700X (Tray)", c: "cpu", p: 1010, specs: ["8C/16T", "4.5GHz base", "105W", "AM5"] },
+    { n: "AMD Ryzen 7 7800X3D (Tray)", c: "cpu", p: 1280, specs: ["8C/16T", "4.2GHz base, 5.0GHz boost", "96MB 3D V-Cache", "AM5", "120W", "Best gaming"] },
+    { n: "AMD Ryzen 5 7500X3D (Tray)", c: "cpu", p: 910, specs: ["6C/12T", "3D V-Cache", "AM5"] },
+    { n: "AMD Ryzen 7 9800X3D (Tray)", c: "cpu", p: 1800, specs: ["8C/16T", "3D V-Cache", "AM5", "120W"] },
+    { n: "AMD Ryzen 7 9700X (Tray)", c: "cpu", p: 1030, specs: ["8C/16T", "Zen5", "AM5", "65W"] },
+    { n: "AMD Ryzen 7 9850X3D (Tray)", c: "cpu", p: 1950, specs: ["8C/16T", "3D V-Cache", "AM5"] },
+    { n: "AMD Ryzen 9 9900X (Tray)", c: "cpu", p: 1720, specs: ["12C/24T", "5.6GHz boost", "AM5", "Pre-order"] },
+    { n: "AMD Ryzen 9 9950X (Tray)", c: "cpu", p: 2050, specs: ["16C/32T", "5.7GHz boost", "AM5", "Pre-order"] },
+    { n: "AMD Ryzen 9 9950X3D (Tray)", c: "cpu", p: 2800, specs: ["16C/32T", "3D V-Cache", "144MB cache", "AM5", "Pre-order"] },
+
+    // ===== Intel CPUs (Sheet 2) =====
+    { n: "Intel Core Ultra 5 225F LGA1851", c: "cpu", p: 550, specs: ["LGA1851", "Box", "3Y warranty", "OUT OF STOCK"] },
+    { n: "Intel 14400F (Tray)", c: "cpu", p: 650, specs: ["14th Gen", "Tray", "LGA1700"] },
+    { n: "Intel 14400 (Tray)", c: "cpu", p: 749, specs: ["14th Gen", "Tray", "LGA1700"] },
+
+    // ===== AMD Motherboards (Sheet 1) =====
+    { n: "MSI A520M-A PRO", c: "motherboard", p: 260, specs: ["AM4", "mATX", "PCIe 3.0", "DDR4"] },
+    { n: "GIGABYTE A520M-K V2", c: "motherboard", p: 255, specs: ["AM4", "mATX", "DDR4", "OUT OF STOCK"] },
     { n: "MSI B550M-A PRO", c: "motherboard", p: 345, specs: ["AM4", "mATX", "PCIe 4.0"] },
-    { n: "MSI B550M PRO-VDH WIFI", c: "motherboard", p: 465, specs: ["AM4", "mATX", "WiFi 6", "BT5.2", "2x M.2 Gen4"] },
+    { n: "MSI B550M PRO-VDH WIFI", c: "motherboard", p: 455, specs: ["AM4", "mATX", "WiFi 6", "BT5.2", "2x M.2 Gen4", "OUT OF STOCK"] },
     { n: "ASROCK A520M/AC (WIFI)", c: "motherboard", p: 300, specs: ["AM4", "AC WiFi", "mATX"] },
-    { n: "ASUS PRIME B550M-A WIFI II", c: "motherboard", p: 480, specs: ["AM4", "WiFi 6", "2.5Gb LAN"] },
+    { n: "ASUS PRIME B550M-A WIFI II", c: "motherboard", p: 475, specs: ["AM4", "WiFi 6", "2.5Gb LAN"] },
+    { n: "GIGABYTE B55OM DS3H AC R2", c: "motherboard", p: 440, specs: ["AM4", "mATX", "WiFi", "DDR4"] },
+    { n: "GIGABYTE B55OM AORUS ELITE AX", c: "motherboard", p: 545, specs: ["AM4", "ATX", "WiFi 6", "OUT OF STOCK"] },
+    { n: "ASUS TUF GAMING B55OM-PLUS WIFI II", c: "motherboard", p: 570, specs: ["AM4", "mATX", "WiFi 6", "TUF"] },
     { n: "MSI A620AM EVO PRO", c: "motherboard", p: 350, specs: ["AM5", "DDR5", "mATX"] },
-    { n: "GIGABYTE B650M GAMING WIFI", c: "motherboard", p: 600, specs: ["AM5", "DDR5", "PCIe 5.0", "WiFi 6E"] },
     { n: "ASROCK B650M-H/M.2 + WIFI", c: "motherboard", p: 500, specs: ["AM5", "2x M.2", "DDR5", "USB-C"] },
     { n: "ASROCK B850M-X WIFI R2.0", c: "motherboard", p: 580, specs: ["AM5", "DDR5 7600+", "PCIe 5.0 M.2", "WiFi 6"] },
-    { n: "GIGABYTE B850M FORCE WIFI 6E", c: "motherboard", p: 615, specs: ["AM5", "WiFi 6E", "14+2+1 VRM"] },
+    { n: "GIGABYTE B850M FORCE WIFI 6E", c: "motherboard", p: 595, specs: ["AM5", "WiFi 6E", "14+2+1 VRM"] },
     { n: "Colorful CVN B850I Gaming Frozen ITX", c: "motherboard", p: 760, specs: ["ITX", "AM5", "DDR5", "White"] },
-    { n: "GIGABYTE A620M-H", c: "motherboard", p: 350, specs: ["AM5", "mATX", "DDR5"] },
-    { n: "MSI B850M GAMING PRO WIFI 6E", c: "motherboard", p: 735, specs: ["AM5", "WiFi 6E", "2.5Gb LAN"] },
-    { n: "GIGABYTE B850M EAGLE WIFI6E ICE", c: "motherboard", p: 795, specs: ["AM5", "White", "WiFi 6E"] },
-    { n: "GIGABYTE B650M GAMING PLUS WIFI", c: "motherboard", p: 630, specs: ["AM5", "WiFi", "DDR5"] },
-    { n: "GIGABYTE B850M GAMING X WIFI 6E", c: "motherboard", p: 830, specs: ["AM5", "WiFi 6E", "PCIe 5.0"] },
+    { n: "GIGABYTE B650M GAMING WIFI", c: "motherboard", p: 505, specs: ["AM5", "DDR5", "PCIe 5.0", "WiFi 6E"] },
+    { n: "MSI B850M GAMING PRO WIFI 6E", c: "motherboard", p: 735, specs: ["AM5", "WiFi 6E", "2.5Gb LAN", "OUT OF STOCK"] },
+    { n: "GIGABYTE B850M EAGLE WIFI6E ICE", c: "motherboard", p: 795, specs: ["AM5", "White", "WiFi 6E", "OUT OF STOCK"] },
+    { n: "GIGABYTE B650M GAMING PLUS WIFI", c: "motherboard", p: 610, specs: ["AM5", "WiFi", "DDR5"] },
     { n: "ASUS B850M AYW GAMING WIFI", c: "motherboard", p: 665, specs: ["AM5", "WiFi", "DDR5"] },
-    { n: "MSI TOMAHAWK B850 MAX WIFI", c: "motherboard", p: 1210, specs: ["ATX", "AM5", "14+2+1 VRM", "5Gb LAN", "WiFi 7"] },
-    { n: "MSI PRO B850M-P WIFI", c: "motherboard", p: 730, specs: ["AM5", "mATX", "WiFi"] },
-    { n: "MSI VENTUS 2X RTX3050 6GB", c: "gpu", p: 1000, specs: ["6GB GDDR6", "128-bit", "2304 CUDA", "PCIe 4.0"] },
-    { n: "GIGABYTE WINDFORCE RTX5050 8GB", c: "gpu", p: 1385, specs: ["8GB GDDR6", "Ray Tracing", "3x DP", "HDMI 2.1a"] },
-    { n: "MSI SHADOW 2X RTX5060 8GB", c: "gpu", p: 1600, specs: ["8GB GDDR7", "192-bit", "3840 CUDA"] },
-    { n: "COLORFUL GAMING DUO RTX5060 8GB", c: "gpu", p: 1575, specs: ["8GB GDDR7", "3840 CUDA", "RGB"] },
-    { n: "ASUS PRIME RTX5060 8GB", c: "gpu", p: 1800, specs: ["8GB GDDR7", "Axial-tech fans", "0dB tech"] },
-    { n: "ZOTAC TWIN EDGE RTX5060 8GB", c: "gpu", p: 1625, specs: ["8GB GDDR7", "IceStorm 2.0", "3+2Y warranty"] },
-    { n: "IGAME ULTRA WHITE DUO RTX5060 8GB", c: "gpu", p: 1735, specs: ["8GB GDDR7", "White edition", "RGB"] },
-    { n: "ASROCK CHALLENGER RX9060XT 16GB", c: "gpu", p: 1849, specs: ["16GB GDDR6", "RDNA4", "256-bit", "Triple fan"] },
-    { n: "ASUS DUAL RX9060XT 16GB", c: "gpu", p: 1950, specs: ["16GB GDDR6", "Dual fan", "OC"] },
-    { n: "SAPPHIRE PULSE RX9060XT 16GB", c: "gpu", p: 1950, specs: ["16GB GDDR6", "Pulse cooling", "Dual BIOS"] },
-    { n: "XFX SWIFT RX9060XT OC 16GB", c: "gpu", p: 2000, specs: ["16GB GDDR6", "Triple fan", "OC"] },
-    { n: "ASUS PRIME RX9060XT 16GB", c: "gpu", p: 2150, specs: ["16GB GDDR6", "Prime series", "Axial fan"] },
-    { n: "COLORFUL GAMING DUO RTX5060TI 16GB", c: "gpu", p: 2300, specs: ["16GB GDDR7", "4608 CUDA", "RGB"] },
-    { n: "COLORFUL BATTLEAX RTX5070 12GB", c: "gpu", p: 2950, specs: ["12GB GDDR7", "192-bit", "4608 CUDA"] },
-    { n: "IGAME ULTRA WHITE RTX5070 12GB", c: "gpu", p: 3105, specs: ["12GB GDDR7", "White", "RGB"] },
-    { n: "IGAME ULTRA BLACK RTX5070 12GB", c: "gpu", p: 3080, specs: ["12GB GDDR7", "Black", "RGB"] },
-    { n: "ASUS PRIME RX9070XT 16GB", c: "gpu", p: 3450, specs: ["16GB GDDR6", "RDNA4", "High performance"] },
-    { n: "HIKSEMI HIKER 16GB 3200MHz DDR4", c: "ram", p: 510, specs: ["16GB", "3200MHz CL16", "Lifetime warranty"] },
-    { n: "FANXIANG UD02R 8GB 3200MHz DDR4", c: "ram", p: 280, specs: ["8GB", "3200MHz CL16", "Lifetime"] },
-    { n: "KINGBANK KJXB 8GB 3200MHz", c: "ram", p: 280, specs: ["8GB", "3200MHz CL16", "Lifetime"] },
-    { n: "KINGBANK KJXB 16GB 3200MHz", c: "ram", p: 510, specs: ["16GB", "3200MHz CL16", "XMP 2.0"] },
-    { n: "KINGBANK KJXS 32GB 3200MHz (16GBx2)", c: "ram", p: 970, specs: ["32GB Kit", "3200MHz CL16", "Dual channel"] },
-    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 Black", c: "ram", p: 900, specs: ["16GB", "6000MHz CL38", "EXPO"] },
-    { n: "COLORFUL BATTLEAX 16GB 6000MHz DDR5 White", c: "ram", p: 935, specs: ["16GB", "6000MHz CL38", "White heatsink"] },
-    { n: "KINGSTON FURY BEAST 16GB 6000MHz Black", c: "ram", p: 1135, specs: ["16GB", "6000MHz CL36", "XMP 3.0"] },
-    { n: "KINGSTON FURY BEAST 16GB 6000MHz Kit (8GBx2)", c: "ram", p: 1145, specs: ["16GB Kit", "6000MHz CL36", "Dual rank"] },
-    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz", c: "ram", p: 1200, specs: ["16GB", "6000MHz CL36", "RGB"] },
-    { n: "KINGSTON FURY BEAST RGB 16GB 6000MHz CL30", c: "ram", p: 1300, specs: ["16GB", "6000MHz CL30", "Low latency"] },
-    { n: "ACER HT200 32GB 6000MHz Silver", c: "ram", p: 1900, specs: ["32GB Kit", "6000MHz CL36", "Silver"] },
-    { n: "ACER PREDATOR VESTA II 32GB 6000MHz RGB", c: "ram", p: 1800, specs: ["32GB Kit", "6000MHz CL36", "RGB"] },
-    { n: "ACER PALLAS II 32GB 6000MHz Silver", c: "ram", p: 1750, specs: ["32GB Kit", "6000MHz CL36", "Silver"] },
-    { n: "GSKILL RIPJAWS M5 NEO RGB 32GB 6000MHz", c: "ram", p: 1800, specs: ["32GB Kit", "6000MHz CL36", "RGB"] },
-    { n: "Kingston FURY Beast 32GB 6000MHz CL30 EXPO Black RGB", c: "ram", p: 2050, specs: ["32GB Kit", "6000MHz CL30", "EXPO"] },
-    { n: "Kingston FURY Beast 32GB 6000MHz CL30 White", c: "ram", p: 2050, specs: ["32GB Kit", "6000MHz CL30", "White"] },
-    { n: "KINGBANK KRRB SOARBLADE 32GB 6000MHz CL36", c: "ram", p: 1800, specs: ["32GB Kit", "6000MHz CL36", "Ready stock"] },
-    { n: "HIKSEMI WAVE 512GB NVMe Gen3", c: "storage", p: 380, specs: ["512GB", "R/W 2500/2000", "3Y warranty"] },
-    { n: "ACER FA100 512GB NVMe Gen3", c: "storage", p: 380, specs: ["512GB", "R/W 3200/2200", "5Y"] },
-    { n: "ACER FA100 1TB NVMe Gen3", c: "storage", p: 685, specs: ["1TB", "R/W 3300/2700", "5Y"] },
-    { n: "ACER FA200 500GB NVMe Gen4", c: "storage", p: 485, specs: ["500GB", "R/W 6300/3100", "5Y"] },
-    { n: "ACER FA200 1TB NVMe Gen4", c: "storage", p: 725, specs: ["1TB", "R/W 7200/6200", "5Y"] },
-    { n: "PUSKILLS 1TB NVMe Gen3", c: "storage", p: 645, specs: ["1TB", "R/W 2100/1700", "3Y"] },
-    { n: "MSI SPATIUM M450 500GB Gen4", c: "storage", p: 415, specs: ["500GB", "R/W 3600/2300", "5Y"] },
-    { n: "MSI SPATIUM M450 1TB Gen4", c: "storage", p: 685, specs: ["1TB", "R/W 3600/3000", "5Y", "DRAM"] },
-    { n: "KINGBANK KP260 PLUS 1TB Gen4", c: "storage", p: 735, specs: ["1TB", "R/W 7000/6600", "3Y"] },
-    { n: "HUAWEI EKITSTOR XTREME 200E 1TB Gen4", c: "storage", p: 750, specs: ["1TB", "R/W 7500/6500", "5Y"] },
-    { n: "T-FORCE Z44A5 512GB Gen4", c: "storage", p: 430, specs: ["512GB", "R/W 5000/2500", "3Y"] },
-    { n: "T-FORCE Z44A5 1TB Gen4", c: "storage", p: 745, specs: ["1TB", "R/W 5500/4500", "5Y"] },
-    { n: "T-FORCE Z44A5 2TB Gen4", c: "storage", p: 1335, specs: ["2TB", "R/W 7000/6100", "5Y"] },
-    { n: "T-FORCE VULCAN 512GB SATA SSD", c: "storage", p: 320, specs: ["512GB", "SATA 2.5\"", "R/W 540/470", "5Y"] },
-    { n: "BRYT M.2 512GB NVMe", c: "storage", p: 340, specs: ["512GB", "Gen3x4", "R/W 3200/2200", "3Y"] },
-    { n: "GIGABYTE P650SS 650W 80+ Silver", c: "psu", p: 230, specs: ["650W", "80+ Silver", "Non-modular", "3Y"] },
-    { n: "AISURIX 550W 80+ Standard", c: "psu", p: 135, specs: ["550W", "80+", "Non-modular", "2Y"] },
-    { n: "AISURIX 600W 80+", c: "psu", p: 145, specs: ["600W", "80+", "Non-modular", "2Y"] },
-    { n: "AISURIX 650W 80+", c: "psu", p: 150, specs: ["650W", "80+", "Non-modular", "2Y"] },
-    { n: "AISURIX 700W 80+", c: "psu", p: 155, specs: ["700W", "80+", "Non-modular", "2Y"] },
-    { n: "SEGOTEP AN550W 80+", c: "psu", p: 185, specs: ["550W", "80+", "Non-modular", "2Y"] },
-    { n: "SEGOTEP AN650W 80+", c: "psu", p: 200, specs: ["650W", "80+", "Non-modular", "2Y"] },
-    { n: "SEGOTEP AN650W White", c: "psu", p: 215, specs: ["650W", "80+", "White", "Non-modular"] },
-    { n: "SEGOTEP AN750W 80+", c: "psu", p: 220, specs: ["750W", "80+", "Non-modular", "2Y"] },
-    { n: "1STPLAYER ACK 650W 80+", c: "psu", p: 210, specs: ["650W", "80+", "Non-modular", "5Y"] },
-    { n: "1STPLAYER ACK 750W 80+", c: "psu", p: 245, specs: ["750W", "80+", "Non-modular", "5Y"] },
-    { n: "1STPLAYER ACK 650W Bronze", c: "psu", p: 240, specs: ["650W", "80+ Bronze", "Non-modular", "5Y"] },
-    { n: "1STPLAYER ACK 750W Bronze", c: "psu", p: 285, specs: ["750W", "80+ Bronze", "Non-modular", "5Y"] },
-    { n: "1STPLAYER DK6.0 600W Bronze", c: "psu", p: 210, specs: ["600W", "80+ Bronze", "Non-modular", "3Y"] },
-    { n: "1STPLAYER DK7.0 700W Bronze", c: "psu", p: 245, specs: ["700W", "80+ Bronze", "Non-modular", "3Y"] },
-    { n: "1STPLAYER ACK 750W Gold", c: "psu", p: 365, specs: ["750W", "80+ Gold", "Full modular", "7Y", "Japanese caps"] },
-    { n: "1STPLAYER ACK 850W Gold", c: "psu", p: 390, specs: ["850W", "80+ Gold", "Full modular", "7Y"] },
-    { n: "THERMALRIGHT TB750 Bronze", c: "psu", p: 295, specs: ["750W", "80+ Bronze", "Full modular", "5Y"] },
-    { n: "THERMALRIGHT KG750 Gold", c: "psu", p: 345, specs: ["750W", "80+ Gold", "Full modular", "ATX 3.0"] },
-    { n: "COOLER MASTER MWE V3 750W Gold", c: "psu", p: 400, specs: ["750W", "80+ Gold", "Full modular", "5Y"] },
-    { n: "Thermalright Assassin X 120 SE Black", c: "cooler", p: 110, specs: ["Air cooler", "4 heatpipes", "120mm"] },
-    { n: "Thermalright Assassin X 120 SE White", c: "cooler", p: 115, specs: ["White", "4 heatpipes", "120mm"] },
-    { n: "Thermalright Assassin X 120 SE ARGB Black", c: "cooler", p: 125, specs: ["ARGB", "4 heatpipes", "120mm"] },
-    { n: "Thermalright Peerless Assassin 120 SE", c: "cooler", p: 170, specs: ["Dual tower", "6 heatpipes", "120mm PWM"] },
-    { n: "VALKYRIE AQ125 Black", c: "cooler", p: 110, specs: ["Single tower", "120mm", "Black"] },
-    { n: "VALKYRIE AQ125 ARGB Black", c: "cooler", p: 125, specs: ["ARGB", "Single tower", "120mm"] },
-    { n: "Snowman MT660-V4D Black", c: "cooler", p: 180, specs: ["Dual tower", "6 heatpipes", "Display"] },
-    { n: "Thermalright Frozen Infinity 240 Black", c: "cooler", p: 200, specs: ["240mm AIO", "Bulk pack", "ARGB"] },
-    { n: "Thermalright Frozen Infinity 360 White", c: "cooler", p: 280, specs: ["360mm AIO", "White", "ARGB"] },
-    { n: "VALKYRIE GLA-240 AIO Black", c: "cooler", p: 285, specs: ["240mm AIO", "LCD display", "ARGB"] },
-    { n: "ID-COOLING FX240 LCD ARGB", c: "cooler", p: 265, specs: ["240mm AIO", "2.1\" LCD", "ARGB"] },
-    { n: "VALKYRIE B240-GT Black", c: "cooler", p: 380, specs: ["240mm AIO", "LED digital display", "Black"] },
-    { n: "Segotep LUMI 3T Black (6 ARGB Fans)", c: "casing", p: 250, specs: ["mATX/ITX", "6x ARGB fans", "Type-C", "360mm AIO"] },
-    { n: "Segotep LUMI 3T White (6 ARGB Fans)", c: "casing", p: 260, specs: ["mATX/ITX", "6x ARGB fans", "Type-C", "White"] },
-    { n: "Segotep BRAVE W1 Black", c: "casing", p: 160, specs: ["mATX", "3 ARGB fans", "TG panel"] },
-    { n: "Segotep BRAVE W1 White", c: "casing", p: 165, specs: ["mATX", "3 ARGB fans", "White"] },
-    { n: "Segotep ENDURA 240S Black", c: "casing", p: 205, specs: ["mATX", "3 ARGB fans", "Type-C"] },
-    { n: "Segotep ENDURA 240S White", c: "casing", p: 215, specs: ["mATX", "3 ARGB fans", "White"] },
-    { n: "1STPLAYER BV5 Black", c: "casing", p: 160, specs: ["mATX", "3 ARGB fans", "120/240 AIO"] },
-    { n: "1STPLAYER BV6 Black", c: "casing", p: 200, specs: ["mATX", "3 ARGB fans", "360mm AIO"] },
-    { n: "TECWARE VXO M TG Black", c: "casing", p: 155, specs: ["mATX", "3 ARGB fans", "TG"] },
-    { n: "TECWARE TIMBER M TG Black", c: "casing", p: 200, specs: ["mATX", "4 fans", "TG"] },
-    { n: "Formula V Crystal Z6M V2 Black", c: "casing", p: 235, specs: ["mATX", "6 ARGB fans", "Panoramic"] },
-    { n: "GS24F14 23.8\" 144Hz IPS", c: "monitor", p: 325, specs: ["23.8\"", "1080p", "144Hz", "1ms", "FreeSync"] },
-    { n: "MF2408-A 23.8\" 120Hz IPS", c: "monitor", p: 335, specs: ["23.8\"", "1080p", "120Hz", "VGA+HDMI"] },
-    { n: "MF2708-A 27\" 120Hz IPS", c: "monitor", p: 410, specs: ["27\"", "1080p", "120Hz", "VESA 100x100"] },
-    { n: "MD2425-V 23.8\" 180Hz IPS", c: "monitor", p: 435, specs: ["23.8\"", "1080p", "180Hz", "USB hub"] },
-    { n: "24G50Z 24\" 260Hz IPS", c: "monitor", p: 510, specs: ["24\"", "1080p", "260Hz", "0.3ms", "G-Sync"] },
-    { n: "27G50Z 27\" 260Hz IPS", c: "monitor", p: 550, specs: ["27\"", "1080p", "260Hz", "0.3ms"] },
-    { n: "GS27QA 27\" 180Hz QHD IPS", c: "monitor", p: 630, specs: ["27\"", "1440p", "180Hz", "1ms", "FreeSync"] },
-    { n: "MSI PRO MP275 E14L 27\" IPS", c: "monitor", p: 400, specs: ["27\" IPS", "1920x1080", "100Hz", "1ms (MPRT)", "HDMI 1.4b x2", "DP 1.2a x1", "Built-in Speakers 2x2W", "VESA 100x100mm", "Tilt -5°~20°", "Flicker-Free", "Less Blue Light"] },
-    { n: "Microsoft Windows 11 Home (ESD)", c: "software", p: 230, specs: ["Digital license", "64-bit", "Secure boot", "Email delivery"] },
+    { n: "MSI TOMAHAWK B850 MAX WIFI", c: "motherboard", p: 1210, specs: ["ATX", "AM5", "14+2+1 VRM", "5Gb LAN", "WiFi 7", "OUT OF STOCK"] },
+    { n: "MSI MAG B850M GAMING PRO MAX WIFI7", c: "motherboard", p: 800, specs: ["AM5", "mATX", "WiFi 7"] },
+    { n: "MSI B850M GAMING PLUS WIFI", c: "motherboard", p: 770, specs: ["AM5", "mATX", "WiFi", "OUT OF STOCK"] },
+    { n: "MSI PRO B850M-P WIFI7", c: "motherboard", p: 700, specs: ["AM5", "mATX", "WiFi 7"] },
+    { n: "MSI MAG X870E TOMAHAWK MAX WIFI", c: "motherboard", p: 1435, specs: ["AM5", "ATX", "WiFi 7", "X870E"] },
+
+    // ===== Intel Motherboards (Sheet 2) =====
+    { n: "MSI B760M GAMING PLUS WIFI", c: "motherboard", p: 640, specs: ["LGA1700", "DDR5", "WiFi", "mATX"] },
+    { n: "ASUS B860M AYW GAMING WIFI", c: "motherboard", p: 620, specs: ["LGA1851", "DDR5", "WiFi", "mATX"] },
+    { n: "MSI PRO H610M-E", c: "motherboard", p: 330, specs: ["LGA1700", "DDR4", "mATX"] },
+    { n: "MSI H810M GAMING WIFI 6E", c: "motherboard", p: 475, specs: ["LGA1851", "DDR5", "WiFi 6E", "mATX"] },
+    { n: "MSI B860M GAMING WIFI 7", c: "motherboard", p: 635, specs: ["LGA1851", "DDR5", "WiFi 7", "mATX"] },
+
+    // ===== GPUs (Sheet 3) =====
+    { n: "MSI VENTUS 2X RTX3050 6GB", c: "gpu", p: 1330, specs: ["6GB GDDR6", "128-bit", "2304 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "ZOTAC TWIN EDGE RTX3050 6GB", c: "gpu", p: 1330, specs: ["6GB GDDR6", "128-bit", "3Y warranty", "Bundle with PC set"] },
+    { n: "COLORFUL BATTLEAX RTX3060 12GB (NEW)", c: "gpu", p: 1865, specs: ["12GB GDDR6", "192-bit", "3Y warranty", "Bundle with PC set"] },
+    { n: "GIGABYTE WINDFORCE RTX5050 8GB", c: "gpu", p: 1850, specs: ["8GB GDDR6", "128-bit", "2560 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "MSI SHADOW 2X RTX5060 8GB", c: "gpu", p: 2085, specs: ["8GB GDDR7", "128-bit", "3840 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "MSI Ventus 2X RTX5060 8GB", c: "gpu", p: 2120, specs: ["8GB GDDR7", "128-bit", "3840 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "GIGABYTE EAGLE RTX5060 8GB", c: "gpu", p: 2050, specs: ["8GB GDDR7", "128-bit", "3840 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "COLORFUL GAMING DUO RTX5060 8GB", c: "gpu", p: 1935, specs: ["8GB GDDR7", "128-bit", "3840 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "ASUS PRIME RTX5060 8GB", c: "gpu", p: 1485, specs: ["8GB GDDR7", "128-bit", "3840 CUDA", "3Y warranty", "Bundle with PC set", "Price TBC", "NO STOCK"] },
+    { n: "ZOTAC TWIN EDGE RTX5060 8GB", c: "gpu", p: 1935, specs: ["8GB GDDR7", "128-bit", "3840 CUDA", "3+2Y warranty", "Bundle with PC set"] },
+    { n: "IGAME ULTRA WHITE DUO RTX5060 8GB", c: "gpu", p: 1485, specs: ["8GB GDDR7", "128-bit", "3840 CUDA", "3Y warranty", "Bundle with PC set", "Price TBC", "NO STOCK"] },
+    { n: "MSI SHADOW 2x RTX5060Ti 8GB OC", c: "gpu", p: 2510, specs: ["8GB GDDR7", "128-bit", "4608 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "MSI VENTUS 3x RTX5060Ti 8GB OC", c: "gpu", p: 2710, specs: ["8GB GDDR7", "128-bit", "4608 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "ASROCK CHALLENGER RX9060XT 16GB", c: "gpu", p: 2730, specs: ["16GB GDDR6", "RDNA4", "256-bit", "Triple fan", "3Y warranty", "Bundle with PC set", "NO STOCK"] },
+    { n: "ASUS DUAL RX9060XT 16GB", c: "gpu", p: 2860, specs: ["16GB GDDR6", "Dual fan", "OC", "3Y warranty", "Bundle with PC set"] },
+    { n: "SAPPHIRE PULSE RX9060XT 16GB", c: "gpu", p: 2480, specs: ["16GB GDDR6", "Pulse cooling", "Dual BIOS", "3Y warranty", "Bundle with PC set"] },
+    { n: "XFX SWIFT RX9060XT OC TRIPLE FAN 16GB", c: "gpu", p: 2680, specs: ["16GB GDDR6", "Triple fan", "OC", "3Y warranty", "Bundle with PC set"] },
+    { n: "ASUS PRIME RX9060XT 16GB", c: "gpu", p: 2940, specs: ["16GB GDDR6", "Prime series", "Axial fan", "3Y warranty", "Bundle with PC set"] },
+    { n: "COLORFUL GAMING DUO RTX5060TI 16GB", c: "gpu", p: 3175, specs: ["16GB GDDR7", "4608 CUDA", "RGB", "3Y warranty", "Bundle with PC set"] },
+    { n: "IGAME ULTRA DUO OC RTX5060TI 16GB", c: "gpu", p: 3315, specs: ["16GB GDDR7", "4608 CUDA", "RGB", "3Y warranty", "Bundle with PC set"] },
+    { n: "IGAME ULTRA OC RTX5060TI 16GB", c: "gpu", p: 3315, specs: ["16GB GDDR7", "4608 CUDA", "RGB", "3Y warranty", "Bundle with PC set", "OUT OF STOCK"] },
+    { n: "MSI Ventus 2x RTX5070 12GB", c: "gpu", p: 3780, specs: ["12GB GDDR7", "192-bit", "6144 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "COLORFUL BATTLEAX RTX5070 12GB", c: "gpu", p: 3680, specs: ["12GB GDDR7", "192-bit", "4608 CUDA", "3Y warranty", "Bundle with PC set"] },
+    { n: "IGAME ULTRA WHITE RTX5070 12GB", c: "gpu", p: 3850, specs: ["12GB GDDR7", "White", "RGB", "3Y warranty", "Bundle with PC set"] },
+    { n: "IGAME ULTRA BLACK RTX5070 12GB", c: "gpu", p: 3850, specs: ["12GB GDDR7", "Black", "RGB", "3Y warranty", "Bundle with PC set"] },
+    { n: "ASUS PRIME RX9070XT 16GB", c: "gpu", p: 3950, specs: ["16GB GDDR6", "RDNA4", "High performance", "3Y warranty", "Bundle with PC set"] },
+    { n: "IGAME ULTRA BLACK RTX5070Ti 16GB", c: "gpu", p: 5500, specs: ["16GB GDDR7", "High performance", "3Y warranty", "Bundle with PC set", "OUT OF STOCK"] },
+
+    // ===== RAM (Sheet 4) =====
+    { n: "FANXIANG UD02R 8GB DDR4 3200MHz", c: "ram", p: 300, specs: ["8GB", "DDR4", "3200MHz CL16", "Lifetime warranty"] },
+    { n: "PNY 8GB UDIMM DDR4 3200MHz", c: "ram", p: 300, specs: ["8GB", "DDR4", "3200MHz CL16", "Lifetime warranty"] },
+    { n: "CORSAIR VENGEANCE CMK DDR4 16GB 3200MHz CL16", c: "ram", p: 539, specs: ["16GB", "DDR4", "3200MHz CL16", "3Y warranty"] },
+    { n: "KINGBANK KJXB 8GB 3200MHz", c: "ram", p: 315, specs: ["8GB", "DDR4", "3200MHz CL16", "Lifetime"] },
+    { n: "KINGBANK KJXB 16GB 3200MHz", c: "ram", p: 549, specs: ["16GB", "DDR4", "3200MHz CL16", "Lifetime"] },
+    { n: "KINGBANK KJXS 32GB 3200MHz (16GBx2)", c: "ram", p: 1000, specs: ["32GB Kit", "DDR4", "3200MHz CL16", "Lifetime"] },
+    { n: "COLORFUL BATTLEAX DDR5 16GB 6000MHz Black", c: "ram", p: 930, specs: ["16GB", "DDR5", "6000MHz CL38", "Lifetime", "OUT OF STOCK"] },
+    { n: "KINGSTON FURY BEAST DDR5 16GB 6000MHz Black", c: "ram", p: 1000, specs: ["16GB", "DDR5", "6000MHz CL36", "Lifetime", "Limited Qty"] },
+    { n: "KINGSTON FURY BEAST DDR5 16GB 6000MHz Kit (8GBx2)", c: "ram", p: 1145, specs: ["16GB Kit", "DDR5", "6000MHz CL36", "Lifetime", "OUT OF STOCK"] },
+    { n: "KINGSTON FURY BEAST RGB DDR5 16GB 6000MHz Black", c: "ram", p: 1200, specs: ["16GB", "DDR5", "6000MHz CL36", "RGB", "Lifetime", "OUT OF STOCK"] },
+    { n: "KINGSTON FURY BEAST RGB DDR5 16GB 6000MHz Black CL30", c: "ram", p: 1300, specs: ["16GB", "DDR5", "6000MHz CL30", "RGB", "Lifetime", "Limited Qty"] },
+    { n: "ACER HT200 DDR5 32GB 6000MHz Silver (16GBx2)", c: "ram", p: 1900, specs: ["32GB Kit", "DDR5", "6000MHz CL36", "Lifetime", "OUT OF STOCK"] },
+    { n: "KINGBANK KRRB SOARBLADE DDR5 32GB 6000MHz CL36 (16GBx2)", c: "ram", p: 2000, specs: ["32GB Kit", "DDR5", "6000MHz CL36", "Lifetime"] },
+    { n: "CORSAIR VENGEANCE CMK DDR5 16GB 6000MHz CL36", c: "ram", p: 910, specs: ["16GB", "DDR5", "6000MHz CL36", "3Y warranty", "OUT OF STOCK"] },
+    { n: "CORSAIR VENGEANCE DDR5 32GB 6000MHz CL30 (32GBx1)", c: "ram", p: 1920, specs: ["32GB", "DDR5", "6000MHz CL30", "3Y warranty"] },
+    { n: "KLEVV BOLT V 32GB DDR5 6000MHz CL28 (16GBx2) White", c: "ram", p: 1920, specs: ["32GB Kit", "DDR5", "6000MHz CL28", "Lifetime", "OUT OF STOCK"] },
+    { n: "Kingston FURY Beast 32GB (Kit of 2) DDR5-6000 CL30 EXPO White", c: "ram", p: 1900, specs: ["32GB Kit", "DDR5", "6000MHz CL30", "EXPO", "Lifetime", "OUT OF STOCK"] },
+    { n: "KLEVV FIT V 6000MHz CL30 16GB Black EXPO", c: "ram", p: 1035, specs: ["16GB", "DDR5", "6000MHz CL30", "EXPO", "Lifetime"] },
+    { n: "KLEVV FIT V 6000MHz CL30 16GB White EXPO", c: "ram", p: 1035, specs: ["16GB", "DDR5", "6000MHz CL30", "EXPO", "Lifetime"] },
+    { n: "KLEVV BOLT V 6000MHz CL28 32GB (16GBx2) Black", c: "ram", p: 2155, specs: ["32GB Kit", "DDR5", "6000MHz CL28", "Lifetime", "OUT OF STOCK"] },
+    { n: "KLEVV BOLT V 6000MHz CL28 32GB (16GBx2) White", c: "ram", p: 2155, specs: ["32GB Kit", "DDR5", "6000MHz CL28", "Lifetime", "OUT OF STOCK"] },
+    { n: "KLEVV CRAS V RGB 6200MHz CL32 48GB (24GBx2) ROG Certified", c: "ram", p: 2689, specs: ["48GB Kit", "DDR5", "6200MHz CL32", "RGB", "Lifetime"] },
+    { n: "KLEVV CRAS V RGB 6000MHz CL28 32GB (16GBx2) Black", c: "ram", p: 2300, specs: ["32GB Kit", "DDR5", "6000MHz CL28", "RGB", "Lifetime", "OUT OF STOCK"] },
+    { n: "KLEVV CRAS V RGB 6000MHz CL28 32GB (16GBx2) White", c: "ram", p: 2300, specs: ["32GB Kit", "DDR5", "6000MHz CL28", "RGB", "Lifetime", "OUT OF STOCK"] },
+    { n: "KLEVV CRAS V RGB 6000MHz CL30 64GB (32GBx2) Black", c: "ram", p: 4060, specs: ["64GB Kit", "DDR5", "6000MHz CL30", "RGB", "Lifetime"] },
+    { n: "KLEVV URBANE V RGB 6000MHz CL30 32GB (16GBx2) Black", c: "ram", p: 2200, specs: ["32GB Kit", "DDR5", "6000MHz CL30", "RGB", "Lifetime"] },
+    { n: "KLEVV URBANE V RGB 6000MHz CL30 32GB (16GBx2) White", c: "ram", p: 2200, specs: ["32GB Kit", "DDR5", "6000MHz CL30", "RGB", "Lifetime", "NO STOCK"] },
+    { n: "KINGBANK KFRW 32GB DDR5 6000MHz 16GB*2 CL36 RGB White", c: "ram", p: 2000, specs: ["32GB Kit", "DDR5", "6000MHz CL36", "RGB White", "Lifetime"] },
+    { n: "KINGBANK KFRB 32GB DDR5 6000MHz 16GB*2 CL36 RGB Black", c: "ram", p: 2000, specs: ["32GB Kit", "DDR5", "6000MHz CL36", "RGB Black", "Lifetime"] },
+
+    // ===== STORAGE (Sheet 5) =====
+    { n: "HIKSEMI WAVE 512GB", c: "storage", p: 410, specs: ["512GB", "M.2 NVMe Gen3x4", "R/W 2500/2000", "3Y warranty"] },
+    { n: "ACER FA100 512GB", c: "storage", p: 410, specs: ["512GB", "M.2 NVMe Gen3x4", "R/W 3200/2200", "5Y", "OUT OF STOCK"] },
+    { n: "ACER FA100 1TB", c: "storage", p: 685, specs: ["1TB", "M.2 NVMe Gen3x4", "R/W 3300/2250", "5Y", "OUT OF STOCK"] },
+    { n: "ACER FA200 500GB", c: "storage", p: 485, specs: ["500GB", "M.2 NVMe Gen4x4", "R/W 6300/3100", "5Y", "OUT OF STOCK"] },
+    { n: "ACER FA200 1TB", c: "storage", p: 725, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 7200/6200", "5Y", "OUT OF STOCK"] },
+    { n: "ACER FA200 2TB", c: "storage", p: 1230, specs: ["2TB", "M.2 NVMe Gen4x4", "R/W 7200/6200", "5Y"] },
+    { n: "ACER PREDATOR GM7 512GB", c: "storage", p: 455, specs: ["512GB", "M.2 NVMe Gen4x4", "R/W 7200/3800", "5Y", "YMTC 128-layer TLC"] },
+    { n: "PUSKILLS 1TB", c: "storage", p: 645, specs: ["1TB", "M.2 NVMe Gen3x3", "R/W 2100/1700", "3Y", "Limited Qty"] },
+    { n: "KINGBANK KP260 PLUS 1TB", c: "storage", p: 735, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 7200/6600", "5Y", "Limited Qty"] },
+    { n: "HP FX700 512GB", c: "storage", p: 425, specs: ["512GB", "M.2 NVMe Gen4x4", "R/W 6300/4900", "5Y", "YMTC QLC NAND", "Limited Qty"] },
+    { n: "HUAWEI EKITSTOR XTREME 200E 1TB", c: "storage", p: 750, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 7500/6500", "5Y", "Limited Qty"] },
+    { n: "T-FORCE Z44A5 512GB", c: "storage", p: 430, specs: ["512GB", "M.2 NVMe Gen4x4", "R/W 5000/2500", "5Y", "Limited Qty"] },
+    { n: "T-FORCE Z44A5 1TB", c: "storage", p: 745, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 5500/4500", "5Y", "Limited Qty"] },
+    { n: "T-FORCE Z44A5 2TB", c: "storage", p: 1335, specs: ["2TB", "M.2 NVMe Gen4x4", "R/W 7000/6100", "5Y", "Limited Qty"] },
+    { n: "T-FORCE VULCAN 2.5\" 512GB SATA SSD", c: "storage", p: 345, specs: ["512GB", "2.5\" SATA SSD", "R/W 540/470", "5Y", "Limited Qty"] },
+    { n: "BRYT M.2 512GB NVMe", c: "storage", p: 410, specs: ["512GB", "M.2 NVMe Gen3x4", "R/W 3200/2200", "3Y", "OUT OF STOCK"] },
+    { n: "LEXAR NQ780 1TB", c: "storage", p: 715, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 6500/2500", "5Y"] },
+    { n: "KINGSTON NV3 500GB", c: "storage", p: 445, specs: ["500GB", "M.2 NVMe Gen4x4", "R/W 5000/3000", "3Y"] },
+    { n: "KINGSTON NV3 1TB", c: "storage", p: 680, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 6000/4000", "3Y"] },
+    { n: "KINGSTON NV3 2TB", c: "storage", p: 1100, specs: ["2TB", "M.2 NVMe Gen4x4", "R/W 6000/4000", "3Y", "OUT OF STOCK"] },
+    { n: "WD GREEN SN3000 1TB", c: "storage", p: 675, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 5000/4000", "3Y", "OUT OF STOCK"] },
+    { n: "LEXAR THOR PRO 1TB", c: "storage", p: 685, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 6500/3000", "3Y", "OUT OF STOCK"] },
+    { n: "KIOXIA EXCERIA BASIC SF10 1TB", c: "storage", p: 705, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 7200/6600", "3Y"] },
+    { n: "ZHITAI Ti600 1TB", c: "storage", p: 700, specs: ["1TB", "M.2 NVMe Gen4x4", "R/W 7000/6000", "3Y"] },
+    { n: "PNY CS1031 256GB", c: "storage", p: 295, specs: ["256GB", "M.2 NVMe Gen3x4", "R/W 2200/1200", "5Y"] },
+    { n: "PNY CS1031 500GB", c: "storage", p: 410, specs: ["500GB", "M.2 NVMe Gen3x4", "R/W 1700/1100", "5Y"] },
+    { n: "PNY SSD 250GB CS900 2.5\" SATA", c: "storage", p: 225, specs: ["250GB", "2.5\" SATA SSD", "R/W 540/470", "3Y"] },
+
+    // ===== THERMAL PASTE (Sheet 6) =====
+    { n: "COOLER MASTER ICE FUSION THERMAL GREASE V2", c: "thermal-paste", p: 72, specs: ["Thermal Paste", "READY STOCK"] },
+    { n: "COOLER MASTER HIGH PERFORMANCE THERMAL GREASE HTK-002", c: "thermal-paste", p: 59, specs: ["Thermal Paste", "READY STOCK"] },
+    { n: "COOLER MASTER MASTERGEL PRO V2", c: "thermal-paste", p: 65, specs: ["Thermal Paste", "READY STOCK"] },
+    { n: "THERMALRIGHT TF7 2G THERMAL PASTE", c: "thermal-paste", p: 59, specs: ["Thermal Paste 2g", "READY STOCK"] },
+    { n: "THERMALRIGHT TF7 4G THERMAL PASTE", c: "thermal-paste", p: 65, specs: ["Thermal Paste 4g", "READY STOCK"] },
+    { n: "THERMAL PASTE KRYONAUT 1G", c: "thermal-paste", p: 65, specs: ["Thermal Paste 1g", "OUT OF STOCK"] },
+    { n: "THERMAL PASTE KRYONAUT 5.5G", c: "thermal-paste", p: 85, specs: ["Thermal Paste 5.5g", "OUT OF STOCK"] },
+    { n: "ARTIC MX7 4G", c: "thermal-paste", p: 80, specs: ["Thermal Paste 4g", "READY STOCK"] },
+
+    // ===== POWER SUPPLY (Sheet 7) =====
+    { n: "GIGABYTE P650SS 650W 80+ Silver", c: "psu", p: 215, specs: ["650W", "80+ Silver", "Non-modular", "3Y", "NO STOCK"] },
+    { n: "MSI MAG A650BN 80+ Bronze", c: "psu", p: 235, specs: ["650W", "80+ Bronze", "Non-modular", "3Y", "OUT OF STOCK"] },
+    { n: "1STPLAYER STEAMPUNK 850W 80+ Gold Full Modular", c: "psu", p: 300, specs: ["850W", "80+ Gold", "Full modular", "7Y", "Limited Stock"] },
+    { n: "AISURIX 550W 80+ Standard", c: "psu", p: 135, specs: ["550W", "80+", "Non-modular", "2Y", "NO STOCK"] },
+    { n: "AISURIX 600W 80+ Standard", c: "psu", p: 145, specs: ["600W", "80+", "Non-modular", "2Y"] },
+    { n: "AISURIX 650W 80+ Standard", c: "psu", p: 150, specs: ["650W", "80+", "Non-modular", "2Y"] },
+    { n: "AISURIX 700W 80+ Standard", c: "psu", p: 155, specs: ["700W", "80+", "Non-modular", "2Y"] },
+    { n: "AISURIX 750W 80+ Standard", c: "psu", p: 195, specs: ["750W", "80+", "Non-modular", "2Y"] },
+    { n: "SEGOTEP AN550W 80+ Standard", c: "psu", p: 185, specs: ["550W", "80+", "Non-modular", "2Y", "NO STOCK"] },
+    { n: "SEGOTEP AN650W 80+ Standard", c: "psu", p: 200, specs: ["650W", "80+", "Non-modular", "2Y", "NO STOCK"] },
+    { n: "SEGOTEP AN750W 80+ Standard", c: "psu", p: 220, specs: ["750W", "80+", "Non-modular", "2Y"] },
+    { n: "SEGOTEP AN750W 80+ Standard (White)", c: "psu", p: 235, specs: ["750W", "80+", "White", "Non-modular", "2Y"] },
+    { n: "1STPLAYER ACK 550W 80+ Standard", c: "psu", p: 175, specs: ["550W", "80+", "Non-modular", "5Y"] },
+    { n: "1STPLAYER ACK 650W 80+ Standard", c: "psu", p: 200, specs: ["650W", "80+", "Non-modular", "5Y"] },
+    { n: "1STPLAYER ACK 650W 80+ Standard (White)", c: "psu", p: 215, specs: ["650W", "80+", "White", "Non-modular", "5Y"] },
+    { n: "1STPLAYER ACK 750W 80+ Standard", c: "psu", p: 230, specs: ["750W", "80+", "Non-modular", "5Y"] },
+    { n: "1STPLAYER ACK 650W 80+ Bronze", c: "psu", p: 240, specs: ["650W", "80+ Bronze", "Non-modular", "5Y", "NO STOCK"] },
+    { n: "1STPLAYER ACK 750W 80+ Bronze", c: "psu", p: 285, specs: ["750W", "80+ Bronze", "Non-modular", "5Y", "Last unit"] },
+    { n: "1STPLAYER ACK 850W 80+ Bronze", c: "psu", p: 305, specs: ["850W", "80+ Bronze", "Non-modular", "5Y", "NO STOCK"] },
+    { n: "1STPLAYER DK6.0 PREMIUM 600W 80+ Bronze", c: "psu", p: 190, specs: ["600W", "80+ Bronze", "Non-modular", "3Y"] },
+    { n: "1STPLAYER DK7.0 PREMIUM 700W 80+ Bronze", c: "psu", p: 220, specs: ["700W", "80+ Bronze", "Non-modular", "3Y"] },
+    { n: "1STPLAYER ACK 750W 80+ Gold", c: "psu", p: 339, specs: ["750W", "80+ Gold", "Full modular", "7Y"] },
+    { n: "1STPLAYER ACK 750W 80+ Gold (White)", c: "psu", p: 359, specs: ["750W", "80+ Gold", "White", "Full modular", "7Y"] },
+    { n: "1STPLAYER ACK 850W 80+ Gold", c: "psu", p: 359, specs: ["850W", "80+ Gold", "Full modular", "7Y"] },
+    { n: "1STPLAYER ACK 850W 80+ Gold (White)", c: "psu", p: 375, specs: ["850W", "80+ Gold", "White", "Full modular", "7Y"] },
+    { n: "1STPLAYER HA-750BA4 750W 80+ Gold Full Modular", c: "psu", p: 410, specs: ["750W", "80+ Gold", "Full modular", "10Y"] },
+    { n: "1STPLAYER HA-850BA4 850W 80+ Gold Full Modular", c: "psu", p: 435, specs: ["850W", "80+ Gold", "Full modular", "10Y"] },
+    { n: "1STPLAYER HA-850BA4 850W 80+ Gold Full Modular (White)", c: "psu", p: 465, specs: ["850W", "80+ Gold", "White", "Full modular", "10Y"] },
+    { n: "THERMALRIGHT 750W 80+ Bronze Modular TB750", c: "psu", p: 295, specs: ["750W", "80+ Bronze", "Full modular", "5Y"] },
+    { n: "THERMALRIGHT 750W 80+ Gold Modular KG750", c: "psu", p: 345, specs: ["750W", "80+ Gold", "Full modular", "5Y"] },
+    { n: "COOLERMASTER MWE 750W V3 80+ Gold (Non-Modular)", c: "psu", p: 329, specs: ["750W", "80+ Gold", "Non-modular", "5Y"] },
+    { n: "COOLERMASTER MWE 850W V3 80+ Gold (Non-Modular)", c: "psu", p: 369, specs: ["850W", "80+ Gold", "Non-modular", "5Y"] },
+
+    // ===== COOLER (Sheet 8) =====
+    { n: "AMD Stock Cooler AM4/AM5 Wraith Stealth", c: "cooler", p: 65, specs: ["AMD stock cooler", "AM4/AM5", "Wraith Stealth"] },
+    { n: "LOVINGCOOL LC-AP300 Black", c: "cooler", p: 100, specs: ["Single tower", "Black"] },
+    { n: "LOVINGCOOL LC-AP300 White", c: "cooler", p: 110, specs: ["Single tower", "White"] },
+    { n: "LOVINGCOOL LC-AP400-B", c: "cooler", p: 105, specs: ["Single tower", "Black"] },
+    { n: "LOVINGCOOL LC-AP400-W", c: "cooler", p: 115, specs: ["Single tower", "White"] },
+    { n: "LOVINGCOOL LC-J160-B", c: "cooler", p: 120, specs: ["Single tower", "Black"] },
+    { n: "LOVINGCOOL LC-J160-W", c: "cooler", p: 125, specs: ["Single tower", "White"] },
+    { n: "LOVINGCOOL LC-AP1000-B", c: "cooler", p: 145, specs: ["Single tower", "Black"] },
+    { n: "LOVINGCOOL LC-AP1000-W", c: "cooler", p: 150, specs: ["Single tower", "White"] },
+    { n: "LOVINGCOOL LC-AP1000PRO-B", c: "cooler", p: 160, specs: ["Single tower", "Black", "Pro"] },
+    { n: "LOVINGCOOL LC-AP1000PRO-W", c: "cooler", p: 165, specs: ["Single tower", "White", "Pro"] },
+    { n: "Thermalright Assassin X 120 Refined SE", c: "cooler", p: 105, specs: ["Single tower", "4 heatpipes", "120mm", "OUT OF STOCK"] },
+    { n: "Thermalright Assassin X 120 Refined SE White", c: "cooler", p: 110, specs: ["Single tower", "White", "4 heatpipes", "120mm"] },
+    { n: "Thermalright Assassin X 120 Refined SE ARGB", c: "cooler", p: 115, specs: ["Single tower", "ARGB", "4 heatpipes", "120mm"] },
+    { n: "Thermalright Assassin X 120 Refined SE White ARGB", c: "cooler", p: 120, specs: ["Single tower", "White", "ARGB", "4 heatpipes", "120mm"] },
+    { n: "Thermalright Assassin X 120 R Digital Black", c: "cooler", p: 130, specs: ["Single tower", "Digital display", "Black"] },
+    { n: "Thermalright Assassin X 120 R Digital White", c: "cooler", p: 135, specs: ["Single tower", "Digital display", "White"] },
+    { n: "Thermalright Assassin X 120 R Digital Black ARGB", c: "cooler", p: 145, specs: ["Single tower", "Digital display", "ARGB", "Black"] },
+    { n: "Thermalright Assassin X 120 R Digital White ARGB", c: "cooler", p: 150, specs: ["Single tower", "Digital display", "ARGB", "White"] },
+    { n: "Thermalright Peerless Assassin 120 SE", c: "cooler", p: 170, specs: ["Dual tower", "6 heatpipes", "120mm", "NO STOCK"] },
+    { n: "Thermalright Peerless Assassin 120 SE ARGB", c: "cooler", p: 185, specs: ["Dual tower", "ARGB", "6 heatpipes", "120mm"] },
+    { n: "Thermalright Peerless Assassin 120 SE White ARGB", c: "cooler", p: 195, specs: ["Dual tower", "White", "ARGB", "6 heatpipes", "120mm"] },
+    { n: "Thermalright Peerless Assassin 120 Digital Black", c: "cooler", p: 230, specs: ["Dual tower", "Digital display", "Black"] },
+    { n: "Thermalright Peerless Assassin 120 Digital White", c: "cooler", p: 230, specs: ["Dual tower", "Digital display", "White"] },
+    { n: "Thermalright Peerless Assassin 120 Digital Black ARGB", c: "cooler", p: 250, specs: ["Dual tower", "Digital display", "ARGB", "Black"] },
+    { n: "Thermalright Peerless Assassin 120 Digital White ARGB", c: "cooler", p: 250, specs: ["Dual tower", "Digital display", "ARGB", "White"] },
+    { n: "Valkyrie AQ125 Black", c: "cooler", p: 110, specs: ["Single tower", "Black"] },
+    { n: "Valkyrie AQ125 White", c: "cooler", p: 115, specs: ["Single tower", "White"] },
+    { n: "Valkyrie AQ125 Black ARGB", c: "cooler", p: 125, specs: ["Single tower", "ARGB", "Black"] },
+    { n: "Valkyrie AQ125 White ARGB", c: "cooler", p: 130, specs: ["Single tower", "ARGB", "White"] },
+    { n: "Snowman MT660-V4D Black", c: "cooler", p: 180, specs: ["Dual tower", "6 heatpipes", "Display", "Black"] },
+    { n: "Snowman MT660-V4D ARGB Black", c: "cooler", p: 200, specs: ["Dual tower", "6 heatpipes", "Display", "ARGB", "Black"] },
+    { n: "Snowman MT660-V4D ARGB White", c: "cooler", p: 210, specs: ["Dual tower", "6 heatpipes", "Display", "ARGB", "White"] },
+    { n: "1stPlayer FT240 3.95\" LCD IPS Display Black", c: "cooler", p: 345, specs: ["AIO 240", "LCD display", "Black", "2Y warranty"] },
+    { n: "1stPlayer FT240 3.95\" LCD IPS Display White", c: "cooler", p: 355, specs: ["AIO 240", "LCD display", "White", "2Y warranty"] },
+    { n: "1stPlayer FT360 3.95\" LCD IPS Display Black", c: "cooler", p: 375, specs: ["AIO 360", "LCD display", "Black", "2Y warranty"] },
+    { n: "1stPlayer FT360 3.95\" LCD IPS Display White", c: "cooler", p: 385, specs: ["AIO 360", "LCD display", "White", "2Y warranty"] },
+    { n: "Thermalright Frozen Infinity 240 Black (Bulk)", c: "cooler", p: 205, specs: ["AIO 240", "Black", "Bulk pack", "NO STOCK"] },
+    { n: "Thermalright Frozen Infinity 240 White (Bulk)", c: "cooler", p: 210, specs: ["AIO 240", "White", "Bulk pack", "NO STOCK"] },
+    { n: "Thermalright Frozen Infinity 360 Black (Bulk)", c: "cooler", p: 245, specs: ["AIO 360", "Black", "Bulk pack"] },
+    { n: "Thermalright Frozen Infinity 360 White (Bulk)", c: "cooler", p: 245, specs: ["AIO 360", "White", "Bulk pack"] },
+    { n: "Valkyrie GLA-240 AIO Black", c: "cooler", p: 285, specs: ["AIO 240", "LED digital display", "Black"] },
+    { n: "Valkyrie GLA-240 AIO White", c: "cooler", p: 285, specs: ["AIO 240", "LED digital display", "White"] },
+    { n: "Valkyrie GLA-360 AIO Black", c: "cooler", p: 330, specs: ["AIO 360", "LED digital display", "Black"] },
+    { n: "Valkyrie GLA-360 AIO White", c: "cooler", p: 330, specs: ["AIO 360", "LED digital display", "White"] },
+    { n: "Valkyrie B240-GT Black", c: "cooler", p: 380, specs: ["AIO 240", "LED digital display", "Black"] },
+    { n: "Valkyrie B240-GT White", c: "cooler", p: 380, specs: ["AIO 240", "LED digital display", "White"] },
+    { n: "Valkyrie B360-GT Black", c: "cooler", p: 440, specs: ["AIO 360", "LED digital display", "Black"] },
+    { n: "Valkyrie B360-GT White", c: "cooler", p: 440, specs: ["AIO 360", "LED digital display", "White"] },
+    { n: "Valkyrie N360 Black", c: "cooler", p: 745, specs: ["AIO 360", "Black", "Premium"] },
+    { n: "Valkyrie N360 White", c: "cooler", p: 745, specs: ["AIO 360", "White", "Premium"] },
+    { n: "1STPLAYER TS4-240 Black", c: "cooler", p: 220, specs: ["AIO 240", "Black"] },
+    { n: "1STPLAYER TS4-240 White", c: "cooler", p: 230, specs: ["AIO 240", "White"] },
+    { n: "1STPLAYER TS4-360 Black", c: "cooler", p: 249, specs: ["AIO 360", "Black"] },
+    { n: "1STPLAYER TS4-360 White", c: "cooler", p: 259, specs: ["AIO 360", "White"] },
+    { n: "ID-COOLING FX240 LCD ARGB Black", c: "cooler", p: 265, specs: ["AIO 240", "LCD display", "ARGB", "Black"] },
+    { n: "ID-COOLING FX240 LCD ARGB White", c: "cooler", p: 270, specs: ["AIO 240", "LCD display", "ARGB", "White"] },
+    { n: "ID-COOLING FX360 LCD ARGB Black", c: "cooler", p: 305, specs: ["AIO 360", "LCD display", "ARGB", "Black"] },
+    { n: "ID-COOLING FX360 LCD ARGB White", c: "cooler", p: 315, specs: ["AIO 360", "LCD display", "ARGB", "White"] },
+    { n: "Invasion Frost Vision 240 Black", c: "cooler", p: 349, specs: ["AIO 240", "Black"] },
+    { n: "Invasion Frost Vision 240 White", c: "cooler", p: 349, specs: ["AIO 240", "White"] },
+    { n: "Invasion Frost Vision 360 Black", c: "cooler", p: 379, specs: ["AIO 360", "Black"] },
+    { n: "Invasion Frost Vision 360 White", c: "cooler", p: 379, specs: ["AIO 360", "White"] },
+    { n: "Invasion Poseidon 360 Curved LCD 6.67\" 2K AMOLED", c: "cooler", p: 749, specs: ["AIO 360", "Curved LCD 6.67\" 2K AMOLED"] },
+    { n: "Invasion SC-240 Black", c: "cooler", p: 209, specs: ["AIO 240", "Black"] },
+    { n: "Invasion SC-240 White", c: "cooler", p: 209, specs: ["AIO 240", "White"] },
+    { n: "Invasion SC-360 Black", c: "cooler", p: 249, specs: ["AIO 360", "Black"] },
+    { n: "Invasion SC-360 White", c: "cooler", p: 249, specs: ["AIO 360", "White", "NO STOCK"] },
+    { n: "Invasion YZ-240 Black", c: "cooler", p: 199, specs: ["AIO 240", "Black"] },
+    { n: "Invasion YZ-240 White", c: "cooler", p: 199, specs: ["AIO 240", "White"] },
+    { n: "Lovingcool SC70 Black 6.67\" Curved LCD", c: "cooler", p: 570, specs: ["AIO 360", "Curved LCD 6.67\"", "Black"] },
+    { n: "Lovingcool SC70 White 6.67\" Curved LCD", c: "cooler", p: 580, specs: ["AIO 360", "Curved LCD 6.67\"", "White"] },
+    { n: "Lovingcool DP240-01 Black w 4\" LCD", c: "cooler", p: 245, specs: ["AIO 240", "4\" LCD", "Black", "NO STOCK"] },
+    { n: "Lovingcool DP240-01 White w 4\" LCD", c: "cooler", p: 255, specs: ["AIO 240", "4\" LCD", "White", "NO STOCK"] },
+    { n: "Lovingcool DP360-01 Black w 4\" LCD", c: "cooler", p: 265, specs: ["AIO 360", "4\" LCD", "Black", "NO STOCK"] },
+    { n: "Lovingcool DP360-01 White w 4\" LCD", c: "cooler", p: 275, specs: ["AIO 360", "4\" LCD", "White", "NO STOCK"] },
+    { n: "Lovingcool B240-AK", c: "cooler", p: 175, specs: ["AIO 240", "NO STOCK"] },
+    { n: "Lovingcool W240-AK", c: "cooler", p: 185, specs: ["AIO 240", "NO STOCK"] },
+    { n: "Lovingcool HK-B360-01", c: "cooler", p: 209, specs: ["AIO 360", "Black"] },
+    { n: "Lovingcool HK-W360-01", c: "cooler", p: 219, specs: ["AIO 360", "White"] },
+    { n: "Cooler Master Hyper 212 Spectrum V3 ARGB", c: "cooler", p: 120, specs: ["Air cooler", "ARGB"] },
+    { n: "J20 Dual Tower CPU Cooler w 6 Heatpipe Black", c: "cooler", p: 130, specs: ["Dual tower", "6 heatpipes", "Black"] },
+    { n: "J20 Dual Tower CPU Cooler w 6 Heatpipe White", c: "cooler", p: 135, specs: ["Dual tower", "6 heatpipes", "White"] },
+
+    // ===== CASING (Sheet 9) =====
+    { n: "TECWARE VXO M TG", c: "casing", p: 150, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "240 AIO"] },
+    { n: "1STPLAYER VT6 Black", c: "casing", p: 170, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "360 AIO", "Black"] },
+    { n: "1STPLAYER VT6 White", c: "casing", p: 180, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "360 AIO", "White"] },
+    { n: "1STPLAYER CV6", c: "casing", p: 199, specs: ["MATX/ITX", "Tempered Glass", "Up to 8x 120mm fans", "360 AIO"] },
+    { n: "OKINOS AQUA UNO CANARY", c: "casing", p: 170, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "240 AIO"] },
+    { n: "Segotep LUMI 3T Black", c: "casing", p: 255, specs: ["MATX/ITX", "Tempered Glass", "6x ARGB Fan w Hub", "360 AIO", "Black"] },
+    { n: "Segotep BRAVE W1 Black", c: "casing", p: 160, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan w Hub", "240 AIO", "Black"] },
+    { n: "Segotep BRAVE W1 White", c: "casing", p: 165, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan w Hub", "240 AIO", "White"] },
+    { n: "Segotep ENDURA 240S Black", c: "casing", p: 205, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan w Hub", "240 AIO", "Black"] },
+    { n: "Segotep ENDURA 240S White", c: "casing", p: 215, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan w Hub", "240 AIO", "White"] },
+    { n: "1STPLAYER BV5", c: "casing", p: 165, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "240 AIO", "Black"] },
+    { n: "1STPLAYER BV6", c: "casing", p: 185, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "360 AIO", "Black"] },
+    { n: "1STPLAYER MV5-TP Black", c: "casing", p: 185, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "240 AIO", "Black"] },
+    { n: "TECWARE VXN+ TG Compact", c: "casing", p: 215, specs: ["MATX/ITX", "Tempered Glass", "6x ARGB Fan", "360 AIO"] },
+    { n: "TECWARE TRINITY 2M TG", c: "casing", p: 220, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "360 AIO", "NO STOCK"] },
+    { n: "TECWARE VXN GLOW M TG", c: "casing", p: 235, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "360 AIO"] },
+    { n: "TECWARE TIMBER M TG Black", c: "casing", p: 200, specs: ["MATX/ITX", "Tempered Glass", "4x Fan", "240 AIO", "Black"] },
+    { n: "TECWARE TIMBER M TG White", c: "casing", p: 210, specs: ["MATX/ITX", "Tempered Glass", "4x Fan", "240 AIO", "White", "NO STOCK"] },
+    { n: "ASUS PRIME AP202 Black", c: "casing", p: 385, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "360 AIO", "Black", "Last unit"] },
+    { n: "ASUS PRIME AP202 White", c: "casing", p: 395, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan", "360 AIO", "White", "Last unit"] },
+    { n: "LIAN LI VECTOR V100R MINI", c: "casing", p: 255, specs: ["MATX/ITX", "Tempered Glass", "4x ARGB Fan", "360 AIO"] },
+    { n: "Formula V Crystal Z6M V2 Black", c: "casing", p: 235, specs: ["MATX/ITX", "Tempered Glass", "6x ARGB Fan", "360 AIO", "Black", "NO STOCK"] },
+    { n: "Formula V Crystal Z6M V2 White", c: "casing", p: 240, specs: ["MATX/ITX", "Tempered Glass", "6x ARGB Fan", "360 AIO", "White", "NO STOCK"] },
+    { n: "Invasion Atlas Black", c: "casing", p: 265, specs: ["MATX/ITX", "Tempered Glass", "4x ARGB Fan w Hub", "360 AIO", "Black"] },
+    { n: "Invasion Atlas White", c: "casing", p: 275, specs: ["MATX/ITX", "Tempered Glass", "4x ARGB Fan w Hub", "360 AIO", "White"] },
+    { n: "Invasion Erebus Black", c: "casing", p: 250, specs: ["MATX/ITX", "Tempered Glass", "6x ARGB Fan w Hub", "360 AIO", "Black"] },
+    { n: "Invasion Erebus White", c: "casing", p: 260, specs: ["MATX/ITX", "Tempered Glass", "6x ARGB Fan w Hub", "360 AIO", "White"] },
+    { n: "Invasion The View 5 Black", c: "casing", p: 255, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan w Hub", "360 AIO", "5\" Screen", "Black"] },
+    { n: "Invasion The View 5 White", c: "casing", p: 265, specs: ["MATX/ITX", "Tempered Glass", "3x ARGB Fan w Hub", "360 AIO", "5\" Screen", "White"] },
+    { n: "Invasion Thanatos Black", c: "casing", p: 309, specs: ["ATX/MATX", "Tempered Glass", "6x ARGB Fan w Hub", "360 AIO", "Black"] },
+    { n: "Invasion Thanatos White", c: "casing", p: 319, specs: ["ATX/MATX", "Tempered Glass", "6x ARGB Fan w Hub", "360 AIO", "White"] },
+    { n: "Invasion Kratos LCD Black", c: "casing", p: 339, specs: ["ATX/MATX", "Tempered Glass", "4x ARGB Fan w Hub", "360 AIO", "LCD", "Black"] },
+    { n: "LIAN LI VECTOR V150 INF", c: "casing", p: 315, specs: ["ATX/MATX", "Tempered Glass", "Infinity fans"] },
+    { n: "LIAN LI O11 VISION COMPACT Black", c: "casing", p: 495, specs: ["ATX/MATX", "Tempered Glass", "Black"] },
+    { n: "LIAN LI O11 VISION COMPACT White", c: "casing", p: 505, specs: ["ATX/MATX", "Tempered Glass", "White"] },
+    { n: "LIAN LI O11 Dynamic Mini V2 Black", c: "casing", p: 395, specs: ["ATX/MATX", "Tempered Glass", "Black"] },
+    { n: "LIAN LI O11 Dynamic Mini V2 White", c: "casing", p: 405, specs: ["ATX/MATX", "Tempered Glass", "White"] },
+
+    // ===== FANS / ACCESSORIES (Sheet 9 lower) =====
+    { n: "Lian Li Uni Fan TL LCD Flex 120mm Black (Single) Forward", c: "fan", p: 255, specs: ["120mm", "LCD", "Forward", "Black"] },
+    { n: "Lian Li Uni Fan TL LCD Flex 120mm Black (Single) Reverse", c: "fan", p: 255, specs: ["120mm", "LCD", "Reverse", "Black"] },
+    { n: "Lian Li Uni Fan TL LCD Flex 120mm White (Single) Forward", c: "fan", p: 255, specs: ["120mm", "LCD", "Forward", "White"] },
+    { n: "Lian Li Uni Fan TL LCD Flex 120mm White (Single) Reverse", c: "fan", p: 255, specs: ["120mm", "LCD", "Reverse", "White"] },
+    { n: "Lian Li Uni Fan TL LCD Flex 120mm*3 Black (Combo) Forward", c: "fan", p: 675, specs: ["3x 120mm", "LCD", "Forward", "Black"] },
+    { n: "Lian Li Uni Fan TL LCD Flex 120mm*3 Black (Combo) Reverse", c: "fan", p: 675, specs: ["3x 120mm", "LCD", "Reverse", "Black"] },
+    { n: "Lian Li Uni Fan TL LCD Flex 120mm*3 White (Combo) Forward", c: "fan", p: 675, specs: ["3x 120mm", "LCD", "Forward", "White"] },
+    { n: "Lian Li Uni Fan TL LCD Flex 120mm*3 White (Combo) Reverse", c: "fan", p: 675, specs: ["3x 120mm", "LCD", "Reverse", "White"] },
+    { n: "Lian Li Uni Fan TL Flex 120mm Black (Single) Forward", c: "fan", p: 195, specs: ["120mm", "Forward", "Black"] },
+    { n: "Lian Li Uni Fan TL Flex 120mm Black (Single) Reverse", c: "fan", p: 195, specs: ["120mm", "Reverse", "Black"] },
+    { n: "Lian Li Uni Fan TL Flex 120mm White (Single) Forward", c: "fan", p: 195, specs: ["120mm", "Forward", "White"] },
+    { n: "Lian Li Uni Fan TL Flex 120mm White (Single) Reverse", c: "fan", p: 195, specs: ["120mm", "Reverse", "White"] },
+    { n: "Lian Li Uni Fan TL Flex 120mm*3 Black (Combo) Forward", c: "fan", p: 500, specs: ["3x 120mm", "Forward", "Black"] },
+    { n: "Lian Li Uni Fan TL Flex 120mm*3 Black (Combo) Reverse", c: "fan", p: 500, specs: ["3x 120mm", "Reverse", "Black"] },
+    { n: "Lian Li Uni Fan TL Flex 120mm*3 White (Combo) Forward", c: "fan", p: 500, specs: ["3x 120mm", "Forward", "White"] },
+    { n: "Lian Li Uni Fan TL Flex 120mm*3 White (Combo) Reverse", c: "fan", p: 500, specs: ["3x 120mm", "Reverse", "White"] },
+    { n: "Lian Li Uni Fan SL-INF LCD Flex 120mm Black (Single) Forward", c: "fan", p: 265, specs: ["120mm", "LCD", "Forward", "Black"] },
+    { n: "Lian Li Uni Fan SL-INF LCD Flex 120mm Black (Single) Reverse", c: "fan", p: 265, specs: ["120mm", "LCD", "Reverse", "Black"] },
+    { n: "Lian Li Uni Fan SL-INF LCD Flex 120mm White (Single) Forward", c: "fan", p: 265, specs: ["120mm", "LCD", "Forward", "White"] },
+    { n: "Lian Li Uni Fan SL-INF LCD Flex 120mm White (Single) Reverse", c: "fan", p: 265, specs: ["120mm", "LCD", "Reverse", "White"] },
+    { n: "Lian Li Uni Fan SL-INF LCD Flex 120mm*3 Black (Combo) Forward", c: "fan", p: 705, specs: ["3x 120mm", "LCD", "Forward", "Black"] },
+    { n: "Lian Li Uni Fan SL-INF LCD Flex 120mm*3 Black (Combo) Reverse", c: "fan", p: 705, specs: ["3x 120mm", "LCD", "Reverse", "Black"] },
+    { n: "Lian Li Uni Fan SL-INF LCD Flex 120mm*3 White (Combo) Forward", c: "fan", p: 705, specs: ["3x 120mm", "LCD", "Forward", "White"] },
+    { n: "Lian Li Uni Fan SL-INF LCD Flex 120mm*3 White (Combo) Reverse", c: "fan", p: 705, specs: ["3x 120mm", "LCD", "Reverse", "White"] },
+    { n: "Lian Li Uni Fan SL-INF Flex 120mm Black (Single) Forward", c: "fan", p: 205, specs: ["120mm", "Forward", "Black"] },
+    { n: "Lian Li Uni Fan SL-INF Flex 120mm Black (Single) Reverse", c: "fan", p: 205, specs: ["120mm", "Reverse", "Black"] },
+    { n: "Lian Li Uni Fan SL-INF Flex 120mm White (Single) Forward", c: "fan", p: 205, specs: ["120mm", "Forward", "White"] },
+    { n: "Lian Li Uni Fan SL-INF Flex 120mm White (Single) Reverse", c: "fan", p: 205, specs: ["120mm", "Reverse", "White"] },
+    { n: "Lian Li Uni Fan SL-INF Flex 120mm*3 Black (Combo) Forward", c: "fan", p: 520, specs: ["3x 120mm", "Forward", "Black"] },
+    { n: "Lian Li Uni Fan SL-INF Flex 120mm*3 Black (Combo) Reverse", c: "fan", p: 520, specs: ["3x 120mm", "Reverse", "Black"] },
+    { n: "Lian Li Uni Fan SL-INF Flex 120mm*3 White (Combo) Forward", c: "fan", p: 520, specs: ["3x 120mm", "Forward", "White"] },
+    { n: "Lian Li Uni Fan SL-INF Flex 120mm*3 White (Combo) Reverse", c: "fan", p: 520, specs: ["3x 120mm", "Reverse", "White"] },
+    { n: "TECWARE GLOW PR12 ARGB Black Forward", c: "fan", p: 70, specs: ["120mm", "ARGB", "Forward", "Black"] },
+    { n: "TECWARE GLOW PR12 ARGB Black Reverse", c: "fan", p: 70, specs: ["120mm", "ARGB", "Reverse", "Black"] },
+    { n: "TECWARE GLOW PR12 ARGB White Forward", c: "fan", p: 71, specs: ["120mm", "ARGB", "Forward", "White"] },
+    { n: "TECWARE GLOW PR12 ARGB White Reverse", c: "fan", p: 71, specs: ["120mm", "ARGB", "Reverse", "White"] },
+    { n: "TECWARE ARGB 3 Pin Dongle", c: "fan", p: 62, specs: ["ARGB Dongle"] },
+    { n: "THERMALRIGHT TL-M12Q Black", c: "fan", p: 79, specs: ["120mm", "Wireless", "Forward", "Black"] },
+    { n: "THERMALRIGHT TL-M12QR Black", c: "fan", p: 79, specs: ["120mm", "Wireless", "Reverse", "Black"] },
+    { n: "THERMALRIGHT TL-M12QW White", c: "fan", p: 79, specs: ["120mm", "Wireless", "Forward", "White"] },
+    { n: "THERMALRIGHT TL-M12QRW White", c: "fan", p: 79, specs: ["120mm", "Wireless", "Reverse", "White"] },
+    { n: "THERMALRIGHT TL-M12QR*3 Black (3-in-1)", c: "fan", p: 129, specs: ["3x 120mm", "Wireless", "Reverse", "Black"] },
+    { n: "THERMALRIGHT TL-M12Q*3 Black (3-in-1)", c: "fan", p: 129, specs: ["3x 120mm", "Wireless", "Forward", "Black"] },
+    { n: "THERMALRIGHT TL-M12QW*3 White (3-in-1)", c: "fan", p: 129, specs: ["3x 120mm", "Wireless", "Forward", "White"] },
+    { n: "THERMALRIGHT TL-M12QRW*3 White (3-in-1)", c: "fan", p: 129, specs: ["3x 120mm", "Wireless", "Reverse", "White"] },
+    { n: "LOVINGCOOL PRISM 9 ULTRA Forward Black", c: "fan", p: 70, specs: ["120mm", "Forward", "Black"] },
+    { n: "LOVINGCOOL PRISM 9 ULTRA Reverse Black", c: "fan", p: 70, specs: ["120mm", "Reverse", "Black"] },
+    { n: "LOVINGCOOL PRISM 9 ULTRA Forward White", c: "fan", p: 70, specs: ["120mm", "Forward", "White"] },
+    { n: "LOVINGCOOL PRISM 9 PRO Reverse White", c: "fan", p: 70, specs: ["120mm", "Reverse", "White"] },
+    { n: "LOVINGCOOL M12 Forward Black", c: "fan", p: 65, specs: ["120mm", "Forward", "Black"] },
+    { n: "LOVINGCOOL M12 Reverse Black", c: "fan", p: 65, specs: ["120mm", "Reverse", "Black"] },
+    { n: "LOVINGCOOL M12 Forward White", c: "fan", p: 65, specs: ["120mm", "Forward", "White"] },
+    { n: "LOVINGCOOL PL-120-1 Forward Black Wireless", c: "fan", p: 75, specs: ["120mm", "Wireless", "Forward", "Black"] },
+    { n: "LOVINGCOOL PL-120-1 Reverse Black Wireless", c: "fan", p: 75, specs: ["120mm", "Wireless", "Reverse", "Black"] },
+    { n: "LOVINGCOOL PL-120-1 Forward White Wireless", c: "fan", p: 75, specs: ["120mm", "Wireless", "Forward", "White"] },
+    { n: "LOVINGCOOL PL-120-1 Reverse White Wireless", c: "fan", p: 75, specs: ["120mm", "Wireless", "Reverse", "White"] },
+    { n: "LOVINGCOOL PL-120-3 Forward Black (3-in-1)", c: "fan", p: 115, specs: ["3x 120mm", "Wireless", "Forward", "Black"] },
+    { n: "LOVINGCOOL PL-120-3 Reverse Black (3-in-1)", c: "fan", p: 115, specs: ["3x 120mm", "Wireless", "Reverse", "Black"] },
+    { n: "LOVINGCOOL PL-120-3 Forward White (3-in-1)", c: "fan", p: 115, specs: ["3x 120mm", "Wireless", "Forward", "White"] },
+    { n: "LOVINGCOOL PL-120-3 Reverse White (3-in-1)", c: "fan", p: 115, specs: ["3x 120mm", "Wireless", "Reverse", "White"] },
+    { n: "LOVINGCOOL PRISM 4 PRO Forward Black", c: "fan", p: 62, specs: ["120mm", "Forward", "Black"] },
+    { n: "LOVINGCOOL PRISM 4 PRO Reverse Black", c: "fan", p: 62, specs: ["120mm", "Reverse", "Black"] },
+    { n: "LOVINGCOOL PRISM 4 PRO Forward White", c: "fan", p: 62, specs: ["120mm", "Forward", "White"] },
+    { n: "LOVINGCOOL PRISM 4 PRO Reverse White", c: "fan", p: 62, specs: ["120mm", "Reverse", "White"] },
+
+    // ===== MONITOR (Sheet 10) =====
+    { n: "GS24F14 23.8\" 144Hz IPS", c: "monitor", p: 335, specs: ["23.8\"", "1080p", "144Hz", "IPS", "1ms", "HDMI+DP", "3Y"] },
+    { n: "MF2408-A 23.8\" 120Hz IPS", c: "monitor", p: 335, specs: ["23.8\"", "1080p", "120Hz", "IPS", "1ms", "HDMI+VGA", "3Y"] },
+    { n: "MF2708-A 27\" 120Hz IPS", c: "monitor", p: 410, specs: ["27\"", "1080p", "120Hz", "IPS", "1ms", "HDMI+VGA", "3Y"] },
+    { n: "MD2425-V 23.8\" 180Hz IPS", c: "monitor", p: 435, specs: ["23.8\"", "1080p", "180Hz", "IPS", "1ms", "HDMI+DP+USB", "3Y"] },
+    { n: "MD2725-V 27\" 180Hz IPS", c: "monitor", p: 485, specs: ["27\"", "1080p", "180Hz", "IPS", "1ms", "HDMI+DP+USB", "3Y", "NO STOCK"] },
+    { n: "24G50Z 24\" 260Hz IPS", c: "monitor", p: 510, specs: ["24\"", "1080p", "260Hz", "IPS", "0.3ms", "HDMI+DP", "3Y"] },
+    { n: "27G50Z 27\" 260Hz IPS", c: "monitor", p: 550, specs: ["27\"", "1080p", "260Hz", "IPS", "0.3ms", "HDMI+DP", "3Y"] },
+    { n: "GS27QA 27\" 180Hz QHD IPS", c: "monitor", p: 630, specs: ["27\"", "1440p", "180Hz", "IPS", "1ms", "HDMI+DP", "3Y"] },
+
+    // ===== KEYBOARD MOUSE COMBO (Sheet 11) =====
+    { n: "1STPLAYER KT2 4 in 1 Combo", c: "peripherals", p: 160, specs: ["Keyboard, Mouse, Headset, Mousepad", "4 in 1 Combo"] },
+
+    // ===== MICROSOFT LICENSE (Sheet 12) =====
+    { n: "Microsoft Windows 11 Home (ESD)", c: "software", p: 230, specs: ["Digital license", "64-bit", "Email delivery"] },
     { n: "Microsoft Windows 11 Pro (ESD)", c: "software", p: 300, specs: ["Pro features", "Remote Desktop", "BitLocker"] },
     { n: "Microsoft Office Home & Business 2024 (ESD)", c: "software", p: 850, specs: ["Word, Excel, Outlook", "1 PC", "Lifetime"] },
   ];
@@ -913,7 +1181,10 @@
       cooler: "fa-solid fa-fan", 
       casing: "fa-solid fa-desktop", 
       monitor: "fa-solid fa-display", 
-      software: "fa-solid fa-code" 
+      software: "fa-solid fa-code",
+      "thermal-paste": "fa-solid fa-paste",
+      peripherals: "fa-solid fa-keyboard",
+      fan: "fa-solid fa-fan"
     };
     return icons[cat] || "fa-solid fa-box";
   }
@@ -928,7 +1199,7 @@
   const totalClicksSpan = document.getElementById('totalClicks');
   const topItemSpan = document.getElementById('topItem');
   const whatsappNumber = '60163691936';
-  let activeCat = 'all', totalClicks = 0, clickCounts = {};
+  let activeCat = 'all', totalClicks = 0, clickCounts = {}, trackerTimeout;
 
   const modal = document.getElementById('imageModal');
   const modalIcon = document.getElementById('modalIcon');
@@ -949,7 +1220,12 @@
     totalClicksSpan.innerText = totalClicks;
     let top = Object.entries(clickCounts).sort((a,b)=>b[1]-a[1])[0];
     topItemSpan.innerText = top ? top[0] : '—';
+    
     clickTracker.classList.add('show');
+    clearTimeout(trackerTimeout);
+    trackerTimeout = setTimeout(() => {
+      clickTracker.classList.remove('show');
+    }, 3000);
   }
 
   function getFiltered() {
@@ -987,7 +1263,7 @@
             <div class="product-details">${specsHtml}</div>
             <div class="price-row">
               <span class="product-price">RM${p.p}</span>
-              <button class="product-buy" data-name="${escapeHtml(p.n)}" data-wa="${escapeHtml(waLink)}">
+              <button class="product-buy" type="button" data-name="${escapeHtml(p.n)}" data-wa="${escapeHtml(waLink)}">
                 <i class="fa-solid fa-shopping-cart"></i> Check
               </button>
             </div>
@@ -996,25 +1272,26 @@
       `;
     }
     grid.innerHTML = htmlOutput;
-    
-    document.querySelectorAll('.product-image-wrap').forEach(w => {
-      w.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const icon = w.getAttribute('data-icon');
-        const name = w.getAttribute('data-name');
-        if (icon && name) openModal(icon, name);
-      });
-    });
-    document.querySelectorAll('.product-buy').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const name = btn.getAttribute('data-name');
-        const url = btn.getAttribute('data-wa');
-        if(name) trackClick(name);
-        if(url) window.open(url, '_blank');
-      });
-    });
   }
+
+  // Optimized Event Delegation for Grid Clicks
+  grid.addEventListener('click', (e) => {
+    const imgWrap = e.target.closest('.product-image-wrap');
+    if (imgWrap) {
+      const icon = imgWrap.getAttribute('data-icon');
+      const name = imgWrap.getAttribute('data-name');
+      if (icon && name) openModal(icon, name);
+      return;
+    }
+
+    const buyBtn = e.target.closest('.product-buy');
+    if (buyBtn) {
+      const name = buyBtn.getAttribute('data-name');
+      const url = buyBtn.getAttribute('data-wa');
+      if (name) trackClick(name);
+      if (url) window.open(url, '_blank');
+    }
+  });
 
   function escapeHtml(str) { 
     return str.replace(/[&<>'"]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[m])); 
@@ -1025,6 +1302,7 @@
     filtersDiv.innerHTML = '';
     cats.forEach(c => {
       const btn = document.createElement('button');
+      btn.type = 'button';
       btn.className = `filter-btn ${c === activeCat ? 'active' : ''}`;
       const count = c === 'all' ? PRODUCTS.length : PRODUCTS.filter(p=>p.c===c).length;
       btn.innerHTML = `${c.toUpperCase()} <span class="filter-count">${count}</span>`;
