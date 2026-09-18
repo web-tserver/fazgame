@@ -426,8 +426,10 @@
             transition: 0.2s;
             color: var(--text);
             text-decoration: none;
+            white-space: nowrap;
         }
-        .nav-link:hover {
+        .nav-link:hover,
+        .nav-link.active {
             background: var(--accent);
             color: #000;
             transform: translateY(-2px);
@@ -466,10 +468,21 @@
             .header-nav {
                 justify-content: center;
                 order: 2;
+                flex-wrap: wrap;
             }
             .header-logos {
                 order: 3;
                 justify-content: center;
+            }
+        }
+        @media (max-width:480px) {
+            .header-nav {
+                gap: 4px;
+                padding: 5px 8px;
+            }
+            .nav-link {
+                font-size: 12px;
+                padding: 7px 10px;
             }
         }
 
@@ -1848,13 +1861,14 @@
     <header>
         <div class="header-inner">
             <div class="header-left">
-                <img src="images/logo1.png" alt="FAZGAME Logo" class="logo-img" onerror="this.src='https://placehold.co/300x300/222/ffd84d?text=FAZGAME';">
+                <img src="images/logo1.png" alt="FAZGAME Logo" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/300x300/222/ffd84d?text=FAZGAME';">
                 <div class="logo-text"><span>FAZ</span><span>GAME</span></div>
             </div>
             <div class="header-nav">
-                <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html" class="nav-link active">Home</a>
                 <a href="pc-builder.html" class="nav-link">PC Builder</a>
                 <a href="shop.html" class="nav-link">Shop</a>
+                <a href="spec.html" class="nav-link">PC Spec</a>
             </div>
             <div class="header-logos">
                 <img src="https://api.iconify.design/simple-icons/playstation.svg" alt="PlayStation">
