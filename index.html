@@ -949,7 +949,34 @@
         .trust-badges { display: flex; justify-content: center; gap: 24px; margin: 30px 0 20px; flex-wrap: wrap; }
         .trust-badge { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text); }
         .trust-badge .icon { font-size: 1.2em; line-height: 1; }
-        .payment-icons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+
+        /* --- Payment groups --- */
+        .payment-group { margin-top: 32px; }
+        .payment-group:first-of-type { margin-top: 20px; }
+
+        .payment-group-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .payment-group-title::before,
+        .payment-group-title::after {
+            content: '';
+            width: 36px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent));
+            opacity: 0.6;
+        }
+        .payment-group-title::after { background: linear-gradient(90deg, var(--accent), transparent); }
+
+        .payment-icons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
         .payment-item {
             background: var(--glass-bg);
             backdrop-filter: blur(8px);
@@ -959,7 +986,69 @@
             font-size: 14px;
             font-weight: 500;
             color: var(--text);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
         }
+
+        /* --- HIGHLIGHTED BNPL ITEMS --- */
+        .payment-item.highlight {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            font-weight: 700;
+            color: var(--text);
+            background: linear-gradient(135deg, rgba(255, 216, 77, 0.22) 0%, rgba(255, 216, 77, 0.06) 100%);
+            border: 1px solid rgba(255, 216, 77, 0.6);
+            box-shadow: 0 0 0 1px rgba(255, 216, 77, 0.12), 0 0 22px rgba(255, 216, 77, 0.22);
+            animation: bnplGlow 3s ease-in-out infinite;
+            overflow: hidden;
+        }
+        .payment-item.highlight::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -120%;
+            width: 60%; height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+            transform: skewX(-20deg);
+            animation: bnplShine 4.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .payment-item.highlight:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 0 1px rgba(255, 216, 77, 0.35), 0 10px 30px rgba(255, 216, 77, 0.35);
+        }
+        body.light-mode .payment-item.highlight {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.18) 0%, rgba(234, 179, 8, 0.05) 100%);
+            border-color: rgba(234, 179, 8, 0.6);
+            box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.12), 0 0 22px rgba(234, 179, 8, 0.18);
+        }
+        @keyframes bnplGlow {
+            0%, 100% { box-shadow: 0 0 0 1px rgba(255, 216, 77, 0.12), 0 0 18px rgba(255, 216, 77, 0.18); }
+            50%      { box-shadow: 0 0 0 1px rgba(255, 216, 77, 0.30), 0 0 30px rgba(255, 216, 77, 0.40); }
+        }
+        @keyframes bnplShine {
+            0%, 60% { left: -120%; }
+            100%    { left: 160%; }
+        }
+        .bnpl-note { margin-top: 14px; font-size: 13px; color: var(--muted); }
+        .bnpl-note strong { color: var(--accent); }
+
+        @media (max-width: 480px) {
+            .payment-icons { gap: 10px; }
+            .payment-item.highlight { padding: 9px 16px; font-size: 13px; gap: 6px; }
+            .payment-group-title::before,
+            .payment-group-title::after { width: 20px; }
+        }
+
+        /* ===== SECTION NOTE (small text under subtitle) ===== */
+        .section-note {
+            font-size: 13px;
+            color: var(--muted);
+            margin: -8px 0 20px;
+            letter-spacing: 0.2px;
+        }
+        .section-note strong { color: var(--accent); font-weight: 700; }
 
         /* ===== FAQ SECTION ===== */
         #faq { padding: 40px 16px; max-width: 800px; margin: 0 auto; }
@@ -1309,6 +1398,7 @@
     <section id="hot" class="reveal">
         <h2 class="section-title">Preorder PC Builds</h2>
         <div class="section-subtitle">Custom Gaming PCs • Built On Demand</div>
+        <p class="section-note">We now accept <strong>Atome</strong>, <strong>ShopeePayLater</strong> &amp; <strong>Grab PayLater</strong></p>
         <div class="hot-grid" id="hotGrid">
 
             <div class="hot-card" data-product='{"name":"PC Gaming White Setup RTX 3050 6GB","price":"RM2,300","image":"images/white-setup-rtx3050.webp","specs":["Processor: AMD Ryzen 5 2600","Graphics: RTX 3050 6GB","Motherboard: A520M","RAM: 16GB DDR4 2666Mhz","Storage: 256GB NVMe SSD","PSU: 500W Bronze 80+","Warranty: up to 4 Years"]}'>
@@ -1622,17 +1712,34 @@
 
     <section id="payment" class="reveal">
         <h2 class="section-title" style="text-align:center;">Payment Methods</h2>
+
         <div class="trust-badges">
             <div class="trust-badge"><span class="icon">✓</span> Verified Business</div>
             <div class="trust-badge"><span class="icon">🔒</span> Secure Checkout</div>
             <div class="trust-badge"><span class="icon">🔄</span> 7-Day Returns</div>
         </div>
-        <div class="payment-icons">
-            <div class="payment-item">Visa</div>
-            <div class="payment-item">Mastercard</div>
-            <div class="payment-item">FPX</div>
-            <div class="payment-item">Touch 'n Go</div>
-            <div class="payment-item">GrabPay</div>
+
+        <!-- BNPL — HIGHLIGHTED (shown first) -->
+        <div class="payment-group">
+            <div class="payment-group-title">✨ Buy Now, Pay Later</div>
+            <div class="payment-icons">
+                <div class="payment-item highlight">Atome</div>
+                <div class="payment-item highlight">ShopeePayLater</div>
+                <div class="payment-item highlight">Grab PayLater</div>
+            </div>
+            <p class="bnpl-note">Split your purchase into easy payments — <strong>no credit card required</strong>.</p>
+        </div>
+
+        <!-- Instant Payment -->
+        <div class="payment-group">
+            <div class="payment-group-title">💳 Pay Instantly</div>
+            <div class="payment-icons">
+                <div class="payment-item">Visa</div>
+                <div class="payment-item">Mastercard</div>
+                <div class="payment-item">FPX</div>
+                <div class="payment-item">Touch 'n Go</div>
+                <div class="payment-item">GrabPay</div>
+            </div>
         </div>
     </section>
 
