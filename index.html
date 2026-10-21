@@ -153,10 +153,10 @@ html,body{background:#0b0b0f;overflow:hidden;font-family:Inter,system-ui,sans-se
 body::before{background:radial-gradient(ellipse 43% 52% at 67% 52%,#f3ba3120 0,transparent 82%)}
 #app{background:#0b0b0f;isolation:isolate}
 header{height:84px;z-index:15;background:rgba(11,11,15,.88);border-bottom:1px solid #ffffff14;padding:0 clamp(20px,5vw,80px);backdrop-filter:blur(17px);box-shadow:none}
-#stage{top:84px;bottom:76px;background:radial-gradient(ellipse 25% 35% at 73% 44%,#ffe07c38 0%,#ffd84d19 45%,transparent 100%),radial-gradient(ellipse 45% 65% at 69% 50%,#b88c1e0a,transparent 80%),#0b0b0f;overflow:hidden}
-#stage::before{inset:0;background:radial-gradient(ellipse 24% 34% at 67% 50%,rgba(255,216,77,.14),transparent 95%);z-index:0}
+#stage{top:84px;bottom:76px;background:radial-gradient(ellipse 42% 46% at 68% 49%,#ffe07c4a 0%,#ffd84d22 38%,transparent 72%),radial-gradient(ellipse 68% 78% at 53% 50%,#2a210a24,transparent 78%),#0b0b0f;overflow:hidden}
+#stage::before{inset:0;background:radial-gradient(ellipse 46% 52% at 60% 50%,rgba(255,216,77,.18),transparent 82%),radial-gradient(ellipse 28% 32% at 59% 49%,rgba(255,242,201,.10),transparent 72%);z-index:0}
 #stage::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background-image:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(90deg,transparent 4%,#000 46%,#000 92%,transparent)}
-#renderCanvas{z-index:1;transform:translateX(13vw);width:100%!important;height:100%!important;touch-action:pan-y}
+#renderCanvas{z-index:1;transform:none;width:100%!important;height:100%!important;touch-action:pan-y}
 .stageVignette{z-index:2;background:linear-gradient(90deg,rgba(11,11,15,.23),transparent 38%,transparent 76%,#0b0b0f2d),linear-gradient(0deg,#0b0b0f64,transparent 21%)}
 .stageTitle,.statMini,.rightPanel,.partCard,.quickTools,.mobileControlsToggle,.mobileBackdrop,#hudTip,.visualBadge,.thermalOverlay,#toast,.modalLayer{display:none!important}
 .fz-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:15px}
@@ -200,9 +200,9 @@ header{height:84px;z-index:15;background:rgba(11,11,15,.88);border-bottom:1px so
 @media(max-width:1150px) and (min-width:751px){.fz-copy{max-width:45vw}.fz-copy h1{font-size:clamp(56px,6.2vw,87px)}.fz-lead{max-width:365px}.fz-showcase-label{right:25px}}
 @media(max-width:750px){
  header{height:65px;padding:0 18px}.fz-mark{width:36px;height:36px;font-size:23px}.fz-word{font-size:22px}.fz-header-pill{font-size:8px;letter-spacing:1px}
- #stage{top:65px;bottom:81px;background:radial-gradient(ellipse 55% 31% at 50% 67%,#ffd84d32,transparent 100%),#0b0b0f}
- #stage::before{background:radial-gradient(ellipse 45% 31% at 52% 62%,#ffd84d24,transparent 100%)}
- #renderCanvas{transform:translateY(19.5vh) scale(.87);transform-origin:center center;touch-action:pan-y}
+ #stage{top:65px;bottom:81px;background:radial-gradient(ellipse 70% 42% at 52% 57%,#ffd84d3a,transparent 82%),radial-gradient(ellipse 42% 28% at 50% 53%,#fff1ba1e,transparent 70%),#0b0b0f}
+ #stage::before{background:radial-gradient(ellipse 62% 42% at 52% 58%,#ffd84d2b,transparent 85%),radial-gradient(ellipse 26% 18% at 51% 49%,#fff0be18,transparent 80%)}
+ #renderCanvas{transform:none;transform-origin:center center;touch-action:pan-y}
  .stageVignette{background:linear-gradient(0deg,#0b0b0f65,transparent 20%)}
  .fz-copy{left:20px;right:20px;top:28px;transform:none;max-width:none}
  .fz-copy h1{font-size:clamp(53px,12vw,78px);margin:15px 0 13px;line-height:.88}
@@ -218,10 +218,10 @@ header{height:84px;z-index:15;background:rgba(11,11,15,.88);border-bottom:1px so
 }
 @media(max-width:420px){
  .fz-copy{top:24px;left:17px;right:17px}.fz-copy h1{font-size:clamp(47px,12.2vw,60px)}.fz-lead{font-size:11px;margin:12px 0}.fz-cta{height:43px}.fz-showcase-label{bottom:75px}
- #renderCanvas{transform:translateY(22vh) scale(.81)}
+ #renderCanvas{transform:none}
 }
 @media(max-height:720px) and (min-width:751px){.fz-copy h1{font-size:clamp(53px,6vw,85px)}.fz-lead{margin:13px 0}.fz-destination{margin-top:0}.fz-copy{top:49%}}
-@media(max-height:770px) and (max-width:750px){.fz-copy h1{font-size:clamp(42px,10.7vw,59px)}.fz-lead{font-size:10px;max-width:320px}.fz-copy{top:12px}.fz-destination{max-width:280px;padding:9px}.fz-destination strong{font-size:20px}.fz-cta{max-width:280px;height:39px}.fz-redirect{max-width:280px}.fz-showcase-label{bottom:55px}#renderCanvas{transform:translateY(23vh) scale(.78)}}
+@media(max-height:770px) and (max-width:750px){.fz-copy h1{font-size:clamp(42px,10.7vw,59px)}.fz-lead{font-size:10px;max-width:320px}.fz-copy{top:12px}.fz-destination{max-width:280px;padding:9px}.fz-destination strong{font-size:20px}.fz-cta{max-width:280px;height:39px}.fz-redirect{max-width:280px}.fz-showcase-label{bottom:55px}#renderCanvas{transform:none}}
 @media(prefers-reduced-motion:reduce){.fz-cta{transition:none}}
 
 </style>
@@ -371,16 +371,16 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,window.innerWidth<751?1.2:1.8))
 renderer.setSize(stage.clientWidth,stage.clientHeight,false);
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.38;
+renderer.toneMappingExposure=1.24;
 renderer.shadowMap.enabled=window.innerWidth>=751;
 renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-const scene=new THREE.Scene();scene.background=null;scene.fog=new THREE.FogExp2('#0b0b0f',0.019);
+const scene=new THREE.Scene();scene.background=null;scene.fog=new THREE.FogExp2('#0b0b0f',0.014);
 const camera=new THREE.PerspectiveCamera(33,1,.1,120);
 camera.position.set(...(window.innerWidth<751?[11.9,7.0,13.3]:[7.9,4.65,8.8]));
 const controls=new OrbitControls(camera,canvas);
 controls.enableDamping=true;controls.dampingFactor=.055;controls.autoRotateSpeed=.8;controls.minDistance=5;controls.maxDistance=25;controls.maxPolarAngle=Math.PI*.88;controls.minPolarAngle=.12;
 controls.target.set(0,.03,0);controls.update();
-const sceneAmbient=new THREE.HemisphereLight(0xdceaff,0x102136,2.25);scene.add(sceneAmbient);
+const sceneAmbient=new THREE.HemisphereLight(0xf4f7ff,0x1b1a14,2.75);scene.add(sceneAmbient);
 function light(color,intensity,x,y,z,shadows=false){const p=new THREE.DirectionalLight(color,intensity);p.position.set(x,y,z);if(shadows){p.castShadow=true;p.shadow.mapSize.set(1024,1024);p.shadow.camera.left=-8;p.shadow.camera.right=8;p.shadow.camera.top=8;p.shadow.camera.bottom=-8;p.shadow.normalBias=.027;}scene.add(p);return p;}
 light(0xffffff,3.2,6,9,9,true);light(0xffd35f,1.55,-6,4,2);light(0xffe7a0,1.0,1,5,-7);
 const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0x080e18,roughness:.91,metalness:.12}));floor.rotation.x=-Math.PI/2;floor.position.y=-2.74;floor.receiveShadow=true;scene.add(floor);
@@ -703,7 +703,12 @@ for(let n=0;n<12;n++){
  const z=-1.25+(n%6)*.18,y=1.25+Math.floor(n/6)*.19;
  box(motherboard,.048,.10,.085,-.605,y,z,materials.graphite,.008);
 }
-const studioFill=new THREE.PointLight(0xffd84d,0.85,20,2);studioFill.position.set(2,3,3);scene.add(studioFill);
+const studioFill=new THREE.PointLight(0xffd84d,1.25,22,2);studioFill.position.set(2.2,3.2,3.5);scene.add(studioFill);
+const backAura=new THREE.PointLight(0xffd84d,1.65,28,2);backAura.position.set(0.6,2.0,-5.8);scene.add(backAura);
+const cpuFillLight=new THREE.PointLight(0xffe9ae,1.05,7.8,2);cpuFillLight.position.set(-0.08,0.68,-0.56);rigRoot.add(cpuFillLight);
+const caseSoftLight=new THREE.PointLight(0xfaf3dc,0.78,8.4,2);caseSoftLight.position.set(0.85,0.95,1.45);rigRoot.add(caseSoftLight);
+const cpuGlow=new THREE.Mesh(new THREE.SphereGeometry(0.44,24,18),new THREE.MeshBasicMaterial({color:0xffd84d,transparent:true,opacity:0.07,depthWrite:false}));cpuGlow.position.set(-0.08,0.68,-0.56);rigRoot.add(cpuGlow);
+const caseGlow=new THREE.Mesh(new THREE.SphereGeometry(1.25,28,24),new THREE.MeshBasicMaterial({color:0xffe6a8,transparent:true,opacity:0.032,depthWrite:false}));caseGlow.position.set(0.55,0.55,0.9);rigRoot.add(caseGlow);
 
 const layout=[
  ['psu',[0,-3.0,0]],['motherboard',[-2.45,0,-.2]],['ssd',[-1.9,-1.12,1.2]],
@@ -986,7 +991,7 @@ $('quickAirflow').addEventListener('click',()=>$('airflowButton').click());
 $('workshopButton').addEventListener('click',()=>{workshopOn=!workshopOn;applyVisualModes();if(workshopOn)setCamera('iso');});
 let followAssembly=false, followLastStage=-1;
 $('cameraFollow').addEventListener('click',()=>{followAssembly=!followAssembly;followLastStage=-1;$('cameraFollow').classList.toggle('active',followAssembly);showToast('Assembly camera follow '+(followAssembly?'enabled':'disabled'));});
-$('cinematicLook').addEventListener('click',()=>{sceneLook=sceneLook==='studio'?'cinema':'studio';const cinema=sceneLook==='cinema';renderer.toneMappingExposure=cinema?1.03:1.25;sceneAmbient.intensity=cinema?1.45:2.25;studioFill.intensity=cinema?1.9:.5;scene.background.set(cinema?'#020710':'#080e19');$('cinematicLook').classList.toggle('active',cinema);$('cinematicLook').textContent=cinema?'☀ STUDIO LIGHT':'☾ CINEMATIC LIGHT';showToast('Lighting: '+sceneLook);});
+$('cinematicLook').addEventListener('click',()=>{sceneLook=sceneLook==='studio'?'cinema':'studio';const cinema=sceneLook==='cinema';renderer.toneMappingExposure=cinema?1.08:1.24;sceneAmbient.intensity=cinema?1.75:2.75;studioFill.intensity=cinema?1.6:1.25;scene.background.set(cinema?'#020710':'#080e19');$('cinematicLook').classList.toggle('active',cinema);$('cinematicLook').textContent=cinema?'☀ STUDIO LIGHT':'☾ CINEMATIC LIGHT';showToast('Lighting: '+sceneLook);});
 function syncJobTo3D(){showTab('simulate');followLastStage=-1;const values=[.00001,.12,.52,.89,1,1,1];if(jobIndex>=4){finishAssembly();}else{startAssembly();progress=values[jobIndex];assemblyPaused=true;$('assemblyPause').textContent='▶ RESUME';updateProgress();}setCamera('iso');showToast('3D view updated to local job-stage snapshot');}
 $('syncJob3D').addEventListener('click',syncJobTo3D);
 for(const id of ['loadRange','ambientRange','gameSelect'])$(id).addEventListener('input',updateLab);
